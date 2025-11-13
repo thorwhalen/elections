@@ -1,3 +1,5 @@
+"""2020 US Election Data Stores"""
+
 from functools import partial
 
 import requests
