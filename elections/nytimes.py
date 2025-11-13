@@ -20,16 +20,19 @@ or guaranteed to remain available.
 
 **Example Usage:**
 
+NOTE: I only managed to get data for year=2020. I implemented the patterns for other years, 
+but it doesn't seem to work.
+
     >>> from elections.nytimes import get_election_data, get_races, get_president_timeseries  # doctest: +SKIP
     >>>
     >>> # Get raw election data for Pennsylvania in 2020
-    >>> data = get_election_data(region='pennsylvania', year=2020)  # doctest: +SKIP
+    >>> data = get_election_data(region='pennsylvania')  # doctest: +SKIP
     >>>
     >>> # Get races for a specific state
-    >>> races = get_races(region='florida', year=2024)  # doctest: +SKIP
+    >>> races = get_races(region='florida')  # doctest: +SKIP
     >>>
     >>> # Get president race time series
-    >>> timeseries = get_president_timeseries(region='georgia', year=2020)  # doctest: +SKIP
+    >>> timeseries = get_president_timeseries(region='georgia')  # doctest: +SKIP
 
 """
 
@@ -40,15 +43,15 @@ from datetime import date as date_type
 import requests
 import pandas as pd
 
-from py2store.utils.explicit import ExplicitKeysSource
-from py2store import add_ipython_key_completions, KvReader, Store, wrap_kvs
+from dol.explicit import ExplicitKeysSource
+from dol import add_ipython_key_completions, KvReader, Store, wrap_kvs
 
 
 # Election dates for supported years
 ELECTION_DATES = {
-    2016: '2016-11-08',
+    # 2016: '2016-11-08',
     2020: '2020-11-03',
-    2024: '2024-11-05',
+    # 2024: '2024-11-05',
 }
 
 # Standard region names (states in lowercase with hyphens)

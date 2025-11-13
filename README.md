@@ -1,42 +1,255 @@
-Easy access to (US 2020, for now) election statistics.
+# elections
 
-# How to use
+A unified Python interface to multiple election data sources from around the world.
 
+## Overview
+
+The `elections` package provides easy access to various election data APIs through a consistent interface. Whether you need U.S. federal campaign finance data, international parliamentary statistics, or real-time election results, this package offers a simple way to access it all.
+
+## Installation
+
+```bash
+pip install elections
+```
+
+Note: Some data sources require additional dependencies (pandas, py2store) which will be installed automatically.
+
+## General Interface
+
+The package provides a dictionary-like interface to access different data source modules:
+
+```python
+from elections import ElectionsDataModules
+
+# Access all data source modules
+modules = ElectionsDataModules()
+
+# List available sources
+print(list(modules))
+# ['nytimes', 'openfec', 'google_civic', 'democracy_works', 'ipu_parline']
+```
+
+### Available Data Sources
+
+- **nytimes**: New York Times election results (2016, 2020, 2024) - No API key required
+- **openfec**: Federal Election Commission campaign finance data - Optional API key
+- **google_civic**: Google Civic Information API (polling, representatives, voter info) - API key required
+- **democracy_works**: Democracy Works election guidance (dates, deadlines, locations) - No API key required
+- **ipu_parline**: Inter-Parliamentary Union global parliamentary data - No API key required
+
+## Usage Examples
+
+### OpenFEC - Federal Campaign Finance
+
+Access U.S. federal campaign finance data, including candidates, committees, and contributions:
+
+```python
+from elections import ElectionsDataModules
+
+modules = ElectionsDataModules()
+
+# Get OpenFEC module
+openfec = modules['openfec']
+
+# Get 2024 presidential candidates
+candidates = openfec.get_candidates(year=2024, office='president')
+print(f"Found {len(candidates['results'])} candidates")
+
+# Search for specific candidate
+results = openfec.search_candidates('Biden', year=2024)
+
+# Get financial totals for a candidate
+totals = openfec.get_candidate_totals('P80001571', year=2020)
+```
+
+**API Key:** Optional for higher rate limits. Get a free key at https://api.open.fec.gov/developers/
+
+### Google Civic Information
+
+Get voter information, polling locations, and representatives:
+
+```python
+from elections import ElectionsDataModules
+
+modules = ElectionsDataModules()
+
+# Get Google Civic module
+civic = modules['google_civic']
+
+# Get voter information for an address
+info = civic.get_voter_info(
+    '1600 Pennsylvania Ave NW, Washington, DC', 
+    api_key='YOUR_KEY'
+)
+
+# Get representatives for an address
+reps = civic.get_representatives(
+    '340 Main St, Venice, CA 90291',
+    api_key='YOUR_KEY'
+)
+
+# Get list of available elections
+elections = civic.get_elections(api_key='YOUR_KEY')
+```
+
+**API Key:** Required. Get a free key at https://console.developers.google.com/
+
+### IPU Parline - International Parliamentary Data
+
+Access global parliamentary and election data for 190+ countries:
+
+```python
+from elections import ElectionsDataModules
+
+modules = ElectionsDataModules()
+
+# Get IPU Parline module
+ipu = modules['ipu_parline']
+
+# Get parliament information for France
+france = ipu.get_parliament('FRA')
+
+# Get election results for Germany
+results = ipu.get_election_results('DEU')
+
+# Get women in parliament statistics
+stats = ipu.get_women_in_parliament('SWE')
+
+# Get list of all countries
+countries = ipu.get_country_list()
+```
+
+**API Key:** Not required
+
+### Democracy Works
+
+Get U.S. election dates, deadlines, and voting locations:
+
+```python
+from elections import ElectionsDataModules
+
+modules = ElectionsDataModules()
+
+# Get Democracy Works module
+dw = modules['democracy_works']
+
+# Get upcoming elections
+upcoming = dw.get_upcoming_elections(region='PA', days_ahead=60)
+
+# Get elections for a specific state
+state_elections = dw.get_state_elections('CA')
+
+# Get all elections
+elections = dw.get_elections()
+```
+
+**API Key:** Not required
+
+### New York Times Election Results
+
+Access historical U.S. election results (2016, 2020, 2024):
+
+```python
+from elections import ElectionsDataModules
+
+modules = ElectionsDataModules()
+
+# Get NYT module
+nyt = modules['nytimes']
+
+# Get election data for a state
+data = nyt.get_election_data('florida', year=2020)
+
+# Get all races for a state
+races = nyt.get_races('pennsylvania', year=2020)
+
+# Get president race time series
+timeseries = nyt.get_president_timeseries('georgia', year=2020)
+```
+
+**API Key:** Not required
+
+## Direct Module Import
+
+You can also import data source modules directly:
+
+```python
+# Import specific modules
+from elections import openfec, google_civic, ipu_parline
+
+# Use them directly
+candidates = openfec.get_candidates(year=2024, office='president')
+info = google_civic.get_voter_info('1600 Pennsylvania Ave', api_key='YOUR_KEY')
+france = ipu_parline.get_parliament('FRA')
+```
+
+## Consistent Parameter Names
+
+Across all modules, we use consistent parameter names:
+
+- **year**: Election year (e.g., 2020, 2024)
+- **region**: Geographic region (state abbreviation like 'PA', or state name)
+- **api_key**: API authentication key (when required)
+- **race_type**: Type of race (e.g., 'president', 'senate', 'house')
+- **office**: Office being sought (used by some APIs)
+
+## API Keys Setup
+
+Set API keys via environment variables for convenience:
+
+```bash
+export OPENFEC_API_KEY='your_openfec_key'
+export GOOGLE_CIVIC_API_KEY='your_google_key'
+```
+
+---
+
+# Specific Example: 2020 US elections
+
+Easy access to (US 2020) election statistics.
+
+Yes, you can do it via our general interface, doing:
+
+```python
+from elections import ElectionsDataModules
+
+modules = ElectionsDataModules()
+
+nyt = modules['nytimes']
+data = nyt.get_election_data('florida', year=2020)
+```
+
+But here's another convenient dict-like interface that was made based on it.
 
 ```python
 import pandas as pd
 from elections import President2020TimeSeries, Races2020, Election2020RawJson
-
 ```
 
 ## President's race stats
 
-
 ```python
+from elections import President2020TimeSeries
+
 s = President2020TimeSeries()
 len(s)
+# Returns: 51
 ```
 
-
-
-    51
-
-
-
-`s` is a dictionary-like interface to the presidential race. 
-
-It's keys are the states
-
+`s` is a dictionary-like interface to the presidential race. Its keys are the states:
 
 ```python
 print(*s)
+# alabama alaska arizona arkansas california colorado connecticut delaware 
+# district-of-columbia florida georgia hawaii idaho illinois indiana iowa kansas 
+# kentucky louisiana maine maryland massachusetts michigan minnesota mississippi 
+# missouri montana nebraska nevada new-hampshire new-jersey new-mexico new-york 
+# north-carolina north-dakota ohio oklahoma oregon pennsylvania rhode-island 
+# south-carolina south-dakota tennessee texas utah vermont virginia washington 
+# west-virginia wisconsin wyoming
 ```
 
-    alabama alaska arizona arkansas california colorado connecticut delaware district-of-columbia florida georgia hawaii idaho illinois indiana iowa kansas kentucky louisiana maine maryland massachusetts michigan minnesota mississippi missouri montana nebraska nevada new-hampshire new-jersey new-mexico new-york north-carolina north-dakota ohio oklahoma oregon pennsylvania rhode-island south-carolina south-dakota tennessee texas utah vermont virginia washington west-virginia wisconsin wyoming
-
-
-It's values are dataframes containing the stats.
-
+Its values are dataframes containing the stats:
 
 ```python
 state = 'georgia'
@@ -44,670 +257,136 @@ df = s[state]
 df
 ```
 
+| timestamp | votes | eevp | eevp_source | trumpd | bidenj |
+|-----------|-------|------|-------------|--------|--------|
+| 2020-11-04T09:23:03Z | 0 | 0 | edison | 0.000 | 0.000 |
+| 2020-11-04T00:14:11Z | 408 | 0 | edison | 0.674 | 0.326 |
+| 2020-11-04T00:15:51Z | 127106 | 2 | edison | 0.370 | 0.618 |
+| 2020-11-04T00:19:55Z | 173638 | 3 | edison | 0.431 | 0.557 |
+| ... | ... | ... | ... | ... | ... |
+| 2020-11-06T23:45:40Z | 4970093 | 99 | edison | 0.493 | 0.494 |
 
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>votes</th>
-      <th>eevp</th>
-      <th>eevp_source</th>
-      <th>trumpd</th>
-      <th>bidenj</th>
-    </tr>
-    <tr>
-      <th>timestamp</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>2020-11-04T09:23:03Z</th>
-      <td>0</td>
-      <td>0</td>
-      <td>edison</td>
-      <td>0.000</td>
-      <td>0.000</td>
-    </tr>
-    <tr>
-      <th>2020-11-04T00:14:11Z</th>
-      <td>408</td>
-      <td>0</td>
-      <td>edison</td>
-      <td>0.674</td>
-      <td>0.326</td>
-    </tr>
-    <tr>
-      <th>2020-11-04T00:15:51Z</th>
-      <td>127106</td>
-      <td>2</td>
-      <td>edison</td>
-      <td>0.370</td>
-      <td>0.618</td>
-    </tr>
-    <tr>
-      <th>2020-11-04T00:19:55Z</th>
-      <td>173638</td>
-      <td>3</td>
-      <td>edison</td>
-      <td>0.431</td>
-      <td>0.557</td>
-    </tr>
-    <tr>
-      <th>2020-11-04T00:21:57Z</th>
-      <td>174006</td>
-      <td>3</td>
-      <td>edison</td>
-      <td>0.432</td>
-      <td>0.557</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>2020-11-06T23:14:40Z</th>
-      <td>4969860</td>
-      <td>99</td>
-      <td>edison</td>
-      <td>0.493</td>
-      <td>0.494</td>
-    </tr>
-    <tr>
-      <th>2020-11-06T23:17:43Z</th>
-      <td>4969869</td>
-      <td>99</td>
-      <td>edison</td>
-      <td>0.493</td>
-      <td>0.494</td>
-    </tr>
-    <tr>
-      <th>2020-11-06T23:36:39Z</th>
-      <td>4969873</td>
-      <td>99</td>
-      <td>edison</td>
-      <td>0.493</td>
-      <td>0.494</td>
-    </tr>
-    <tr>
-      <th>2020-11-06T23:41:44Z</th>
-      <td>4969880</td>
-      <td>99</td>
-      <td>edison</td>
-      <td>0.493</td>
-      <td>0.494</td>
-    </tr>
-    <tr>
-      <th>2020-11-06T23:45:40Z</th>
-      <td>4970093</td>
-      <td>99</td>
-      <td>edison</td>
-      <td>0.493</td>
-      <td>0.494</td>
-    </tr>
-  </tbody>
-</table>
-<p>456 rows × 5 columns</p>
-</div>
-
-
-
+*456 rows × 5 columns*
 
 ```python
 df['bidenj'].plot(figsize=(16, 6), grid=True, title=state);
 ```
 
-
-![](https://github.com/thorwhalen/elections/blob/master/output_9_0.png)
-
-    
+![Biden vote share over time in Georgia](https://github.com/thorwhalen/elections/blob/master/output_9_0.png)
 
 
 ## Other races
 
-But that's not the only race going on here. 
-
+But that's not the only race going on here.
 
 ```python
+from elections import Races2020
+
 s = Races2020()
 len(s)
+# Returns: 51
 ```
-
-
-
-
-    51
-
-
-
 
 ```python
-data = s['new-york']   # by the way, you can tab-complete this if you're working in a jupyter notebook
+data = s['new-york']   # by the way, you can tab-complete this in a jupyter notebook
 print(type(data))
+# <class 'py2store.base.Store'>
+
 print(f"{len(data)} items... Here are the first 5:")
 list(data)[:5]
+# ['president-general-2020-11-03',
+#  'house-general-district-001-2020-11-03',
+#  'house-general-district-002-2020-11-03',
+#  'house-general-district-003-2020-11-03',
+#  'house-general-district-004-2020-11-03']
 ```
 
-    <class 'py2store.base.Store'>
-    242 items... Here are the first 5:
+So we see that now, instead of just getting the president's race, we get... 242 races (one of which is the president's race).
 
+What you need to know is that `President2020TimeSeries` just gave you one of the many data fields available for the race (the 'timeseries' one), extracted and formatted for your convenience, since it's probably the main information you're here for.
 
-
-
-
-    ['president-general-2020-11-03',
-     'house-general-district-001-2020-11-03',
-     'house-general-district-002-2020-11-03',
-     'house-general-district-003-2020-11-03',
-     'house-general-district-004-2020-11-03']
-
-
-
-So we see that now, instead of just getting the president's race, we get... 242 races (one of which is the president's race). 
-
-What you need to know, as well, is that `President2020TimeSeries` just gave you one of the many datas available for the race (the 'timeseries' one), extracted and formated for your convenience, since it's probably the main information you're here for. 
-
-But there are other associated (raw) datas you may or may not be interested in. Here's what you got:
-
+But there are other associated (raw) data fields you may or may not be interested in. Here's what you got:
 
 ```python
 data['president-general-2020-11-03'].keys()  # you can tab complete here as well (you're welcome!)
+# dict_keys(['race_id', 'race_slug', 'url', 'state_page_url', 'ap_polls_page', 
+#            'edison_exit_polls_page', 'race_type', 'election_type', 'election_date', 
+#            'runoff', 'race_name', 'office', 'officeid', 'race_rating', 'seat', 
+#            'seat_name', 'state_id', 'state_slug', 'state_name', 'state_nyt_abbrev', 
+#            'state_shape', 'party_id', 'uncontested', 'report', 'result', 
+#            'result_source', 'gain', 'lost_seat', 'votes', 'electoral_votes', 
+#            'absentee_votes', 'absentee_counties', 'absentee_count_progress', 
+#            'absentee_outstanding', 'absentee_max_ballots', 'provisional_outstanding', 
+#            'provisional_count_progress', 'poll_display', 'poll_countdown_display', 
+#            'poll_waiting_display', 'poll_time', 'poll_time_short', 'precincts_reporting', 
+#            'precincts_total', 'reporting_display', 'reporting_value', 'eevp', 
+#            'tot_exp_vote', 'eevp_source', 'eevp_value', 'eevp_display', 
+#            'county_data_source', 'incumbent_party', 'no_forecast', 'last_updated', 
+#            'candidates', 'has_incumbent', 'leader_margin_value', 'leader_margin_votes', 
+#            'leader_margin_display', 'leader_margin_name_display', 'leader_party_id', 
+#            'counties', 'votes2016', 'margin2016', 'clinton2016', 'trump2016', 
+#            'votes2012', 'margin2012', 'expectations_text', 'expectations_text_short', 
+#            'absentee_ballot_deadline', 'absentee_postmark_deadline', 'update_sentences', 
+#            'race_diff', 'winnerCalledTimestamp', 'timeseries'])
 ```
-
-
-
-
-    dict_keys(['race_id', 'race_slug', 'url', 'state_page_url', 'ap_polls_page', 'edison_exit_polls_page', 'race_type', 'election_type', 'election_date', 'runoff', 'race_name', 'office', 'officeid', 'race_rating', 'seat', 'seat_name', 'state_id', 'state_slug', 'state_name', 'state_nyt_abbrev', 'state_shape', 'party_id', 'uncontested', 'report', 'result', 'result_source', 'gain', 'lost_seat', 'votes', 'electoral_votes', 'absentee_votes', 'absentee_counties', 'absentee_count_progress', 'absentee_outstanding', 'absentee_max_ballots', 'provisional_outstanding', 'provisional_count_progress', 'poll_display', 'poll_countdown_display', 'poll_waiting_display', 'poll_time', 'poll_time_short', 'precincts_reporting', 'precincts_total', 'reporting_display', 'reporting_value', 'eevp', 'tot_exp_vote', 'eevp_source', 'eevp_value', 'eevp_display', 'county_data_source', 'incumbent_party', 'no_forecast', 'last_updated', 'candidates', 'has_incumbent', 'leader_margin_value', 'leader_margin_votes', 'leader_margin_display', 'leader_margin_name_display', 'leader_party_id', 'counties', 'votes2016', 'margin2016', 'clinton2016', 'trump2016', 'votes2012', 'margin2012', 'expectations_text', 'expectations_text_short', 'absentee_ballot_deadline', 'absentee_postmark_deadline', 'update_sentences', 'race_diff', 'winnerCalledTimestamp', 'timeseries'])
-
-
-
 
 ```python
 t = data['president-general-2020-11-03']
 print(t['trump2016'], t['clinton2016'])
+# 2819534 4556124
 ```
-
-    2819534 4556124
 
 
 ## Election2020RawJson
 
-But if you want even more, and even more raw than the above, we can give that to you. 
+But if you want even more raw data than the above, we can give that to you.
 
-With `Election2020RawJson` you get access to the original full json. 
-
+With `Election2020RawJson` you get access to the original full JSON.
 
 ```python
+from elections import Election2020RawJson
+import pandas as pd
+
 raw_jsons = Election2020RawJson()
 json_data = raw_jsons['california']
-json_data.keys()
+
+print(json_data.keys())
+# dict_keys(['data', 'meta'])
+
+print(json_data['meta'])
+# {'version': 10403,
+#  'track': '2020-11-03',
+#  'timestamp': '2020-11-06T23:52:57.623Z'}
+
+print(json_data['data'].keys())
+# dict_keys(['races', 'party_control', 'liveUpdates'])
 ```
 
-
-
-
-    dict_keys(['data', 'meta'])
-
-
-
+### Party Control
 
 ```python
-json_data['meta']
+party_df = pd.DataFrame(json_data['data']['party_control']).set_index('race_type').T
 ```
 
+| race_type | house | president | senate |
+|-----------|-------|-----------|--------|
+| needed_for_control | 218 | 270 | 50 |
+| total | 435 | 538 | 100 |
+| no_election | {} | {} | {'democrat': 35, 'republican': 30, 'other': 0} |
 
-
-
-    {'version': 10403,
-     'track': '2020-11-03',
-     'timestamp': '2020-11-06T23:52:57.623Z'}
-
-
-
+### Live Updates
 
 ```python
-json_data['data'].keys()
+updates_df = pd.DataFrame(json_data['data']['liveUpdates'])
+print(f"Total live updates: {len(updates_df)}")
+# Total live updates: 449
 ```
 
+Example entries from the 449 live updates:
 
-
-
-    dict_keys(['races', 'party_control', 'liveUpdates'])
-
-
-
-
-```python
-pd.DataFrame(json_data['data']['party_control']).set_index('race_type').T
-```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th>race_type</th>
-      <th>house</th>
-      <th>president</th>
-      <th>senate</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>state_id</th>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th>needed_for_control</th>
-      <td>218</td>
-      <td>270</td>
-      <td>50</td>
-    </tr>
-    <tr>
-      <th>total</th>
-      <td>435</td>
-      <td>538</td>
-      <td>100</td>
-    </tr>
-    <tr>
-      <th>no_election</th>
-      <td>{}</td>
-      <td>{}</td>
-      <td>{'democrat': 35, 'republican': 30, 'other': 0}</td>
-    </tr>
-    <tr>
-      <th>winner</th>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>parties</th>
-      <td>{'democrat': {'party_id': 'democrat', 'name_di...</td>
-      <td>{'democrat': {'party_id': 'democrat', 'name_di...</td>
-      <td>{'democrat': {'party_id': 'democrat', 'name_di...</td>
-    </tr>
-    <tr>
-      <th>winnerCalledTimestamp</th>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-
-```python
-pd.DataFrame(json_data['data']['liveUpdates'])
-```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>id</th>
-      <th>author</th>
-      <th>author_title_or_location</th>
-      <th>text</th>
-      <th>link_url</th>
-      <th>link_text</th>
-      <th>linked_state_1</th>
-      <th>linked_state_2</th>
-      <th>linked_state_3</th>
-      <th>image_url</th>
-      <th>...</th>
-      <th>call_type</th>
-      <th>race_id</th>
-      <th>winner</th>
-      <th>party_id</th>
-      <th>candidate_last_name</th>
-      <th>candidate_name_display</th>
-      <th>candidate_id</th>
-      <th>race_call_party_winner</th>
-      <th>state_name</th>
-      <th>link</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>333</td>
-      <td>Nate Cohn</td>
-      <td>in New York</td>
-      <td>New ballots from Clark County (that’s Las Vega...</td>
-      <td></td>
-      <td></td>
-      <td>NV</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>332</td>
-      <td>Nate Cohn</td>
-      <td>in New York</td>
-      <td>The latest Arizona ballot releases aren’t look...</td>
-      <td></td>
-      <td></td>
-      <td>AZ</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>331</td>
-      <td>Nick Corasaniti</td>
-      <td>in Philadelphia</td>
-      <td>There are still 102,000 mail ballots to be cou...</td>
-      <td></td>
-      <td></td>
-      <td>PA</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>330</td>
-      <td>Dave Philipps</td>
-      <td>in Las Vegas</td>
-      <td>Biden nets 2,520 votes in the Las Vegas area, ...</td>
-      <td></td>
-      <td></td>
-      <td>NV</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>329</td>
-      <td>Katie Glueck</td>
-      <td>in Wilmington, Del.</td>
-      <td>I’m told Biden spent the day watching election...</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>444</th>
-      <td>5</td>
-      <td>Nate Cohn</td>
-      <td>in New York</td>
-      <td>Tonight, the needle will be back — sort of. We...</td>
-      <td>https://www.nytimes.com/2020/11/02/upshot/need...</td>
-      <td>Learn more about the needle</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>445</th>
-      <td>4</td>
-      <td>Sheera Frenkel</td>
-      <td>in Silicon Valley</td>
-      <td>Times tech reporters will be monitoring for mi...</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>446</th>
-      <td>3</td>
-      <td>Michael Barbaro</td>
-      <td>in New York</td>
-      <td>From 4 p.m. to 8 p.m. Eastern time, we’ll be t...</td>
-      <td>https://nytimes.com/thedaily</td>
-      <td>Listen here</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>447</th>
-      <td>2</td>
-      <td>Trip Gabriel</td>
-      <td>in Butler County, Pa.</td>
-      <td>A look at Trump and the G.O.P.’s closing strat...</td>
-      <td>https://www.nytimes.com/2020/11/02/us/politics...</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>448</th>
-      <td>1</td>
-      <td>Shane Goldmacher</td>
-      <td>in New Hope, Pa.</td>
-      <td>Here’s our recap of the final day of campaigni...</td>
-      <td>https://www.nytimes.com/2020/11/02/us/politics...</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-  </tbody>
-</table>
-<p>449 rows × 31 columns</p>
-</div>
-
-
-
-
-```python
-
-```
-
-
-```python
-
-```
-
+| id | author | location | text |
+|----|--------|----------|------|
+| 333 | Nate Cohn | in New York | New ballots from Clark County (that's Las Vegas)... |
+| 332 | Nate Cohn | in New York | The latest Arizona ballot releases aren't looking... |
+| 331 | Nick Corasaniti | in Philadelphia | There are still 102,000 mail ballots to be counted... |
+| 330 | Dave Philipps | in Las Vegas | Biden nets 2,520 votes in the Las Vegas area... |

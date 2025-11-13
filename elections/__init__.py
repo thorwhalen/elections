@@ -14,15 +14,15 @@ international parliamentary and election data.
 
 **Quick Start:**
 
-    >>> from elections import ElectionsDataGetters
+    >>> from elections import ElectionsDataModules
     >>>
     >>> # Access all data sources as a mapping
-    >>> getters = ElectionsDataGetters()
-    >>> list(getters.keys())  # doctest: +SKIP
+    >>> modules = ElectionsDataModules()
+    >>> list(modules.keys())  # doctest: +SKIP
     ['nytimes', 'openfec', 'google_civic', 'democracy_works', 'ipu_parline']
     >>>
     >>> # Access a specific data source module
-    >>> nyt = getters['nytimes']  # doctest: +SKIP
+    >>> nyt = modules['nytimes']  # doctest: +SKIP
     >>> data = nyt.get_election_data('florida', year=2020)  # doctest: +SKIP
     >>>
     >>> # Or import modules directly
@@ -103,7 +103,7 @@ except ImportError as e:
     President2020TimeSeries = None
 
 
-class ElectionsDataGetters(Mapping):
+class ElectionsDataModules(Mapping):
     """
     Mapping interface to election data sources.
 
@@ -120,21 +120,23 @@ class ElectionsDataGetters(Mapping):
 
     **Usage:**
 
-        >>> getters = ElectionsDataGetters()
+        >>> modules = ElectionsDataModules()
         >>>
         >>> # List all available sources
-        >>> sources = list(getters.keys())  # doctest: +SKIP
-        >>>
+        >>> sources = sorted(modules)
+        >>> sources  # doctest: +ELLIPSIS
+        ['democracy_works', 'google_civic', 'ipu_parline', 'nytimes', 'openfec']
+
         >>> # Access a specific source
-        >>> nyt_module = getters['nytimes']  # doctest: +SKIP
+        >>> nyt_module = modules['nytimes']  # doctest: +SKIP
         >>> data = nyt_module.get_election_data('florida', year=2020)  # doctest: +SKIP
         >>>
         >>> # Iterate over all sources
-        >>> for source_id, module in getters.items():  # doctest: +SKIP
+        >>> for source_id, module in modules.items():  # doctest: +SKIP
         ...     print(f"{source_id}: {module.__doc__.split(chr(10))[0]}")
         >>>
         >>> # Check if a source exists
-        >>> 'nytimes' in getters  # doctest: +SKIP
+        >>> 'nytimes' in modules  # doctest: +SKIP
         True
 
     **Attributes:**
@@ -142,8 +144,8 @@ class ElectionsDataGetters(Mapping):
     Each source module provides its own functions and classes for accessing data.
     See the module documentation for details:
 
-        >>> getters = ElectionsDataGetters()
-        >>> nyt = getters['nytimes']  # doctest: +SKIP
+        >>> modules = ElectionsDataModules()
+        >>> nyt = modules['nytimes']  # doctest: +SKIP
         >>> help(nyt)  # doctest: +SKIP
     """
 
@@ -156,7 +158,7 @@ class ElectionsDataGetters(Mapping):
     }
 
     def __init__(self):
-        """Initialize the ElectionsDataGetters mapping."""
+        """Initialize the ElectionsDataModules mapping."""
         self._modules = {}
 
     def __getitem__(self, key: str) -> Any:
@@ -203,7 +205,7 @@ class ElectionsDataGetters(Mapping):
 
     def __repr__(self) -> str:
         """Return a string representation of available sources."""
-        return f"ElectionsDataGetters({list(self._sources.keys())})"
+        return f"ElectionsDataModules({list(self._sources.keys())})"
 
     def describe(self) -> None:
         """
@@ -219,7 +221,9 @@ class ElectionsDataGetters(Mapping):
             module = self[source_id]
             # Get first line of module docstring
             doc_lines = module.__doc__.split('\n') if module.__doc__ else []
-            first_line = next((line.strip() for line in doc_lines if line.strip()), 'No description')
+            first_line = next(
+                (line.strip() for line in doc_lines if line.strip()), 'No description'
+            )
 
             print(f"\n{source_id}:")
             print(f"  {first_line}")
@@ -231,8 +235,8 @@ class ElectionsDataGetters(Mapping):
                         print(f"  {line.strip()}")
 
 
-# Convenience: pre-instantiate a default getter
-_default_getters = ElectionsDataGetters()
+# Convenience: pre-instantiate a default modules instance
+_default_modules = ElectionsDataModules()
 
 
 def get_source(source_id: str) -> Any:
@@ -250,7 +254,7 @@ def get_source(source_id: str) -> Any:
         >>> nyt = get_source('nytimes')  # doctest: +SKIP
         >>> data = nyt.get_election_data('florida', year=2020)  # doctest: +SKIP
     """
-    return _default_getters[source_id]
+    return _default_modules[source_id]
 
 
 def list_sources() -> list:
@@ -268,12 +272,12 @@ def list_sources() -> list:
         >>> 'openfec' in sources
         True
     """
-    return list(_default_getters.keys())
+    return list(_default_modules.keys())
 
 
 # Export main classes and functions
 __all__ = [
-    'ElectionsDataGetters',
+    'ElectionsDataModules',
     'get_source',
     'list_sources',
     # Backward compatibility exports
