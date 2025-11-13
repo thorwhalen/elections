@@ -182,8 +182,8 @@ df['bidenj'].plot(figsize=(16, 6), grid=True, title=state);
 ```
 
 
-    
-![png](output_9_0.png)
+![](https://github.com/thorwhalen/elections/blob/master/output_9_0.png)
+
     
 
 
