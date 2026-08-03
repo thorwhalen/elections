@@ -49,17 +49,17 @@ from elections import ElectionsDataModules
 modules = ElectionsDataModules()
 
 # Get OpenFEC module
-openfec = modules['openfec']
+openfec = modules["openfec"]
 
 # Get 2024 presidential candidates
-candidates = openfec.get_candidates(year=2024, office='president')
+candidates = openfec.get_candidates(year=2024, office="president")
 print(f"Found {len(candidates['results'])} candidates")
 
 # Search for specific candidate
-results = openfec.search_candidates('Biden', year=2024)
+results = openfec.search_candidates("Biden", year=2024)
 
 # Get financial totals for a candidate
-totals = openfec.get_candidate_totals('P80001571', year=2020)
+totals = openfec.get_candidate_totals("P80001571", year=2020)
 ```
 
 **API Key:** Optional for higher rate limits. Get a free key at https://api.open.fec.gov/developers/
@@ -74,22 +74,18 @@ from elections import ElectionsDataModules
 modules = ElectionsDataModules()
 
 # Get Google Civic module
-civic = modules['google_civic']
+civic = modules["google_civic"]
 
 # Get voter information for an address
 info = civic.get_voter_info(
-    '1600 Pennsylvania Ave NW, Washington, DC', 
-    api_key='YOUR_KEY'
+    "1600 Pennsylvania Ave NW, Washington, DC", api_key="YOUR_KEY"
 )
 
 # Get representatives for an address
-reps = civic.get_representatives(
-    '340 Main St, Venice, CA 90291',
-    api_key='YOUR_KEY'
-)
+reps = civic.get_representatives("340 Main St, Venice, CA 90291", api_key="YOUR_KEY")
 
 # Get list of available elections
-elections = civic.get_elections(api_key='YOUR_KEY')
+elections = civic.get_elections(api_key="YOUR_KEY")
 ```
 
 **API Key:** Required. Get a free key at https://console.developers.google.com/
@@ -104,16 +100,16 @@ from elections import ElectionsDataModules
 modules = ElectionsDataModules()
 
 # Get IPU Parline module
-ipu = modules['ipu_parline']
+ipu = modules["ipu_parline"]
 
 # Get parliament information for France
-france = ipu.get_parliament('FRA')
+france = ipu.get_parliament("FRA")
 
 # Get election results for Germany
-results = ipu.get_election_results('DEU')
+results = ipu.get_election_results("DEU")
 
 # Get women in parliament statistics
-stats = ipu.get_women_in_parliament('SWE')
+stats = ipu.get_women_in_parliament("SWE")
 
 # Get list of all countries
 countries = ipu.get_country_list()
@@ -131,13 +127,13 @@ from elections import ElectionsDataModules
 modules = ElectionsDataModules()
 
 # Get Democracy Works module
-dw = modules['democracy_works']
+dw = modules["democracy_works"]
 
 # Get upcoming elections
-upcoming = dw.get_upcoming_elections(region='PA', days_ahead=60)
+upcoming = dw.get_upcoming_elections(region="PA", days_ahead=60)
 
 # Get elections for a specific state
-state_elections = dw.get_state_elections('CA')
+state_elections = dw.get_state_elections("CA")
 
 # Get all elections
 elections = dw.get_elections()
@@ -155,16 +151,16 @@ from elections import ElectionsDataModules
 modules = ElectionsDataModules()
 
 # Get NYT module
-nyt = modules['nytimes']
+nyt = modules["nytimes"]
 
 # Get election data for a state
-data = nyt.get_election_data('florida', year=2020)
+data = nyt.get_election_data("florida", year=2020)
 
 # Get all races for a state
-races = nyt.get_races('pennsylvania', year=2020)
+races = nyt.get_races("pennsylvania", year=2020)
 
 # Get president race time series
-timeseries = nyt.get_president_timeseries('georgia', year=2020)
+timeseries = nyt.get_president_timeseries("georgia", year=2020)
 ```
 
 **API Key:** Not required
@@ -178,9 +174,9 @@ You can also import data source modules directly:
 from elections import openfec, google_civic, ipu_parline
 
 # Use them directly
-candidates = openfec.get_candidates(year=2024, office='president')
-info = google_civic.get_voter_info('1600 Pennsylvania Ave', api_key='YOUR_KEY')
-france = ipu_parline.get_parliament('FRA')
+candidates = openfec.get_candidates(year=2024, office="president")
+info = google_civic.get_voter_info("1600 Pennsylvania Ave", api_key="YOUR_KEY")
+france = ipu_parline.get_parliament("FRA")
 ```
 
 ## Consistent Parameter Names
@@ -215,8 +211,8 @@ from elections import ElectionsDataModules
 
 modules = ElectionsDataModules()
 
-nyt = modules['nytimes']
-data = nyt.get_election_data('florida', year=2020)
+nyt = modules["nytimes"]
+data = nyt.get_election_data("florida", year=2020)
 ```
 
 But here's another convenient dict-like interface that was made based on it.
@@ -240,19 +236,19 @@ len(s)
 
 ```python
 print(*s)
-# alabama alaska arizona arkansas california colorado connecticut delaware 
-# district-of-columbia florida georgia hawaii idaho illinois indiana iowa kansas 
-# kentucky louisiana maine maryland massachusetts michigan minnesota mississippi 
-# missouri montana nebraska nevada new-hampshire new-jersey new-mexico new-york 
-# north-carolina north-dakota ohio oklahoma oregon pennsylvania rhode-island 
-# south-carolina south-dakota tennessee texas utah vermont virginia washington 
+# alabama alaska arizona arkansas california colorado connecticut delaware
+# district-of-columbia florida georgia hawaii idaho illinois indiana iowa kansas
+# kentucky louisiana maine maryland massachusetts michigan minnesota mississippi
+# missouri montana nebraska nevada new-hampshire new-jersey new-mexico new-york
+# north-carolina north-dakota ohio oklahoma oregon pennsylvania rhode-island
+# south-carolina south-dakota tennessee texas utah vermont virginia washington
 # west-virginia wisconsin wyoming
 ```
 
 Its values are dataframes containing the stats:
 
 ```python
-state = 'georgia'
+state = "georgia"
 df = s[state]
 df
 ```
@@ -269,7 +265,7 @@ df
 *456 rows × 5 columns*
 
 ```python
-df['bidenj'].plot(figsize=(16, 6), grid=True, title=state);
+df["bidenj"].plot(figsize=(16, 6), grid=True, title=state)
 ```
 
 ![Biden vote share over time in Georgia](https://github.com/thorwhalen/elections/blob/master/output_9_0.png)
@@ -288,7 +284,7 @@ len(s)
 ```
 
 ```python
-data = s['new-york']   # by the way, you can tab-complete this in a jupyter notebook
+data = s["new-york"]  # by the way, you can tab-complete this in a jupyter notebook
 print(type(data))
 # <class 'py2store.base.Store'>
 
@@ -308,31 +304,33 @@ What you need to know is that `President2020TimeSeries` just gave you one of the
 But there are other associated (raw) data fields you may or may not be interested in. Here's what you got:
 
 ```python
-data['president-general-2020-11-03'].keys()  # you can tab complete here as well (you're welcome!)
-# dict_keys(['race_id', 'race_slug', 'url', 'state_page_url', 'ap_polls_page', 
-#            'edison_exit_polls_page', 'race_type', 'election_type', 'election_date', 
-#            'runoff', 'race_name', 'office', 'officeid', 'race_rating', 'seat', 
-#            'seat_name', 'state_id', 'state_slug', 'state_name', 'state_nyt_abbrev', 
-#            'state_shape', 'party_id', 'uncontested', 'report', 'result', 
-#            'result_source', 'gain', 'lost_seat', 'votes', 'electoral_votes', 
-#            'absentee_votes', 'absentee_counties', 'absentee_count_progress', 
-#            'absentee_outstanding', 'absentee_max_ballots', 'provisional_outstanding', 
-#            'provisional_count_progress', 'poll_display', 'poll_countdown_display', 
-#            'poll_waiting_display', 'poll_time', 'poll_time_short', 'precincts_reporting', 
-#            'precincts_total', 'reporting_display', 'reporting_value', 'eevp', 
-#            'tot_exp_vote', 'eevp_source', 'eevp_value', 'eevp_display', 
-#            'county_data_source', 'incumbent_party', 'no_forecast', 'last_updated', 
-#            'candidates', 'has_incumbent', 'leader_margin_value', 'leader_margin_votes', 
-#            'leader_margin_display', 'leader_margin_name_display', 'leader_party_id', 
-#            'counties', 'votes2016', 'margin2016', 'clinton2016', 'trump2016', 
-#            'votes2012', 'margin2012', 'expectations_text', 'expectations_text_short', 
-#            'absentee_ballot_deadline', 'absentee_postmark_deadline', 'update_sentences', 
+data[
+    "president-general-2020-11-03"
+].keys()  # you can tab complete here as well (you're welcome!)
+# dict_keys(['race_id', 'race_slug', 'url', 'state_page_url', 'ap_polls_page',
+#            'edison_exit_polls_page', 'race_type', 'election_type', 'election_date',
+#            'runoff', 'race_name', 'office', 'officeid', 'race_rating', 'seat',
+#            'seat_name', 'state_id', 'state_slug', 'state_name', 'state_nyt_abbrev',
+#            'state_shape', 'party_id', 'uncontested', 'report', 'result',
+#            'result_source', 'gain', 'lost_seat', 'votes', 'electoral_votes',
+#            'absentee_votes', 'absentee_counties', 'absentee_count_progress',
+#            'absentee_outstanding', 'absentee_max_ballots', 'provisional_outstanding',
+#            'provisional_count_progress', 'poll_display', 'poll_countdown_display',
+#            'poll_waiting_display', 'poll_time', 'poll_time_short', 'precincts_reporting',
+#            'precincts_total', 'reporting_display', 'reporting_value', 'eevp',
+#            'tot_exp_vote', 'eevp_source', 'eevp_value', 'eevp_display',
+#            'county_data_source', 'incumbent_party', 'no_forecast', 'last_updated',
+#            'candidates', 'has_incumbent', 'leader_margin_value', 'leader_margin_votes',
+#            'leader_margin_display', 'leader_margin_name_display', 'leader_party_id',
+#            'counties', 'votes2016', 'margin2016', 'clinton2016', 'trump2016',
+#            'votes2012', 'margin2012', 'expectations_text', 'expectations_text_short',
+#            'absentee_ballot_deadline', 'absentee_postmark_deadline', 'update_sentences',
 #            'race_diff', 'winnerCalledTimestamp', 'timeseries'])
 ```
 
 ```python
-t = data['president-general-2020-11-03']
-print(t['trump2016'], t['clinton2016'])
+t = data["president-general-2020-11-03"]
+print(t["trump2016"], t["clinton2016"])
 # 2819534 4556124
 ```
 
@@ -348,24 +346,24 @@ from elections import Election2020RawJson
 import pandas as pd
 
 raw_jsons = Election2020RawJson()
-json_data = raw_jsons['california']
+json_data = raw_jsons["california"]
 
 print(json_data.keys())
 # dict_keys(['data', 'meta'])
 
-print(json_data['meta'])
+print(json_data["meta"])
 # {'version': 10403,
 #  'track': '2020-11-03',
 #  'timestamp': '2020-11-06T23:52:57.623Z'}
 
-print(json_data['data'].keys())
+print(json_data["data"].keys())
 # dict_keys(['races', 'party_control', 'liveUpdates'])
 ```
 
 ### Party Control
 
 ```python
-party_df = pd.DataFrame(json_data['data']['party_control']).set_index('race_type').T
+party_df = pd.DataFrame(json_data["data"]["party_control"]).set_index("race_type").T
 ```
 
 | race_type | house | president | senate |
@@ -377,7 +375,7 @@ party_df = pd.DataFrame(json_data['data']['party_control']).set_index('race_type
 ### Live Updates
 
 ```python
-updates_df = pd.DataFrame(json_data['data']['liveUpdates'])
+updates_df = pd.DataFrame(json_data["data"]["liveUpdates"])
 print(f"Total live updates: {len(updates_df)}")
 # Total live updates: 449
 ```

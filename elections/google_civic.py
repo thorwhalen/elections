@@ -55,7 +55,7 @@ from typing import Dict, List, Optional, Any
 import requests
 
 
-BASE_URL = 'https://civicinfo.googleapis.com/civicinfo/v2/'
+BASE_URL = "https://civicinfo.googleapis.com/civicinfo/v2/"
 
 
 def _get_api_key(api_key: Optional[str] = None) -> str:
@@ -74,7 +74,7 @@ def _get_api_key(api_key: Optional[str] = None) -> str:
     if api_key:
         return api_key
 
-    env_key = os.environ.get('GOOGLE_CIVIC_API_KEY')
+    env_key = os.environ.get("GOOGLE_CIVIC_API_KEY")
     if env_key:
         return env_key
 
@@ -88,9 +88,7 @@ def _get_api_key(api_key: Optional[str] = None) -> str:
 
 
 def _make_request(
-    endpoint: str,
-    params: Dict[str, Any],
-    api_key: Optional[str] = None
+    endpoint: str, params: Dict[str, Any], api_key: Optional[str] = None
 ) -> Dict[str, Any]:
     """
     Make a request to the Google Civic Information API.
@@ -107,13 +105,13 @@ def _make_request(
         requests.HTTPError: If request fails
         ValueError: If API key is missing
     """
-    params['key'] = _get_api_key(api_key)
+    params["key"] = _get_api_key(api_key)
     url = BASE_URL + endpoint
 
     response = requests.get(url, params=params)
 
     if response.status_code == 400:
-        error_msg = response.json().get('error', {}).get('message', response.text)
+        error_msg = response.json().get("error", {}).get("message", response.text)
         raise requests.HTTPError(
             f"Bad request (400): {error_msg}. "
             f"Check your parameters and ensure addresses are properly formatted."
@@ -157,14 +155,14 @@ def get_elections(api_key: Optional[str] = None) -> Dict[str, Any]:
         >>> elections['elections'][0]['name']  # doctest: +SKIP
         'U.S. General Election'
     """
-    return _make_request('elections', {}, api_key)
+    return _make_request("elections", {}, api_key)
 
 
 def get_voter_info(
     address: str,
     election_id: Optional[int] = None,
     api_key: Optional[str] = None,
-    return_all_available_data: bool = True
+    return_all_available_data: bool = True,
 ) -> Dict[str, Any]:
     """
     Get voter information for a specific address.
@@ -190,14 +188,14 @@ def get_voter_info(
         True
     """
     params = {
-        'address': address,
-        'returnAllAvailableData': str(return_all_available_data).lower()
+        "address": address,
+        "returnAllAvailableData": str(return_all_available_data).lower(),
     }
 
     if election_id:
-        params['electionId'] = election_id
+        params["electionId"] = election_id
 
-    return _make_request('voterinfo', params, api_key)
+    return _make_request("voterinfo", params, api_key)
 
 
 def get_representatives(
@@ -205,7 +203,7 @@ def get_representatives(
     include_offices: bool = True,
     levels: Optional[List[str]] = None,
     roles: Optional[List[str]] = None,
-    api_key: Optional[str] = None
+    api_key: Optional[str] = None,
 ) -> Dict[str, Any]:
     """
     Get elected representatives for an address.
@@ -230,23 +228,23 @@ def get_representatives(
         >>> 'officials' in reps  # doctest: +SKIP
         True
     """
-    params = {'includeOffices': str(include_offices).lower()}
+    params = {"includeOffices": str(include_offices).lower()}
 
     if address:
-        params['address'] = address
+        params["address"] = address
     if levels:
-        params['levels'] = levels
+        params["levels"] = levels
     if roles:
-        params['roles'] = roles
+        params["roles"] = roles
 
-    return _make_request('representatives', params, api_key)
+    return _make_request("representatives", params, api_key)
 
 
 def get_representatives_by_division(
     division_id: str,
     levels: Optional[List[str]] = None,
     roles: Optional[List[str]] = None,
-    api_key: Optional[str] = None
+    api_key: Optional[str] = None,
 ) -> Dict[str, Any]:
     """
     Get representatives for a specific Open Civic Data division.
@@ -271,9 +269,9 @@ def get_representatives_by_division(
     params = {}
 
     if levels:
-        params['levels'] = levels
+        params["levels"] = levels
     if roles:
-        params['roles'] = roles
+        params["roles"] = roles
 
-    endpoint = f'representatives/{division_id}'
+    endpoint = f"representatives/{division_id}"
     return _make_request(endpoint, params, api_key)

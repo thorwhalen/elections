@@ -150,11 +150,11 @@ class ElectionsDataModules(Mapping):
     """
 
     _sources = {
-        'nytimes': 'elections.nytimes',
-        'openfec': 'elections.openfec',
-        'google_civic': 'elections.google_civic',
-        'democracy_works': 'elections.democracy_works',
-        'ipu_parline': 'elections.ipu_parline',
+        "nytimes": "elections.nytimes",
+        "openfec": "elections.openfec",
+        "google_civic": "elections.google_civic",
+        "democracy_works": "elections.democracy_works",
+        "ipu_parline": "elections.ipu_parline",
     }
 
     def __init__(self):
@@ -220,9 +220,9 @@ class ElectionsDataModules(Mapping):
         for source_id in self._sources:
             module = self[source_id]
             # Get first line of module docstring
-            doc_lines = module.__doc__.split('\n') if module.__doc__ else []
+            doc_lines = module.__doc__.split("\n") if module.__doc__ else []
             first_line = next(
-                (line.strip() for line in doc_lines if line.strip()), 'No description'
+                (line.strip() for line in doc_lines if line.strip()), "No description"
             )
 
             print(f"\n{source_id}:")
@@ -231,7 +231,7 @@ class ElectionsDataModules(Mapping):
             # Try to extract key info from docstring
             if module.__doc__:
                 for line in doc_lines:
-                    if 'Access:' in line or 'API Key' in line or 'Coverage:' in line:
+                    if "Access:" in line or "API Key" in line or "Coverage:" in line:
                         print(f"  {line.strip()}")
 
 
@@ -277,11 +277,11 @@ def list_sources() -> list:
 
 # Export main classes and functions
 __all__ = [
-    'ElectionsDataModules',
-    'get_source',
-    'list_sources',
+    "ElectionsDataModules",
+    "get_source",
+    "list_sources",
     # Backward compatibility exports
-    'Election2020RawJson',
-    'Races2020',
-    'President2020TimeSeries',
+    "Election2020RawJson",
+    "Races2020",
+    "President2020TimeSeries",
 ]
