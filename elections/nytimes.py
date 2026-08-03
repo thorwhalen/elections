@@ -274,4 +274,12 @@ def get_president_timeseries(region: str, year: int = 2020) -> pd.DataFrame:
 # Store classes for backward compatibility with original API
 Election2020RawJson = partial(ElectionRawJson, year=2020)
 Races2020 = partial(Races, year=2020)
-President2020TimeSeries = wrap_kvs(Races2020, obj_of_data=_post_process_timeseries)
+
+# NOTE: `wrap_kvs` must wrap the *class*, not `Races2020`. Handed a
+# `functools.partial`, `wrap_kvs` treats it as a store *instance* and returns a
+# (non-callable) `Store` wrapping the partial itself, so `President2020TimeSeries()`
+# raised `TypeError: 'Store' object is not callable`. Wrapping the class first and
+# binding the year afterwards mirrors `Races2020` and yields a working factory.
+President2020TimeSeries = partial(
+    wrap_kvs(Races, obj_of_data=_post_process_timeseries), year=2020
+)
