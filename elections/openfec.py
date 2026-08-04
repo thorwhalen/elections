@@ -49,11 +49,11 @@ import requests
 
 
 # Default API key (can be overridden)
-DEFAULT_API_KEY = 'DEMO_KEY'
-BASE_URL = 'https://api.open.fec.gov/v1/'
+DEFAULT_API_KEY = "DEMO_KEY"
+BASE_URL = "https://api.open.fec.gov/v1/"
 
 # Valid office types
-OFFICE_TYPES = ['president', 'senate', 'house', 'P', 'S', 'H']
+OFFICE_TYPES = ["president", "senate", "house", "P", "S", "H"]
 
 
 def _get_api_key(api_key: Optional[str] = None) -> str:
@@ -68,13 +68,11 @@ def _get_api_key(api_key: Optional[str] = None) -> str:
     """
     if api_key:
         return api_key
-    return os.environ.get('OPENFEC_API_KEY', DEFAULT_API_KEY)
+    return os.environ.get("OPENFEC_API_KEY", DEFAULT_API_KEY)
 
 
 def _make_request(
-    endpoint: str,
-    params: Dict[str, Any],
-    api_key: Optional[str] = None
+    endpoint: str, params: Dict[str, Any], api_key: Optional[str] = None
 ) -> Dict[str, Any]:
     """
     Make a request to the OpenFEC API.
@@ -90,7 +88,7 @@ def _make_request(
     Raises:
         requests.HTTPError: If request fails
     """
-    params['api_key'] = _get_api_key(api_key)
+    params["api_key"] = _get_api_key(api_key)
     url = BASE_URL + endpoint
 
     response = requests.get(url, params=params)
@@ -121,7 +119,7 @@ def get_candidates(
     region: Optional[str] = None,
     party: Optional[str] = None,
     api_key: Optional[str] = None,
-    **kwargs
+    **kwargs,
 ) -> Dict[str, Any]:
     """
     Fetch federal election candidates.
@@ -149,26 +147,23 @@ def get_candidates(
     params = {}
 
     if year:
-        params['election_year'] = year
+        params["election_year"] = year
     if office:
         # Normalize office to single letter
-        office_map = {'president': 'P', 'senate': 'S', 'house': 'H'}
-        params['office'] = office_map.get(office.lower(), office.upper())
+        office_map = {"president": "P", "senate": "S", "house": "H"}
+        params["office"] = office_map.get(office.lower(), office.upper())
     if region:
-        params['state'] = region.upper()
+        params["state"] = region.upper()
     if party:
-        params['party'] = party.upper()
+        params["party"] = party.upper()
 
     params.update(kwargs)
 
-    return _make_request('candidates/', params, api_key)
+    return _make_request("candidates/", params, api_key)
 
 
 def search_candidates(
-    name: str,
-    year: Optional[int] = None,
-    api_key: Optional[str] = None,
-    **kwargs
+    name: str, year: Optional[int] = None, api_key: Optional[str] = None, **kwargs
 ) -> Dict[str, Any]:
     """
     Search for candidates by name.
@@ -187,13 +182,13 @@ def search_candidates(
         >>> len(results['results']) > 0  # doctest: +SKIP
         True
     """
-    params = {'q': name}
+    params = {"q": name}
     if year:
-        params['election_year'] = year
+        params["election_year"] = year
 
     params.update(kwargs)
 
-    return _make_request('candidates/search/', params, api_key)
+    return _make_request("candidates/search/", params, api_key)
 
 
 def get_committees(
@@ -201,7 +196,7 @@ def get_committees(
     committee_type: Optional[str] = None,
     region: Optional[str] = None,
     api_key: Optional[str] = None,
-    **kwargs
+    **kwargs,
 ) -> Dict[str, Any]:
     """
     Fetch federal election committees.
@@ -224,22 +219,22 @@ def get_committees(
     params = {}
 
     if year:
-        params['cycle'] = year
+        params["cycle"] = year
     if committee_type:
-        params['committee_type'] = committee_type.upper()
+        params["committee_type"] = committee_type.upper()
     if region:
-        params['state'] = region.upper()
+        params["state"] = region.upper()
 
     params.update(kwargs)
 
-    return _make_request('committees/', params, api_key)
+    return _make_request("committees/", params, api_key)
 
 
 def get_candidate_totals(
     candidate_id: str,
     year: Optional[int] = None,
     api_key: Optional[str] = None,
-    **kwargs
+    **kwargs,
 ) -> Dict[str, Any]:
     """
     Get financial totals for a specific candidate.
@@ -260,11 +255,11 @@ def get_candidate_totals(
     """
     params = {}
     if year:
-        params['cycle'] = year
+        params["cycle"] = year
 
     params.update(kwargs)
 
-    endpoint = f'candidate/{candidate_id}/totals/'
+    endpoint = f"candidate/{candidate_id}/totals/"
     return _make_request(endpoint, params, api_key)
 
 
@@ -273,7 +268,7 @@ def get_election_results(
     office: str,
     region: Optional[str] = None,
     api_key: Optional[str] = None,
-    **kwargs
+    **kwargs,
 ) -> Dict[str, Any]:
     """
     Get election results summary.
@@ -293,14 +288,14 @@ def get_election_results(
         >>> len(results['results']) > 0  # doctest: +SKIP
         True
     """
-    params = {'election_year': year}
+    params = {"election_year": year}
 
-    office_map = {'president': 'president', 'senate': 'senate', 'house': 'house'}
-    params['office'] = office_map.get(office.lower(), office.lower())
+    office_map = {"president": "president", "senate": "senate", "house": "house"}
+    params["office"] = office_map.get(office.lower(), office.lower())
 
     if region:
-        params['state'] = region.upper()
+        params["state"] = region.upper()
 
     params.update(kwargs)
 
-    return _make_request('election/', params, api_key)
+    return _make_request("election/", params, api_key)

@@ -31,15 +31,13 @@ Python example (using demo key for testing):
 ```python
 import requests
 
-def get_candidates(api_key='DEMO_KEY', year=2024):
-    url = 'https://api.open.fec.gov/v1/candidates/'
-    params = {
-        'api_key': api_key,
-        'election_year': year,
-        'sort': 'name'
-    }
+
+def get_candidates(api_key="DEMO_KEY", year=2024):
+    url = "https://api.open.fec.gov/v1/candidates/"
+    params = {"api_key": api_key, "election_year": year, "sort": "name"}
     response = requests.get(url, params=params)
-    return response.json() if response.status_code == 200 else {'error': response.text}
+    return response.json() if response.status_code == 200 else {"error": response.text}
+
 
 # Usage: data = get_candidates()
 ```  
@@ -52,11 +50,13 @@ Python example:
 ```python
 import requests
 
+
 def get_elections(api_key):
-    url = 'https://civicinfo.googleapis.com/civicinfo/v2/elections'
-    params = {'key': api_key}
+    url = "https://civicinfo.googleapis.com/civicinfo/v2/elections"
+    params = {"key": api_key}
     response = requests.get(url, params=params)
-    return response.json() if response.status_code == 200 else {'error': response.text}
+    return response.json() if response.status_code == 200 else {"error": response.text}
+
 
 # Usage: data = get_elections('YOUR_API_KEY')
 ```  
@@ -69,10 +69,12 @@ Python example (assuming no key):
 ```python
 import requests
 
+
 def get_election_info(election_id):
-    url = f'https://api.democracy.works/elections/v2/{election_id}'
+    url = f"https://api.democracy.works/elections/v2/{election_id}"
     response = requests.get(url)
-    return response.json() if response.status_code == 200 else {'error': response.text}
+    return response.json() if response.status_code == 200 else {"error": response.text}
+
 
 # Usage: data = get_election_info('12345')  # Replace with valid ID from /elections endpoint
 ```  
@@ -85,11 +87,13 @@ Python example:
 ```python
 import requests
 
-def get_results(api_key, date='2024-11-05'):
-    url = 'https://api.ap.org/v3/elections'
-    params = {'apiKey': api_key, 'date': date}
+
+def get_results(api_key, date="2024-11-05"):
+    url = "https://api.ap.org/v3/elections"
+    params = {"apiKey": api_key, "date": date}
     response = requests.get(url, params=params)
     return response.json()
+
 
 # Usage: data = get_results('YOUR_KEY')
 ```
@@ -116,10 +120,12 @@ Python example:
 ```python
 import requests
 
-def get_parliament_data(country_code='FRA'):
-    url = f'https://data.ipu.org/api/parliaments/{country_code}'
+
+def get_parliament_data(country_code="FRA"):
+    url = f"https://data.ipu.org/api/parliaments/{country_code}"
     response = requests.get(url)
-    return response.json() if response.status_code == 200 else {'error': response.text}
+    return response.json() if response.status_code == 200 else {"error": response.text}
+
 
 # Usage: data = get_parliament_data()  # For France
 ```  
@@ -132,11 +138,13 @@ Python example:
 ```python
 import requests
 
-def get_polling_stations(postcode='SW1A 1AA'):
-    url = 'https://api.electoralcommission.org.uk/api/v1/pollingstations'
-    params = {'postcode': postcode}
+
+def get_polling_stations(postcode="SW1A 1AA"):
+    url = "https://api.electoralcommission.org.uk/api/v1/pollingstations"
+    params = {"postcode": postcode}
     response = requests.get(url, params=params)
     return response.json()
+
 
 # Usage: data = get_polling_stations()
 ```
@@ -148,11 +156,13 @@ Python example:
 ```python
 import requests
 
-def get_french_results(department='75'):  # Paris code
-    url = 'https://api.store/france-api/etalab-api/presidential-election-2022-results-by-department-api'
-    params = {'department': department}
+
+def get_french_results(department="75"):  # Paris code
+    url = "https://api.store/france-api/etalab-api/presidential-election-2022-results-by-department-api"
+    params = {"department": department}
     response = requests.get(url, params=params)
     return response.json()
+
 
 # Usage: data = get_french_results()
 ```  
@@ -165,11 +175,13 @@ Python example:
 ```python
 import requests
 
-def get_italian_results(region='Lazio'):
-    url = 'https://api.store/italy-api/agenzia-per-litalia-digitale-api/participation-regional-elections-election-results-api'
-    params = {'region': region}
+
+def get_italian_results(region="Lazio"):
+    url = "https://api.store/italy-api/agenzia-per-litalia-digitale-api/participation-regional-elections-election-results-api"
+    params = {"region": region}
     response = requests.get(url, params=params)
     return response.json()
+
 
 # Usage: data = get_italian_results()
 ```  

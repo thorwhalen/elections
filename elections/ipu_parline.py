@@ -41,24 +41,27 @@ from typing import Dict, List, Optional, Any
 import requests
 
 
-BASE_URL = 'https://data.ipu.org/api/'
+BASE_URL = "https://data.ipu.org/api/"
 
 # Common country codes (ISO 3166-1 alpha-3)
 COMMON_COUNTRIES = {
-    'usa': 'USA', 'united states': 'USA',
-    'uk': 'GBR', 'united kingdom': 'GBR', 'britain': 'GBR',
-    'france': 'FRA',
-    'germany': 'DEU',
-    'italy': 'ITA',
-    'spain': 'ESP',
-    'canada': 'CAN',
-    'australia': 'AUS',
-    'japan': 'JPN',
-    'india': 'IND',
-    'brazil': 'BRA',
-    'mexico': 'MEX',
-    'china': 'CHN',
-    'russia': 'RUS',
+    "usa": "USA",
+    "united states": "USA",
+    "uk": "GBR",
+    "united kingdom": "GBR",
+    "britain": "GBR",
+    "france": "FRA",
+    "germany": "DEU",
+    "italy": "ITA",
+    "spain": "ESP",
+    "canada": "CAN",
+    "australia": "AUS",
+    "japan": "JPN",
+    "india": "IND",
+    "brazil": "BRA",
+    "mexico": "MEX",
+    "china": "CHN",
+    "russia": "RUS",
 }
 
 
@@ -87,8 +90,7 @@ def _normalize_country_code(country_code: str) -> str:
 
 
 def _make_request(
-    endpoint: str,
-    params: Optional[Dict[str, Any]] = None
+    endpoint: str, params: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
     """
     Make a request to the IPU Parline API.
@@ -143,12 +145,11 @@ def get_parliament(country_code: str) -> Dict[str, Any]:
         >>> parliament = get_parliament('France')  # doctest: +SKIP
     """
     code = _normalize_country_code(country_code)
-    return _make_request(f'parliaments/{code}')
+    return _make_request(f"parliaments/{code}")
 
 
 def get_election_results(
-    country_code: str,
-    chamber: Optional[str] = None
+    country_code: str, chamber: Optional[str] = None
 ) -> Dict[str, Any]:
     """
     Get election results for a country.
@@ -166,11 +167,11 @@ def get_election_results(
         True
     """
     code = _normalize_country_code(country_code)
-    endpoint = f'elections/{code}'
+    endpoint = f"elections/{code}"
 
     params = {}
     if chamber:
-        params['chamber'] = chamber.lower()
+        params["chamber"] = chamber.lower()
 
     return _make_request(endpoint, params)
 
@@ -189,8 +190,8 @@ def get_country_list() -> List[Dict[str, Any]]:
         >>> any(c.get('code') == 'USA' for c in countries)  # doctest: +SKIP
         True
     """
-    result = _make_request('countries')
-    return result if isinstance(result, list) else result.get('countries', [])
+    result = _make_request("countries")
+    return result if isinstance(result, list) else result.get("countries", [])
 
 
 def get_women_in_parliament(country_code: Optional[str] = None) -> Dict[str, Any]:
@@ -213,9 +214,9 @@ def get_women_in_parliament(country_code: Optional[str] = None) -> Dict[str, Any
     """
     if country_code:
         code = _normalize_country_code(country_code)
-        return _make_request(f'women-in-parliament/{code}')
+        return _make_request(f"women-in-parliament/{code}")
     else:
-        return _make_request('women-in-parliament')
+        return _make_request("women-in-parliament")
 
 
 def get_electoral_system(country_code: str) -> Dict[str, Any]:
@@ -234,12 +235,11 @@ def get_electoral_system(country_code: str) -> Dict[str, Any]:
         True
     """
     code = _normalize_country_code(country_code)
-    return _make_request(f'electoral-systems/{code}')
+    return _make_request(f"electoral-systems/{code}")
 
 
 def search_parliaments(
-    region: Optional[str] = None,
-    chamber_type: Optional[str] = None
+    region: Optional[str] = None, chamber_type: Optional[str] = None
 ) -> List[Dict[str, Any]]:
     """
     Search for parliaments by region or chamber type.
@@ -258,9 +258,9 @@ def search_parliaments(
     """
     params = {}
     if region:
-        params['region'] = region
+        params["region"] = region
     if chamber_type:
-        params['chamber_type'] = chamber_type.lower()
+        params["chamber_type"] = chamber_type.lower()
 
-    result = _make_request('parliaments', params)
-    return result if isinstance(result, list) else result.get('parliaments', [])
+    result = _make_request("parliaments", params)
+    return result if isinstance(result, list) else result.get("parliaments", [])

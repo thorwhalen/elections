@@ -20,7 +20,7 @@ or guaranteed to remain available.
 
 **Example Usage:**
 
-NOTE: I only managed to get data for year=2020. I implemented the patterns for other years, 
+NOTE: I only managed to get data for year=2020. I implemented the patterns for other years,
 but it doesn't seem to work.
 
     >>> from elections.nytimes import get_election_data, get_races, get_president_timeseries  # doctest: +SKIP
@@ -50,21 +50,63 @@ from dol import add_ipython_key_completions, KvReader, Store, wrap_kvs
 # Election dates for supported years
 ELECTION_DATES = {
     # 2016: '2016-11-08',
-    2020: '2020-11-03',
+    2020: "2020-11-03",
     # 2024: '2024-11-05',
 }
 
 # Standard region names (states in lowercase with hyphens)
 REGIONS = [
-    'alabama', 'alaska', 'arizona', 'arkansas', 'california', 'colorado',
-    'connecticut', 'delaware', 'district-of-columbia', 'florida', 'georgia',
-    'hawaii', 'idaho', 'illinois', 'indiana', 'iowa', 'kansas', 'kentucky',
-    'louisiana', 'maine', 'maryland', 'massachusetts', 'michigan', 'minnesota',
-    'mississippi', 'missouri', 'montana', 'nebraska', 'nevada', 'new-hampshire',
-    'new-jersey', 'new-mexico', 'new-york', 'north-carolina', 'north-dakota', 'ohio',
-    'oklahoma', 'oregon', 'pennsylvania', 'rhode-island', 'south-carolina', 'south-dakota',
-    'tennessee', 'texas', 'utah', 'vermont', 'virginia', 'washington', 'west-virginia',
-    'wisconsin', 'wyoming'
+    "alabama",
+    "alaska",
+    "arizona",
+    "arkansas",
+    "california",
+    "colorado",
+    "connecticut",
+    "delaware",
+    "district-of-columbia",
+    "florida",
+    "georgia",
+    "hawaii",
+    "idaho",
+    "illinois",
+    "indiana",
+    "iowa",
+    "kansas",
+    "kentucky",
+    "louisiana",
+    "maine",
+    "maryland",
+    "massachusetts",
+    "michigan",
+    "minnesota",
+    "mississippi",
+    "missouri",
+    "montana",
+    "nebraska",
+    "nevada",
+    "new-hampshire",
+    "new-jersey",
+    "new-mexico",
+    "new-york",
+    "north-carolina",
+    "north-dakota",
+    "ohio",
+    "oklahoma",
+    "oregon",
+    "pennsylvania",
+    "rhode-island",
+    "south-carolina",
+    "south-dakota",
+    "tennessee",
+    "texas",
+    "utah",
+    "vermont",
+    "virginia",
+    "washington",
+    "west-virginia",
+    "wisconsin",
+    "wyoming",
 ]
 
 
@@ -93,7 +135,7 @@ def get_election_data(region: str, year: int = 2020) -> Dict[str, Any]:
         )
 
     election_date = ELECTION_DATES[year]
-    url = f'https://static01.nyt.com/elections-assets/{year}/data/api/{election_date}/state-page/{region}.json'
+    url = f"https://static01.nyt.com/elections-assets/{year}/data/api/{election_date}/state-page/{region}.json"
 
     response = requests.get(url)
     if response.status_code == 200:
@@ -148,12 +190,14 @@ class Races(ElectionRawJson):
 
     def _obj_of_data(self, data):
         """Transform raw data into a store of races."""
-        state_slug = data['data']['races'][0]['state_id'].lower()
-        races = Store({x['race_slug'][3:]: x for x in data['data']['races']})
+        state_slug = data["data"]["races"][0]["state_id"].lower()
+        races = Store({x["race_slug"][3:]: x for x in data["data"]["races"]})
         return add_ipython_key_completions(races)
 
 
-def _post_process_timeseries(data: Dict[str, Any], race_type: str = 'president') -> pd.DataFrame:
+def _post_process_timeseries(
+    data: Dict[str, Any], race_type: str = "president"
+) -> pd.DataFrame:
     """
     Post-process race data to extract time series information.
 
@@ -167,22 +211,22 @@ def _post_process_timeseries(data: Dict[str, Any], race_type: str = 'president')
     # Find the race key matching the race type
     race_key = None
     for key in data.keys():
-        if race_type in key.lower() and 'timeseries' in data[key]:
+        if race_type in key.lower() and "timeseries" in data[key]:
             race_key = key
             break
 
     if not race_key:
-        raise KeyError(f"No race matching type '{race_type}' found with timeseries data")
-
-    df = pd.DataFrame(data[race_key]['timeseries'])
-    if 'vote_shares' in df.columns:
-        df = pd.concat(
-            (df, pd.DataFrame(df['vote_shares'].values.tolist())), axis=1
+        raise KeyError(
+            f"No race matching type '{race_type}' found with timeseries data"
         )
-        del df['vote_shares']
 
-    if 'timestamp' in df.columns:
-        df = df.set_index('timestamp')
+    df = pd.DataFrame(data[race_key]["timeseries"])
+    if "vote_shares" in df.columns:
+        df = pd.concat((df, pd.DataFrame(df["vote_shares"].values.tolist())), axis=1)
+        del df["vote_shares"]
+
+    if "timestamp" in df.columns:
+        df = df.set_index("timestamp")
 
     return df
 
@@ -224,10 +268,18 @@ def get_president_timeseries(region: str, year: int = 2020) -> pd.DataFrame:
         Index(['timestamp', 'votes', 'bidenj', 'trumpd', ...], dtype='object')
     """
     races = get_races(region, year)
-    return _post_process_timeseries(races, race_type='president')
+    return _post_process_timeseries(races, race_type="president")
 
 
 # Store classes for backward compatibility with original API
 Election2020RawJson = partial(ElectionRawJson, year=2020)
 Races2020 = partial(Races, year=2020)
-President2020TimeSeries = wrap_kvs(Races2020, obj_of_data=_post_process_timeseries)
+
+# NOTE: `wrap_kvs` must wrap the *class*, not `Races2020`. Handed a
+# `functools.partial`, `wrap_kvs` treats it as a store *instance* and returns a
+# (non-callable) `Store` wrapping the partial itself, so `President2020TimeSeries()`
+# raised `TypeError: 'Store' object is not callable`. Wrapping the class first and
+# binding the year afterwards mirrors `Races2020` and yields a working factory.
+President2020TimeSeries = partial(
+    wrap_kvs(Races, obj_of_data=_post_process_timeseries), year=2020
+)

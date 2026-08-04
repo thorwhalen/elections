@@ -39,12 +39,11 @@ from datetime import datetime
 import requests
 
 
-BASE_URL = 'https://api.democracy.works/elections/v2/'
+BASE_URL = "https://api.democracy.works/elections/v2/"
 
 
 def _make_request(
-    endpoint: str,
-    params: Optional[Dict[str, Any]] = None
+    endpoint: str, params: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
     """
     Make a request to the Democracy Works Elections API.
@@ -79,9 +78,7 @@ def _make_request(
 
 
 def get_elections(
-    date_from: Optional[str] = None,
-    date_to: Optional[str] = None,
-    **kwargs
+    date_from: Optional[str] = None, date_to: Optional[str] = None, **kwargs
 ) -> Dict[str, Any]:
     """
     Get list of elections.
@@ -102,13 +99,13 @@ def get_elections(
     params = {}
 
     if date_from:
-        params['date_from'] = date_from
+        params["date_from"] = date_from
     if date_to:
-        params['date_to'] = date_to
+        params["date_to"] = date_to
 
     params.update(kwargs)
 
-    return _make_request('elections', params)
+    return _make_request("elections", params)
 
 
 def get_election_by_id(election_id: str) -> Dict[str, Any]:
@@ -126,14 +123,14 @@ def get_election_by_id(election_id: str) -> Dict[str, Any]:
         >>> 'id' in election  # doctest: +SKIP
         True
     """
-    return _make_request(f'elections/{election_id}')
+    return _make_request(f"elections/{election_id}")
 
 
 def get_state_elections(
     region: str,
     date_from: Optional[str] = None,
     date_to: Optional[str] = None,
-    **kwargs
+    **kwargs,
 ) -> Dict[str, Any]:
     """
     Get elections for a specific state.
@@ -152,21 +149,20 @@ def get_state_elections(
         >>> isinstance(elections, (dict, list))  # doctest: +SKIP
         True
     """
-    params = {'state': region.upper()}
+    params = {"state": region.upper()}
 
     if date_from:
-        params['date_from'] = date_from
+        params["date_from"] = date_from
     if date_to:
-        params['date_to'] = date_to
+        params["date_to"] = date_to
 
     params.update(kwargs)
 
-    return _make_request('elections', params)
+    return _make_request("elections", params)
 
 
 def get_upcoming_elections(
-    region: Optional[str] = None,
-    days_ahead: int = 90
+    region: Optional[str] = None, days_ahead: int = 90
 ) -> Dict[str, Any]:
     """
     Get upcoming elections, optionally filtered by state.
@@ -188,12 +184,9 @@ def get_upcoming_elections(
     today = datetime.now().date()
     future_date = today + timedelta(days=days_ahead)
 
-    params = {
-        'date_from': today.isoformat(),
-        'date_to': future_date.isoformat()
-    }
+    params = {"date_from": today.isoformat(), "date_to": future_date.isoformat()}
 
     if region:
-        params['state'] = region.upper()
+        params["state"] = region.upper()
 
-    return _make_request('elections', params)
+    return _make_request("elections", params)
