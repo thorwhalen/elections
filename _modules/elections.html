@@ -1,0 +1,410 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>elections &mdash; elections 0.0.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=47de8214"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            elections
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../module_docs/elections.html">elections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../module_docs/elections/democracy_works.html">elections.democracy_works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../module_docs/elections/google_civic.html">elections.google_civic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../module_docs/elections/ipu_parline.html">elections.ipu_parline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../module_docs/elections/nytimes.html">elections.nytimes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../module_docs/elections/openfec.html">elections.openfec</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">elections</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">elections</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for elections</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Election Data Package</span>
+
+<span class="sd">This package provides a unified interface to multiple election data sources from</span>
+<span class="sd">around the world. It includes U.S. election data from various providers as well as</span>
+<span class="sd">international parliamentary and election data.</span>
+
+<span class="sd">**Available Data Sources:**</span>
+
+<span class="sd">- **nytimes**: New York Times election results (2016, 2020, 2024)</span>
+<span class="sd">- **openfec**: Federal Election Commission campaign finance data</span>
+<span class="sd">- **google_civic**: Google Civic Information API (polling, representatives, voter info)</span>
+<span class="sd">- **democracy_works**: Democracy Works election guidance (dates, deadlines, locations)</span>
+<span class="sd">- **ipu_parline**: Inter-Parliamentary Union global parliamentary data</span>
+
+<span class="sd">**Quick Start:**</span>
+
+<span class="sd">    &gt;&gt;&gt; from elections import ElectionsDataModules</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; # Access all data sources as a mapping</span>
+<span class="sd">    &gt;&gt;&gt; modules = ElectionsDataModules()</span>
+<span class="sd">    &gt;&gt;&gt; list(modules.keys())  # doctest: +SKIP</span>
+<span class="sd">    [&#39;nytimes&#39;, &#39;openfec&#39;, &#39;google_civic&#39;, &#39;democracy_works&#39;, &#39;ipu_parline&#39;]</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; # Access a specific data source module</span>
+<span class="sd">    &gt;&gt;&gt; nyt = modules[&#39;nytimes&#39;]  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt; data = nyt.get_election_data(&#39;florida&#39;, year=2020)  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; # Or import modules directly</span>
+<span class="sd">    &gt;&gt;&gt; from elections import nytimes</span>
+<span class="sd">    &gt;&gt;&gt; data = nytimes.get_election_data(&#39;pennsylvania&#39;, year=2020)  # doctest: +SKIP</span>
+
+<span class="sd">**Consistent Parameter Names:**</span>
+
+<span class="sd">Across all modules, we use consistent parameter names for common concepts:</span>
+
+<span class="sd">- **year**: Election year (e.g., 2020, 2024)</span>
+<span class="sd">- **region**: Geographic region (state abbreviation like &#39;PA&#39;, or state name like &#39;pennsylvania&#39;)</span>
+<span class="sd">- **api_key**: API authentication key (when required)</span>
+<span class="sd">- **race_type**: Type of race (e.g., &#39;president&#39;, &#39;senate&#39;, &#39;house&#39;)</span>
+<span class="sd">- **office**: Office being sought (used by some APIs)</span>
+
+<span class="sd">**API Keys:**</span>
+
+<span class="sd">Some data sources require API keys:</span>
+
+<span class="sd">- **openfec**: Optional (use &#39;DEMO_KEY&#39; or get free key at https://api.open.fec.gov/developers/)</span>
+<span class="sd">- **google_civic**: Required (get free key at https://console.developers.google.com/)</span>
+<span class="sd">- **democracy_works**: Not required</span>
+<span class="sd">- **nytimes**: Not required</span>
+<span class="sd">- **ipu_parline**: Not required</span>
+
+<span class="sd">Set API keys via environment variables:</span>
+<span class="sd">- OPENFEC_API_KEY</span>
+<span class="sd">- GOOGLE_CIVIC_API_KEY</span>
+
+<span class="sd">**Example Workflows:**</span>
+
+<span class="sd">Get NYT election results for multiple states:</span>
+
+<span class="sd">    &gt;&gt;&gt; from elections.nytimes import get_election_data</span>
+<span class="sd">    &gt;&gt;&gt; states = [&#39;florida&#39;, &#39;pennsylvania&#39;, &#39;georgia&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; results = {s: get_election_data(s, year=2020) for s in states}  # doctest: +SKIP</span>
+
+<span class="sd">Search for campaign finance data:</span>
+
+<span class="sd">    &gt;&gt;&gt; from elections.openfec import search_candidates, get_candidate_totals</span>
+<span class="sd">    &gt;&gt;&gt; candidates = search_candidates(&#39;Biden&#39;, year=2024)  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt; # Get financial totals for specific candidate</span>
+<span class="sd">    &gt;&gt;&gt; totals = get_candidate_totals(&#39;P80001571&#39;, year=2020)  # doctest: +SKIP</span>
+
+<span class="sd">Get voter information for an address:</span>
+
+<span class="sd">    &gt;&gt;&gt; from elections.google_civic import get_voter_info</span>
+<span class="sd">    &gt;&gt;&gt; info = get_voter_info(  # doctest: +SKIP</span>
+<span class="sd">    ...     &#39;1600 Pennsylvania Ave NW, Washington, DC 20500&#39;,</span>
+<span class="sd">    ...     api_key=&#39;YOUR_KEY&#39;</span>
+<span class="sd">    ... )</span>
+
+<span class="sd">Get international election data:</span>
+
+<span class="sd">    &gt;&gt;&gt; from elections.ipu_parline import get_parliament, get_election_results</span>
+<span class="sd">    &gt;&gt;&gt; france = get_parliament(&#39;FRA&#39;)  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt; results = get_election_results(&#39;DEU&#39;)  # doctest: +SKIP</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Mapping</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Iterator</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
+
+
+<span class="c1"># Backward compatibility - import classes from nytimes module (if available)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">elections.nytimes</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+        <span class="n">Election2020RawJson</span><span class="p">,</span>
+        <span class="n">Races2020</span><span class="p">,</span>
+        <span class="n">President2020TimeSeries</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="c1"># If py2store or pandas not available, skip backward compatibility imports</span>
+    <span class="n">Election2020RawJson</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">Races2020</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">President2020TimeSeries</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="ElectionsDataModules">
+<a class="viewcode-back" href="../module_docs/elections.html#elections.ElectionsDataModules">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ElectionsDataModules</span><span class="p">(</span><span class="n">Mapping</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Mapping interface to election data sources.</span>
+
+<span class="sd">    This class provides dict-like access to different election data source modules.</span>
+<span class="sd">    Each key is a source identifier, and the value is the corresponding module.</span>
+
+<span class="sd">    **Available Sources:**</span>
+
+<span class="sd">    - &#39;nytimes&#39;: New York Times election results API</span>
+<span class="sd">    - &#39;openfec&#39;: Federal Election Commission API</span>
+<span class="sd">    - &#39;google_civic&#39;: Google Civic Information API</span>
+<span class="sd">    - &#39;democracy_works&#39;: Democracy Works Elections API</span>
+<span class="sd">    - &#39;ipu_parline&#39;: Inter-Parliamentary Union Parline database</span>
+
+<span class="sd">    **Usage:**</span>
+
+<span class="sd">        &gt;&gt;&gt; modules = ElectionsDataModules()</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # List all available sources</span>
+<span class="sd">        &gt;&gt;&gt; sources = sorted(modules)</span>
+<span class="sd">        &gt;&gt;&gt; sources  # doctest: +ELLIPSIS</span>
+<span class="sd">        [&#39;democracy_works&#39;, &#39;google_civic&#39;, &#39;ipu_parline&#39;, &#39;nytimes&#39;, &#39;openfec&#39;]</span>
+
+<span class="sd">        &gt;&gt;&gt; # Access a specific source</span>
+<span class="sd">        &gt;&gt;&gt; nyt_module = modules[&#39;nytimes&#39;]  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; data = nyt_module.get_election_data(&#39;florida&#39;, year=2020)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Iterate over all sources</span>
+<span class="sd">        &gt;&gt;&gt; for source_id, module in modules.items():  # doctest: +SKIP</span>
+<span class="sd">        ...     print(f&quot;{source_id}: {module.__doc__.split(chr(10))[0]}&quot;)</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Check if a source exists</span>
+<span class="sd">        &gt;&gt;&gt; &#39;nytimes&#39; in modules  # doctest: +SKIP</span>
+<span class="sd">        True</span>
+
+<span class="sd">    **Attributes:**</span>
+
+<span class="sd">    Each source module provides its own functions and classes for accessing data.</span>
+<span class="sd">    See the module documentation for details:</span>
+
+<span class="sd">        &gt;&gt;&gt; modules = ElectionsDataModules()</span>
+<span class="sd">        &gt;&gt;&gt; nyt = modules[&#39;nytimes&#39;]  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; help(nyt)  # doctest: +SKIP</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_sources</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;nytimes&quot;</span><span class="p">:</span> <span class="s2">&quot;elections.nytimes&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;openfec&quot;</span><span class="p">:</span> <span class="s2">&quot;elections.openfec&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;google_civic&quot;</span><span class="p">:</span> <span class="s2">&quot;elections.google_civic&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;democracy_works&quot;</span><span class="p">:</span> <span class="s2">&quot;elections.democracy_works&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ipu_parline&quot;</span><span class="p">:</span> <span class="s2">&quot;elections.ipu_parline&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the ElectionsDataModules mapping.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_modules</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a data source module by its identifier.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key: Source identifier (e.g., &#39;nytimes&#39;, &#39;openfec&#39;)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The imported module for that data source</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            KeyError: If the source identifier is not recognized</span>
+<span class="sd">            ImportError: If the module cannot be imported (e.g., missing dependencies)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sources</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Unknown data source: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Available sources: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sources</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Lazy load modules</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modules</span><span class="p">:</span>
+            <span class="n">module_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sources</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_modules</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">module_path</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Cannot import </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> module: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">. &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;This may be due to missing dependencies. &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;For &#39;nytimes&#39;, ensure &#39;py2store&#39; and &#39;pandas&#39; are installed.&quot;</span>
+                <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modules</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Iterate over source identifiers.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sources</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the number of available data sources.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sources</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a string representation of available sources.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;ElectionsDataModules(</span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sources</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+<div class="viewcode-block" id="ElectionsDataModules.describe">
+<a class="viewcode-back" href="../module_docs/elections.html#elections.ElectionsDataModules.describe">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">describe</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Print descriptions of all available data sources.</span>
+
+<span class="sd">        This method loads each module and prints its first docstring line</span>
+<span class="sd">        along with key information about the data source.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Available Election Data Sources:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">source_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sources</span><span class="p">:</span>
+            <span class="n">module</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">source_id</span><span class="p">]</span>
+            <span class="c1"># Get first line of module docstring</span>
+            <span class="n">doc_lines</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="vm">__doc__</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">module</span><span class="o">.</span><span class="vm">__doc__</span> <span class="k">else</span> <span class="p">[]</span>
+            <span class="n">first_line</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">doc_lines</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()),</span> <span class="s2">&quot;No description&quot;</span>
+            <span class="p">)</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">source_id</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">first_line</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Try to extract key info from docstring</span>
+            <span class="k">if</span> <span class="n">module</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">doc_lines</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="s2">&quot;Access:&quot;</span> <span class="ow">in</span> <span class="n">line</span> <span class="ow">or</span> <span class="s2">&quot;API Key&quot;</span> <span class="ow">in</span> <span class="n">line</span> <span class="ow">or</span> <span class="s2">&quot;Coverage:&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</div>
+
+
+
+<span class="c1"># Convenience: pre-instantiate a default modules instance</span>
+<span class="n">_default_modules</span> <span class="o">=</span> <span class="n">ElectionsDataModules</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="get_source">
+<a class="viewcode-back" href="../module_docs/elections.html#elections.get_source">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_source</span><span class="p">(</span><span class="n">source_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convenience function to get a data source module.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        source_id: Source identifier (e.g., &#39;nytimes&#39;, &#39;openfec&#39;)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The data source module</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from elections import get_source</span>
+<span class="sd">        &gt;&gt;&gt; nyt = get_source(&#39;nytimes&#39;)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; data = nyt.get_election_data(&#39;florida&#39;, year=2020)  # doctest: +SKIP</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_default_modules</span><span class="p">[</span><span class="n">source_id</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="list_sources">
+<a class="viewcode-back" href="../module_docs/elections.html#elections.list_sources">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_sources</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    List all available data source identifiers.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List of source identifier strings</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from elections import list_sources</span>
+<span class="sd">        &gt;&gt;&gt; sources = list_sources()</span>
+<span class="sd">        &gt;&gt;&gt; &#39;nytimes&#39; in sources</span>
+<span class="sd">        True</span>
+<span class="sd">        &gt;&gt;&gt; &#39;openfec&#39; in sources</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">_default_modules</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
+
+
+
+<span class="c1"># Export main classes and functions</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;ElectionsDataModules&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;get_source&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;list_sources&quot;</span><span class="p">,</span>
+    <span class="c1"># Backward compatibility exports</span>
+    <span class="s2">&quot;Election2020RawJson&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Races2020&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;President2020TimeSeries&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

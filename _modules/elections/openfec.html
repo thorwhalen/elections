@@ -1,0 +1,428 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>elections.openfec &mdash; elections 0.0.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=47de8214"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            elections
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections.html">elections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/democracy_works.html">elections.democracy_works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/google_civic.html">elections.google_civic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/ipu_parline.html">elections.ipu_parline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/nytimes.html">elections.nytimes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/openfec.html">elections.openfec</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">elections</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../elections.html">elections</a></li>
+      <li class="breadcrumb-item active">elections.openfec</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for elections.openfec</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;OpenFEC - Federal Election Commission Data Source</span>
+
+<span class="sd">This module provides access to federal campaign finance data from the Federal</span>
+<span class="sd">Election Commission (FEC) through their OpenFEC API. The API offers comprehensive</span>
+<span class="sd">data on candidates, committees, contributions, expenditures, and filings.</span>
+
+<span class="sd">**Data Source:** OpenFEC API (Federal Election Commission)</span>
+<span class="sd">**Base URL:** https://api.open.fec.gov/v1/</span>
+<span class="sd">**Access:** Free with optional API key for higher rate limits</span>
+<span class="sd">**Rate Limits:**</span>
+<span class="sd">  - Without key: 1,000 calls/hour</span>
+<span class="sd">  - With key: Up to 120 calls/minute</span>
+<span class="sd">**Coverage:** Federal elections (Presidential, Senate, House)</span>
+<span class="sd">**Data Types:** Campaign finance, candidates, committees, contributions, expenditures</span>
+
+<span class="sd">**Getting an API Key:**</span>
+<span class="sd">Register for a free API key at: https://api.open.fec.gov/developers/</span>
+<span class="sd">Simply provide your email address - no payment required.</span>
+
+<span class="sd">**More Information:**</span>
+<span class="sd">- API Documentation: https://api.open.fec.gov/developers/</span>
+<span class="sd">- OpenAPI/Swagger UI: https://api.open.fec.gov/developers/</span>
+<span class="sd">- Data Catalog: https://www.fec.gov/data/</span>
+
+<span class="sd">**Error Messages:**</span>
+<span class="sd">If you receive a 403 or rate limit error without an API key, you can:</span>
+<span class="sd">1. Use &#39;DEMO_KEY&#39; for testing (limited)</span>
+<span class="sd">2. Register for a free API key at https://api.open.fec.gov/developers/</span>
+<span class="sd">3. Set your key via environment variable: export OPENFEC_API_KEY=&#39;your_key&#39;</span>
+
+<span class="sd">**Example Usage:**</span>
+
+<span class="sd">    &gt;&gt;&gt; from elections.openfec import get_candidates, get_committees, search_candidates  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; # Get candidates for 2024 presidential election</span>
+<span class="sd">    &gt;&gt;&gt; candidates = get_candidates(year=2024, office=&#39;president&#39;)  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; # Search for specific candidate</span>
+<span class="sd">    &gt;&gt;&gt; results = search_candidates(&#39;Biden&#39;, year=2024)  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; # Get committee information</span>
+<span class="sd">    &gt;&gt;&gt; committees = get_committees(year=2024)  # doctest: +SKIP</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+
+
+<span class="c1"># Default API key (can be overridden)</span>
+<span class="n">DEFAULT_API_KEY</span> <span class="o">=</span> <span class="s2">&quot;DEMO_KEY&quot;</span>
+<span class="n">BASE_URL</span> <span class="o">=</span> <span class="s2">&quot;https://api.open.fec.gov/v1/&quot;</span>
+
+<span class="c1"># Valid office types</span>
+<span class="n">OFFICE_TYPES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;president&quot;</span><span class="p">,</span> <span class="s2">&quot;senate&quot;</span><span class="p">,</span> <span class="s2">&quot;house&quot;</span><span class="p">,</span> <span class="s2">&quot;P&quot;</span><span class="p">,</span> <span class="s2">&quot;S&quot;</span><span class="p">,</span> <span class="s2">&quot;H&quot;</span><span class="p">]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_api_key</span><span class="p">(</span><span class="n">api_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get API key from parameter, environment, or default.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        api_key: Optional API key to use</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        API key string</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">api_key</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">api_key</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;OPENFEC_API_KEY&quot;</span><span class="p">,</span> <span class="n">DEFAULT_API_KEY</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_make_request</span><span class="p">(</span>
+    <span class="n">endpoint</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">api_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Make a request to the OpenFEC API.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        endpoint: API endpoint path (e.g., &#39;candidates/&#39;)</span>
+<span class="sd">        params: Query parameters</span>
+<span class="sd">        api_key: Optional API key</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        JSON response as dictionary</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        requests.HTTPError: If request fails</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">params</span><span class="p">[</span><span class="s2">&quot;api_key&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_get_api_key</span><span class="p">(</span><span class="n">api_key</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">endpoint</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">403</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Access forbidden (403). Your API key may be invalid or you&#39;ve hit rate limits. &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Get a free API key at: https://api.open.fec.gov/developers/ &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Current key being used: </span><span class="si">{</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;api_key&#39;</span><span class="p">][:</span><span class="mi">10</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">429</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Rate limit exceeded (429). &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Without an API key: 1,000 calls/hour. With key: 120 calls/minute. &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Get a free API key at: https://api.open.fec.gov/developers/&quot;</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Request failed with status </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="get_candidates">
+<a class="viewcode-back" href="../../module_docs/elections/openfec.html#elections.openfec.get_candidates">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_candidates</span><span class="p">(</span>
+    <span class="n">year</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">office</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">region</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">party</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">api_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fetch federal election candidates.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        year: Election year (e.g., 2024, 2020)</span>
+<span class="sd">        office: Office type - &#39;president&#39;, &#39;senate&#39;, &#39;house&#39; (or &#39;P&#39;, &#39;S&#39;, &#39;H&#39;)</span>
+<span class="sd">        region: State abbreviation (e.g., &#39;PA&#39;, &#39;CA&#39;) - for Senate/House</span>
+<span class="sd">        party: Party abbreviation (e.g., &#39;DEM&#39;, &#39;REP&#39;, &#39;LIB&#39;)</span>
+<span class="sd">        api_key: OpenFEC API key (defaults to DEMO_KEY or env variable)</span>
+<span class="sd">        **kwargs: Additional API parameters (per_page, page, sort, etc.)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary with &#39;results&#39; list and pagination info</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; # Get 2024 presidential candidates</span>
+<span class="sd">        &gt;&gt;&gt; data = get_candidates(year=2024, office=&#39;president&#39;)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; len(data[&#39;results&#39;]) &gt; 0  # doctest: +SKIP</span>
+<span class="sd">        True</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Get Pennsylvania senate candidates</span>
+<span class="sd">        &gt;&gt;&gt; data = get_candidates(year=2024, office=&#39;senate&#39;, region=&#39;PA&#39;)  # doctest: +SKIP</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">if</span> <span class="n">year</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;election_year&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">year</span>
+    <span class="k">if</span> <span class="n">office</span><span class="p">:</span>
+        <span class="c1"># Normalize office to single letter</span>
+        <span class="n">office_map</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;president&quot;</span><span class="p">:</span> <span class="s2">&quot;P&quot;</span><span class="p">,</span> <span class="s2">&quot;senate&quot;</span><span class="p">:</span> <span class="s2">&quot;S&quot;</span><span class="p">,</span> <span class="s2">&quot;house&quot;</span><span class="p">:</span> <span class="s2">&quot;H&quot;</span><span class="p">}</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;office&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">office_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">office</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">office</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+    <span class="k">if</span> <span class="n">region</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">region</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">party</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;party&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">party</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+
+    <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">_make_request</span><span class="p">(</span><span class="s2">&quot;candidates/&quot;</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">api_key</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="search_candidates">
+<a class="viewcode-back" href="../../module_docs/elections/openfec.html#elections.openfec.search_candidates">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">search_candidates</span><span class="p">(</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">year</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">api_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Search for candidates by name.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name: Candidate name or partial name to search</span>
+<span class="sd">        year: Optional election year to filter</span>
+<span class="sd">        api_key: OpenFEC API key</span>
+<span class="sd">        **kwargs: Additional API parameters</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary with matching candidates</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; results = search_candidates(&#39;Biden&#39;, year=2024)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; len(results[&#39;results&#39;]) &gt; 0  # doctest: +SKIP</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;q&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">year</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;election_year&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">year</span>
+
+    <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">_make_request</span><span class="p">(</span><span class="s2">&quot;candidates/search/&quot;</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">api_key</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_committees">
+<a class="viewcode-back" href="../../module_docs/elections/openfec.html#elections.openfec.get_committees">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_committees</span><span class="p">(</span>
+    <span class="n">year</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">committee_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">region</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">api_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fetch federal election committees.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        year: Election year</span>
+<span class="sd">        committee_type: Type of committee (e.g., &#39;P&#39; for Presidential)</span>
+<span class="sd">        region: State abbreviation</span>
+<span class="sd">        api_key: OpenFEC API key</span>
+<span class="sd">        **kwargs: Additional API parameters</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary with committee information</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; committees = get_committees(year=2024, committee_type=&#39;P&#39;)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; len(committees[&#39;results&#39;]) &gt; 0  # doctest: +SKIP</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">if</span> <span class="n">year</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;cycle&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">year</span>
+    <span class="k">if</span> <span class="n">committee_type</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;committee_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">committee_type</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">region</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">region</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+
+    <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">_make_request</span><span class="p">(</span><span class="s2">&quot;committees/&quot;</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">api_key</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_candidate_totals">
+<a class="viewcode-back" href="../../module_docs/elections/openfec.html#elections.openfec.get_candidate_totals">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_candidate_totals</span><span class="p">(</span>
+    <span class="n">candidate_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">year</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">api_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get financial totals for a specific candidate.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        candidate_id: FEC candidate ID (e.g., &#39;P80001571&#39; for Obama)</span>
+<span class="sd">        year: Election cycle year</span>
+<span class="sd">        api_key: OpenFEC API key</span>
+<span class="sd">        **kwargs: Additional API parameters</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary with financial totals (receipts, disbursements, etc.)</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; totals = get_candidate_totals(&#39;P80001571&#39;, year=2012)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; &#39;results&#39; in totals  # doctest: +SKIP</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">year</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;cycle&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">year</span>
+
+    <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="n">endpoint</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;candidate/</span><span class="si">{</span><span class="n">candidate_id</span><span class="si">}</span><span class="s2">/totals/&quot;</span>
+    <span class="k">return</span> <span class="n">_make_request</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">api_key</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_election_results">
+<a class="viewcode-back" href="../../module_docs/elections/openfec.html#elections.openfec.get_election_results">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_election_results</span><span class="p">(</span>
+    <span class="n">year</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">office</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">region</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">api_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get election results summary.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        year: Election year</span>
+<span class="sd">        office: Office type - &#39;president&#39;, &#39;senate&#39;, or &#39;house&#39;</span>
+<span class="sd">        region: State abbreviation (for Senate/House)</span>
+<span class="sd">        api_key: OpenFEC API key</span>
+<span class="sd">        **kwargs: Additional API parameters</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary with election results</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; results = get_election_results(2020, &#39;president&#39;)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; len(results[&#39;results&#39;]) &gt; 0  # doctest: +SKIP</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;election_year&quot;</span><span class="p">:</span> <span class="n">year</span><span class="p">}</span>
+
+    <span class="n">office_map</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;president&quot;</span><span class="p">:</span> <span class="s2">&quot;president&quot;</span><span class="p">,</span> <span class="s2">&quot;senate&quot;</span><span class="p">:</span> <span class="s2">&quot;senate&quot;</span><span class="p">,</span> <span class="s2">&quot;house&quot;</span><span class="p">:</span> <span class="s2">&quot;house&quot;</span><span class="p">}</span>
+    <span class="n">params</span><span class="p">[</span><span class="s2">&quot;office&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">office_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">office</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">office</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+
+    <span class="k">if</span> <span class="n">region</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">region</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+
+    <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">_make_request</span><span class="p">(</span><span class="s2">&quot;election/&quot;</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">api_key</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

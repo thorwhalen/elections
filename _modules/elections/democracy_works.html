@@ -1,0 +1,316 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>elections.democracy_works &mdash; elections 0.0.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=47de8214"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            elections
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections.html">elections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/democracy_works.html">elections.democracy_works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/google_civic.html">elections.google_civic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/ipu_parline.html">elections.ipu_parline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/nytimes.html">elections.nytimes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/openfec.html">elections.openfec</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">elections</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../elections.html">elections</a></li>
+      <li class="breadcrumb-item active">elections.democracy_works</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for elections.democracy_works</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Democracy Works Elections API Data Source</span>
+
+<span class="sd">This module provides access to U.S. election guidance data through the Democracy Works</span>
+<span class="sd">Elections API, including election dates, deadlines, polling locations, ballot measures,</span>
+<span class="sd">and candidate information for federal, state, and local levels.</span>
+
+<span class="sd">**Data Source:** Democracy Works Elections API</span>
+<span class="sd">**Base URL:** https://api.democracy.works/elections/v2/</span>
+<span class="sd">**Access:** Free, no API key required (but may require registration for alerts)</span>
+<span class="sd">**Coverage:** U.S. federal, state, and local elections</span>
+<span class="sd">**Data Types:** Election dates, deadlines, polling locations, ballot measures, candidates</span>
+
+<span class="sd">**More Information:**</span>
+<span class="sd">- API Documentation: https://developers.democracy.works/api/v2</span>
+<span class="sd">- Google Group (for updates): https://groups.google.com/g/turbovote-api</span>
+<span class="sd">- Main Site: https://www.democracy.works/</span>
+
+<span class="sd">**Note:** This API provides voter guidance data including when and where to vote.</span>
+<span class="sd">It&#39;s particularly useful for getting information about upcoming elections, registration</span>
+<span class="sd">deadlines, and voting locations.</span>
+
+<span class="sd">**Example Usage:**</span>
+
+<span class="sd">    &gt;&gt;&gt; from elections.democracy_works import get_elections, get_election_by_id, get_state_elections  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; # Get list of all elections</span>
+<span class="sd">    &gt;&gt;&gt; elections = get_elections()  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; # Get elections for a specific state</span>
+<span class="sd">    &gt;&gt;&gt; state_elections = get_state_elections(region=&#39;PA&#39;)  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; # Get detailed info for specific election</span>
+<span class="sd">    &gt;&gt;&gt; election = get_election_by_id(&#39;12345&#39;)  # doctest: +SKIP</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+
+
+<span class="n">BASE_URL</span> <span class="o">=</span> <span class="s2">&quot;https://api.democracy.works/elections/v2/&quot;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_make_request</span><span class="p">(</span>
+    <span class="n">endpoint</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Make a request to the Democracy Works Elections API.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        endpoint: API endpoint path (e.g., &#39;elections&#39;)</span>
+<span class="sd">        params: Optional query parameters</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        JSON response as dictionary</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        requests.HTTPError: If request fails</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">endpoint</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span> <span class="ow">or</span> <span class="p">{})</span>
+
+    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Resource not found (404). Check that the election ID or endpoint is correct.&quot;</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">400</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Bad request (400). Check your parameters: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Request failed with status </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="get_elections">
+<a class="viewcode-back" href="../../module_docs/elections/democracy_works.html#elections.democracy_works.get_elections">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_elections</span><span class="p">(</span>
+    <span class="n">date_from</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">date_to</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get list of elections.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        date_from: Start date in YYYY-MM-DD format</span>
+<span class="sd">        date_to: End date in YYYY-MM-DD format</span>
+<span class="sd">        **kwargs: Additional API parameters</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary with elections list</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; elections = get_elections()  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; len(elections) &gt; 0  # doctest: +SKIP</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">if</span> <span class="n">date_from</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;date_from&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">date_from</span>
+    <span class="k">if</span> <span class="n">date_to</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;date_to&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">date_to</span>
+
+    <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">_make_request</span><span class="p">(</span><span class="s2">&quot;elections&quot;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_election_by_id">
+<a class="viewcode-back" href="../../module_docs/elections/democracy_works.html#elections.democracy_works.get_election_by_id">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_election_by_id</span><span class="p">(</span><span class="n">election_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get detailed information for a specific election.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        election_id: Election ID (obtained from get_elections())</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary with election details</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; election = get_election_by_id(&#39;12345&#39;)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; &#39;id&#39; in election  # doctest: +SKIP</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_make_request</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;elections/</span><span class="si">{</span><span class="n">election_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_state_elections">
+<a class="viewcode-back" href="../../module_docs/elections/democracy_works.html#elections.democracy_works.get_state_elections">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_state_elections</span><span class="p">(</span>
+    <span class="n">region</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">date_from</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">date_to</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get elections for a specific state.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        region: State abbreviation (e.g., &#39;PA&#39;, &#39;CA&#39;)</span>
+<span class="sd">        date_from: Start date in YYYY-MM-DD format</span>
+<span class="sd">        date_to: End date in YYYY-MM-DD format</span>
+<span class="sd">        **kwargs: Additional API parameters</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary with state elections</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; elections = get_state_elections(&#39;PA&#39;)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; isinstance(elections, (dict, list))  # doctest: +SKIP</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;state&quot;</span><span class="p">:</span> <span class="n">region</span><span class="o">.</span><span class="n">upper</span><span class="p">()}</span>
+
+    <span class="k">if</span> <span class="n">date_from</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;date_from&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">date_from</span>
+    <span class="k">if</span> <span class="n">date_to</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;date_to&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">date_to</span>
+
+    <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">_make_request</span><span class="p">(</span><span class="s2">&quot;elections&quot;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_upcoming_elections">
+<a class="viewcode-back" href="../../module_docs/elections/democracy_works.html#elections.democracy_works.get_upcoming_elections">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_upcoming_elections</span><span class="p">(</span>
+    <span class="n">region</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">days_ahead</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">90</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get upcoming elections, optionally filtered by state.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        region: Optional state abbreviation (e.g., &#39;PA&#39;, &#39;CA&#39;)</span>
+<span class="sd">        days_ahead: Number of days to look ahead (default 90)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary with upcoming elections</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; elections = get_upcoming_elections(region=&#39;CA&#39;, days_ahead=60)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; isinstance(elections, (dict, list))  # doctest: +SKIP</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+
+    <span class="n">today</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+    <span class="n">future_date</span> <span class="o">=</span> <span class="n">today</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">days_ahead</span><span class="p">)</span>
+
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;date_from&quot;</span><span class="p">:</span> <span class="n">today</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span> <span class="s2">&quot;date_to&quot;</span><span class="p">:</span> <span class="n">future_date</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()}</span>
+
+    <span class="k">if</span> <span class="n">region</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">region</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">_make_request</span><span class="p">(</span><span class="s2">&quot;elections&quot;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,409 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>elections.nytimes &mdash; elections 0.0.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=47de8214"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            elections
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections.html">elections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/democracy_works.html">elections.democracy_works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/google_civic.html">elections.google_civic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/ipu_parline.html">elections.ipu_parline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/nytimes.html">elections.nytimes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/openfec.html">elections.openfec</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">elections</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../elections.html">elections</a></li>
+      <li class="breadcrumb-item active">elections.nytimes</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for elections.nytimes</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;New York Times Election Data Source</span>
+
+<span class="sd">This module provides access to election data from the New York Times&#39; unofficial</span>
+<span class="sd">election results API. The API provides detailed election results including vote</span>
+<span class="sd">counts, candidate information, and time-series data for U.S. elections.</span>
+
+<span class="sd">**Data Source:** New York Times Elections Assets API (unofficial)</span>
+<span class="sd">**URL Pattern:** https://static01.nyt.com/elections-assets/{year}/data/api/{date}/...</span>
+<span class="sd">**Access:** Free, no API key required</span>
+<span class="sd">**Coverage:** U.S. presidential and other races for 2016, 2020, 2024</span>
+<span class="sd">**Data Types:** Election results, vote counts, time-series data, race details</span>
+
+<span class="sd">**More Information:**</span>
+<span class="sd">- Example usage: https://gist.github.com/curran/b218499a412033064fea7936334b86bb</span>
+<span class="sd">- Background: https://source.opennews.org/articles/ny-times-results-loader/</span>
+
+<span class="sd">**Note:** This is an unofficial API that powers the NYT election website. The API</span>
+<span class="sd">structure has been consistent across election years but is not officially documented</span>
+<span class="sd">or guaranteed to remain available.</span>
+
+<span class="sd">**Example Usage:**</span>
+
+<span class="sd">NOTE: I only managed to get data for year=2020. I implemented the patterns for other years,</span>
+<span class="sd">but it doesn&#39;t seem to work.</span>
+
+<span class="sd">    &gt;&gt;&gt; from elections.nytimes import get_election_data, get_races, get_president_timeseries  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; # Get raw election data for Pennsylvania in 2020</span>
+<span class="sd">    &gt;&gt;&gt; data = get_election_data(region=&#39;pennsylvania&#39;)  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; # Get races for a specific state</span>
+<span class="sd">    &gt;&gt;&gt; races = get_races(region=&#39;florida&#39;)  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; # Get president race time series</span>
+<span class="sd">    &gt;&gt;&gt; timeseries = get_president_timeseries(region=&#39;georgia&#39;)  # doctest: +SKIP</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">date</span> <span class="k">as</span> <span class="n">date_type</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">dol.explicit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExplicitKeysSource</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dol</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_ipython_key_completions</span><span class="p">,</span> <span class="n">KvReader</span><span class="p">,</span> <span class="n">Store</span><span class="p">,</span> <span class="n">wrap_kvs</span>
+
+
+<span class="c1"># Election dates for supported years</span>
+<span class="n">ELECTION_DATES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># 2016: &#39;2016-11-08&#39;,</span>
+    <span class="mi">2020</span><span class="p">:</span> <span class="s2">&quot;2020-11-03&quot;</span><span class="p">,</span>
+    <span class="c1"># 2024: &#39;2024-11-05&#39;,</span>
+<span class="p">}</span>
+
+<span class="c1"># Standard region names (states in lowercase with hyphens)</span>
+<span class="n">REGIONS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;alabama&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;alaska&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;arizona&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;arkansas&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;california&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;colorado&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;connecticut&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;delaware&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;district-of-columbia&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;florida&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;georgia&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;hawaii&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;idaho&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;illinois&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;indiana&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;iowa&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;kansas&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;kentucky&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;louisiana&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;maine&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;maryland&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;massachusetts&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;michigan&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;minnesota&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mississippi&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;missouri&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;montana&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nebraska&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nevada&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;new-hampshire&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;new-jersey&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;new-mexico&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;new-york&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;north-carolina&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;north-dakota&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ohio&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;oklahoma&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;oregon&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pennsylvania&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;rhode-island&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;south-carolina&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;south-dakota&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tennessee&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;texas&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;utah&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;vermont&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;virginia&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;washington&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;west-virginia&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;wisconsin&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;wyoming&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="get_election_data">
+<a class="viewcode-back" href="../../module_docs/elections/nytimes.html#elections.nytimes.get_election_data">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_election_data</span><span class="p">(</span><span class="n">region</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">year</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2020</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fetch raw election JSON data for a specific region and year from NYT API.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        region: Region name (state) in lowercase with hyphens (e.g., &#39;pennsylvania&#39;)</span>
+<span class="sd">        year: Election year (2016, 2020, or 2024)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary containing election data, or requests.Response object on error</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If year is not supported</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; data = get_election_data(&#39;florida&#39;, 2020)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; print(data[&#39;data&#39;][&#39;races&#39;][0][&#39;state_id&#39;])  # doctest: +SKIP</span>
+<span class="sd">        &#39;FL&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">year</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ELECTION_DATES</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Year </span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2"> not supported. Available years: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">ELECTION_DATES</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+    <span class="n">election_date</span> <span class="o">=</span> <span class="n">ELECTION_DATES</span><span class="p">[</span><span class="n">year</span><span class="p">]</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://static01.nyt.com/elections-assets/</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2">/data/api/</span><span class="si">{</span><span class="n">election_date</span><span class="si">}</span><span class="s2">/state-page/</span><span class="si">{</span><span class="n">region</span><span class="si">}</span><span class="s2">.json&quot;</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Failed to fetch data for region &#39;</span><span class="si">{</span><span class="n">region</span><span class="si">}</span><span class="s2">&#39; and year </span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2">. &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Status code: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">. &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Note: Regions should be in lowercase with hyphens, like: </span><span class="si">{</span><span class="n">REGIONS</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span>
+        <span class="p">)</span></div>
+
+
+
+<span class="nd">@add_ipython_key_completions</span>
+<span class="nd">@Store</span><span class="o">.</span><span class="n">wrap</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ElectionRawJson</span><span class="p">(</span><span class="n">ExplicitKeysSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Store interface for accessing raw election JSON data by region.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        year: Election year (2016, 2020, or 2024). Defaults to 2020.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; store = ElectionRawJson(year=2020)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; florida_data = store[&#39;florida&#39;]  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; print(florida_data[&#39;data&#39;][&#39;races&#39;][0][&#39;race_id&#39;])  # doctest: +SKIP</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">year</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2020</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">year</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ELECTION_DATES</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Year </span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2"> not supported. Available years: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">ELECTION_DATES</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">year</span> <span class="o">=</span> <span class="n">year</span>
+        <span class="n">_obj_of_key</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">get_election_data</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="n">year</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">key_collection</span><span class="o">=</span><span class="n">REGIONS</span><span class="p">,</span> <span class="n">_obj_of_key</span><span class="o">=</span><span class="n">_obj_of_key</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Races">
+<a class="viewcode-back" href="../../module_docs/elections/nytimes.html#elections.nytimes.Races">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Races</span><span class="p">(</span><span class="n">ElectionRawJson</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Store interface for accessing race data by region.</span>
+
+<span class="sd">    Transforms raw election data into a store of races indexed by race slug.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        year: Election year (2016, 2020, or 2024). Defaults to 2020.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; races = Races(year=2020)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; pa_races = races[&#39;pennsylvania&#39;]  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; president = pa_races[&#39;president-general-2020-11-03&#39;]  # doctest: +SKIP</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_obj_of_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Transform raw data into a store of races.&quot;&quot;&quot;</span>
+        <span class="n">state_slug</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="s2">&quot;races&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;state_id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="n">races</span> <span class="o">=</span> <span class="n">Store</span><span class="p">({</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;race_slug&quot;</span><span class="p">][</span><span class="mi">3</span><span class="p">:]:</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="s2">&quot;races&quot;</span><span class="p">]})</span>
+        <span class="k">return</span> <span class="n">add_ipython_key_completions</span><span class="p">(</span><span class="n">races</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_post_process_timeseries</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">race_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;president&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Post-process race data to extract time series information.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data: Raw election data dictionary</span>
+<span class="sd">        race_type: Type of race to extract (e.g., &#39;president&#39;, &#39;senate&#39;)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        DataFrame with time series data including vote shares</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Find the race key matching the race type</span>
+    <span class="n">race_key</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">race_type</span> <span class="ow">in</span> <span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">and</span> <span class="s2">&quot;timeseries&quot;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]:</span>
+            <span class="n">race_key</span> <span class="o">=</span> <span class="n">key</span>
+            <span class="k">break</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">race_key</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;No race matching type &#39;</span><span class="si">{</span><span class="n">race_type</span><span class="si">}</span><span class="s2">&#39; found with timeseries data&quot;</span>
+        <span class="p">)</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">race_key</span><span class="p">][</span><span class="s2">&quot;timeseries&quot;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="s2">&quot;vote_shares&quot;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">df</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;vote_shares&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">())),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">del</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;vote_shares&quot;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="s2">&quot;timestamp&quot;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;timestamp&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df</span>
+
+
+<div class="viewcode-block" id="get_races">
+<a class="viewcode-back" href="../../module_docs/elections/nytimes.html#elections.nytimes.get_races">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_races</span><span class="p">(</span><span class="n">region</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">year</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2020</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get races for a specific region and year.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        region: Region name (state) in lowercase with hyphens</span>
+<span class="sd">        year: Election year (2016, 2020, or 2024)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary mapping race slugs to race data</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; races = get_races(&#39;pennsylvania&#39;, 2020)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; list(races.keys())[:2]  # doctest: +SKIP</span>
+<span class="sd">        [&#39;president-general-2020-11-03&#39;, &#39;senate-general-2020-11-03&#39;]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">races_store</span> <span class="o">=</span> <span class="n">Races</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="n">year</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">races_store</span><span class="p">[</span><span class="n">region</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="get_president_timeseries">
+<a class="viewcode-back" href="../../module_docs/elections/nytimes.html#elections.nytimes.get_president_timeseries">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_president_timeseries</span><span class="p">(</span><span class="n">region</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">year</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2020</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get president race time series data for a specific region and year.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        region: Region name (state) in lowercase with hyphens</span>
+<span class="sd">        year: Election year (2016, 2020, or 2024)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        DataFrame with time series vote data</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; df = get_president_timeseries(&#39;georgia&#39;, 2020)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; df.columns  # doctest: +SKIP</span>
+<span class="sd">        Index([&#39;timestamp&#39;, &#39;votes&#39;, &#39;bidenj&#39;, &#39;trumpd&#39;, ...], dtype=&#39;object&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">races</span> <span class="o">=</span> <span class="n">get_races</span><span class="p">(</span><span class="n">region</span><span class="p">,</span> <span class="n">year</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_post_process_timeseries</span><span class="p">(</span><span class="n">races</span><span class="p">,</span> <span class="n">race_type</span><span class="o">=</span><span class="s2">&quot;president&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># Store classes for backward compatibility with original API</span>
+<span class="n">Election2020RawJson</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">ElectionRawJson</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">2020</span><span class="p">)</span>
+<span class="n">Races2020</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">Races</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">2020</span><span class="p">)</span>
+
+<span class="c1"># NOTE: `wrap_kvs` must wrap the *class*, not `Races2020`. Handed a</span>
+<span class="c1"># `functools.partial`, `wrap_kvs` treats it as a store *instance* and returns a</span>
+<span class="c1"># (non-callable) `Store` wrapping the partial itself, so `President2020TimeSeries()`</span>
+<span class="c1"># raised `TypeError: &#39;Store&#39; object is not callable`. Wrapping the class first and</span>
+<span class="c1"># binding the year afterwards mirrors `Races2020` and yields a working factory.</span>
+<span class="n">President2020TimeSeries</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
+    <span class="n">wrap_kvs</span><span class="p">(</span><span class="n">Races</span><span class="p">,</span> <span class="n">obj_of_data</span><span class="o">=</span><span class="n">_post_process_timeseries</span><span class="p">),</span> <span class="n">year</span><span class="o">=</span><span class="mi">2020</span>
+<span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

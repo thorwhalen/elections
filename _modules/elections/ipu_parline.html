@@ -1,0 +1,396 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>elections.ipu_parline &mdash; elections 0.0.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=47de8214"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            elections
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections.html">elections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/democracy_works.html">elections.democracy_works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/google_civic.html">elections.google_civic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/ipu_parline.html">elections.ipu_parline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/nytimes.html">elections.nytimes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/openfec.html">elections.openfec</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">elections</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../elections.html">elections</a></li>
+      <li class="breadcrumb-item active">elections.ipu_parline</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for elections.ipu_parline</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;IPU Parline - Inter-Parliamentary Union Data Source</span>
+
+<span class="sd">This module provides access to global parliamentary and election data from the</span>
+<span class="sd">Inter-Parliamentary Union (IPU) Parline database. The database contains information</span>
+<span class="sd">on national parliaments worldwide, including election results, turnout, party</span>
+<span class="sd">composition, and electoral systems for 190+ countries.</span>
+
+<span class="sd">**Data Source:** IPU Parline (Inter-Parliamentary Union)</span>
+<span class="sd">**Base URL:** https://data.ipu.org/api/</span>
+<span class="sd">**Access:** Free, no API key required</span>
+<span class="sd">**Coverage:** Global - 190+ countries</span>
+<span class="sd">**Data Types:** Election results, turnout, party composition, electoral systems, parliamentary info</span>
+
+<span class="sd">**More Information:**</span>
+<span class="sd">- Data Portal: https://data.ipu.org/</span>
+<span class="sd">- IPU Main Site: https://www.ipu.org/</span>
+<span class="sd">- About Parline: https://www.ipu.org/resources/parline-database</span>
+
+<span class="sd">**Note:** This API provides historical data on national parliaments and elections</span>
+<span class="sd">worldwide. It&#39;s particularly useful for comparative analysis across countries and</span>
+<span class="sd">for historical election data. Live/real-time election data is not available.</span>
+
+<span class="sd">**Country Codes:** Uses ISO 3166-1 alpha-3 codes (e.g., &#39;USA&#39;, &#39;GBR&#39;, &#39;FRA&#39;, &#39;DEU&#39;)</span>
+
+<span class="sd">**Example Usage:**</span>
+
+<span class="sd">    &gt;&gt;&gt; from elections.ipu_parline import get_parliament, get_election_results, get_country_list  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; # Get parliament information for France</span>
+<span class="sd">    &gt;&gt;&gt; parliament = get_parliament(country_code=&#39;FRA&#39;)  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; # Get election results for a country</span>
+<span class="sd">    &gt;&gt;&gt; results = get_election_results(country_code=&#39;DEU&#39;)  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; # Get list of available countries</span>
+<span class="sd">    &gt;&gt;&gt; countries = get_country_list()  # doctest: +SKIP</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+
+
+<span class="n">BASE_URL</span> <span class="o">=</span> <span class="s2">&quot;https://data.ipu.org/api/&quot;</span>
+
+<span class="c1"># Common country codes (ISO 3166-1 alpha-3)</span>
+<span class="n">COMMON_COUNTRIES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;usa&quot;</span><span class="p">:</span> <span class="s2">&quot;USA&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;united states&quot;</span><span class="p">:</span> <span class="s2">&quot;USA&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;uk&quot;</span><span class="p">:</span> <span class="s2">&quot;GBR&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;united kingdom&quot;</span><span class="p">:</span> <span class="s2">&quot;GBR&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;britain&quot;</span><span class="p">:</span> <span class="s2">&quot;GBR&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;france&quot;</span><span class="p">:</span> <span class="s2">&quot;FRA&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;germany&quot;</span><span class="p">:</span> <span class="s2">&quot;DEU&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;italy&quot;</span><span class="p">:</span> <span class="s2">&quot;ITA&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;spain&quot;</span><span class="p">:</span> <span class="s2">&quot;ESP&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;canada&quot;</span><span class="p">:</span> <span class="s2">&quot;CAN&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;australia&quot;</span><span class="p">:</span> <span class="s2">&quot;AUS&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;japan&quot;</span><span class="p">:</span> <span class="s2">&quot;JPN&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;india&quot;</span><span class="p">:</span> <span class="s2">&quot;IND&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;brazil&quot;</span><span class="p">:</span> <span class="s2">&quot;BRA&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mexico&quot;</span><span class="p">:</span> <span class="s2">&quot;MEX&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;china&quot;</span><span class="p">:</span> <span class="s2">&quot;CHN&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;russia&quot;</span><span class="p">:</span> <span class="s2">&quot;RUS&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_normalize_country_code</span><span class="p">(</span><span class="n">country_code</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Normalize country code to ISO 3166-1 alpha-3 format.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        country_code: Country code or name</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Normalized 3-letter country code</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="n">country_code</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+
+    <span class="c1"># If already 3 letters, return as-is</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">code</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">code</span>
+
+    <span class="c1"># Check if it&#39;s a common country name</span>
+    <span class="n">lookup</span> <span class="o">=</span> <span class="n">COMMON_COUNTRIES</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">country_code</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+    <span class="k">if</span> <span class="n">lookup</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">lookup</span>
+
+    <span class="k">return</span> <span class="n">code</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_make_request</span><span class="p">(</span>
+    <span class="n">endpoint</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Make a request to the IPU Parline API.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        endpoint: API endpoint path</span>
+<span class="sd">        params: Optional query parameters</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        JSON response as dictionary</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        requests.HTTPError: If request fails</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">endpoint</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span> <span class="ow">or</span> <span class="p">{})</span>
+
+    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Resource not found (404). Check that the country code or endpoint is correct. &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Country codes should be ISO 3166-1 alpha-3 format (e.g., &#39;FRA&#39;, &#39;GBR&#39;, &#39;USA&#39;).&quot;</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">400</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Bad request (400). Check your parameters: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Request failed with status </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="get_parliament">
+<a class="viewcode-back" href="../../module_docs/elections/ipu_parline.html#elections.ipu_parline.get_parliament">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_parliament</span><span class="p">(</span><span class="n">country_code</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get parliament information for a specific country.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        country_code: ISO 3166-1 alpha-3 country code (e.g., &#39;FRA&#39;, &#39;GBR&#39;, &#39;USA&#39;)</span>
+<span class="sd">                     or common name (e.g., &#39;France&#39;, &#39;UK&#39;)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary with parliament information</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; parliament = get_parliament(&#39;FRA&#39;)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; &#39;country&#39; in parliament  # doctest: +SKIP</span>
+<span class="sd">        True</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Can also use country names</span>
+<span class="sd">        &gt;&gt;&gt; parliament = get_parliament(&#39;France&#39;)  # doctest: +SKIP</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="n">_normalize_country_code</span><span class="p">(</span><span class="n">country_code</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_make_request</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;parliaments/</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_election_results">
+<a class="viewcode-back" href="../../module_docs/elections/ipu_parline.html#elections.ipu_parline.get_election_results">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_election_results</span><span class="p">(</span>
+    <span class="n">country_code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">chamber</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get election results for a country.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        country_code: ISO 3166-1 alpha-3 country code or common name</span>
+<span class="sd">        chamber: Optional chamber specification (&#39;lower&#39;, &#39;upper&#39;, &#39;unicameral&#39;)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary with election results</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; results = get_election_results(&#39;DEU&#39;)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; isinstance(results, dict)  # doctest: +SKIP</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="n">_normalize_country_code</span><span class="p">(</span><span class="n">country_code</span><span class="p">)</span>
+    <span class="n">endpoint</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;elections/</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">chamber</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;chamber&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">chamber</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">_make_request</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_country_list">
+<a class="viewcode-back" href="../../module_docs/elections/ipu_parline.html#elections.ipu_parline.get_country_list">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_country_list</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get list of countries available in the database.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List of dictionaries with country information</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; countries = get_country_list()  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; len(countries) &gt; 100  # doctest: +SKIP</span>
+<span class="sd">        True</span>
+<span class="sd">        &gt;&gt;&gt; any(c.get(&#39;code&#39;) == &#39;USA&#39; for c in countries)  # doctest: +SKIP</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">_make_request</span><span class="p">(</span><span class="s2">&quot;countries&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;countries&quot;</span><span class="p">,</span> <span class="p">[])</span></div>
+
+
+
+<div class="viewcode-block" id="get_women_in_parliament">
+<a class="viewcode-back" href="../../module_docs/elections/ipu_parline.html#elections.ipu_parline.get_women_in_parliament">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_women_in_parliament</span><span class="p">(</span><span class="n">country_code</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get statistics on women in national parliaments.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        country_code: Optional country code to filter by specific country</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary with women in parliament statistics</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; stats = get_women_in_parliament()  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; isinstance(stats, dict)  # doctest: +SKIP</span>
+<span class="sd">        True</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # For specific country</span>
+<span class="sd">        &gt;&gt;&gt; stats = get_women_in_parliament(&#39;SWE&#39;)  # doctest: +SKIP</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">country_code</span><span class="p">:</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="n">_normalize_country_code</span><span class="p">(</span><span class="n">country_code</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_make_request</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;women-in-parliament/</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_make_request</span><span class="p">(</span><span class="s2">&quot;women-in-parliament&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_electoral_system">
+<a class="viewcode-back" href="../../module_docs/elections/ipu_parline.html#elections.ipu_parline.get_electoral_system">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_electoral_system</span><span class="p">(</span><span class="n">country_code</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get electoral system information for a country.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        country_code: ISO 3166-1 alpha-3 country code or common name</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary with electoral system details</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; system = get_electoral_system(&#39;CAN&#39;)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; isinstance(system, dict)  # doctest: +SKIP</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="n">_normalize_country_code</span><span class="p">(</span><span class="n">country_code</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_make_request</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;electoral-systems/</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="search_parliaments">
+<a class="viewcode-back" href="../../module_docs/elections/ipu_parline.html#elections.ipu_parline.search_parliaments">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">search_parliaments</span><span class="p">(</span>
+    <span class="n">region</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">chamber_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Search for parliaments by region or chamber type.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        region: Optional region to filter (e.g., &#39;Europe&#39;, &#39;Americas&#39;, &#39;Asia&#39;)</span>
+<span class="sd">        chamber_type: Optional chamber type (&#39;bicameral&#39;, &#39;unicameral&#39;)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List of parliament information</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; parliaments = search_parliaments(region=&#39;Europe&#39;)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; len(parliaments) &gt; 0  # doctest: +SKIP</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">region</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;region&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">region</span>
+    <span class="k">if</span> <span class="n">chamber_type</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;chamber_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">chamber_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">_make_request</span><span class="p">(</span><span class="s2">&quot;parliaments&quot;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;parliaments&quot;</span><span class="p">,</span> <span class="p">[])</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

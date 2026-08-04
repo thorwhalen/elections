@@ -1,0 +1,4 @@
+elections
+=========
+.. automodule:: elections
+   :members:

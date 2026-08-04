@@ -1,0 +1,281 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>elections.google_civic &mdash; elections 0.0.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=47de8214"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="elections.ipu_parline" href="ipu_parline.html" />
+    <link rel="prev" title="elections.democracy_works" href="democracy_works.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            elections
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../elections.html">elections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="democracy_works.html">elections.democracy_works</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">elections.google_civic</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#elections.google_civic.get_elections"><code class="docutils literal notranslate"><span class="pre">get_elections()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#elections.google_civic.get_representatives"><code class="docutils literal notranslate"><span class="pre">get_representatives()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#elections.google_civic.get_representatives_by_division"><code class="docutils literal notranslate"><span class="pre">get_representatives_by_division()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#elections.google_civic.get_voter_info"><code class="docutils literal notranslate"><span class="pre">get_voter_info()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ipu_parline.html">elections.ipu_parline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nytimes.html">elections.nytimes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="openfec.html">elections.openfec</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">elections</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">elections.google_civic</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/module_docs/elections/google_civic.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-elections.google_civic">
+<span id="elections-google-civic"></span><h1>elections.google_civic<a class="headerlink" href="#module-elections.google_civic" title="Link to this heading"></a></h1>
+<p>Google Civic Information API Data Source</p>
+<p>This module provides access to U.S. civic data through Google’s Civic Information API,
+including elections, representatives, polling places, early voting sites, and candidate
+information. The API covers both historical and upcoming elections.</p>
+<p><strong>Data Source:</strong> Google Civic Information API
+<strong>Base URL:</strong> <a class="reference external" href="https://civicinfo.googleapis.com/civicinfo/v2/">https://civicinfo.googleapis.com/civicinfo/v2/</a>
+<strong>Access:</strong> Requires free Google API key
+<strong>Rate Limits:</strong> 1,000 requests/day (free tier)
+<strong>Coverage:</strong> U.S. federal, state, and local elections
+<strong>Data Types:</strong> Elections, representatives, polling locations, ballot info, candidates</p>
+<p><strong>Getting an API Key:</strong>
+1. Go to: <a class="reference external" href="https://console.developers.google.com/">https://console.developers.google.com/</a>
+2. Create a new project (or select existing)
+3. Enable the “Google Civic Information API”
+4. Go to “Credentials” and create an API key
+5. Set via environment variable: export GOOGLE_CIVIC_API_KEY=’your_key’</p>
+<p><strong>More Information:</strong>
+- API Documentation: <a class="reference external" href="https://developers.google.com/civic-information/docs/v2">https://developers.google.com/civic-information/docs/v2</a>
+- API Console: <a class="reference external" href="https://console.developers.google.com/apis/library/civicinfo.googleapis.com">https://console.developers.google.com/apis/library/civicinfo.googleapis.com</a>
+- Data Coverage: <a class="reference external" href="https://developers.google.com/civic-information/docs/v2/coverage">https://developers.google.com/civic-information/docs/v2/coverage</a></p>
+<p><strong>Error Messages:</strong>
+If you receive an authentication error, you need a Google API key:
+1. Register at: <a class="reference external" href="https://console.developers.google.com/">https://console.developers.google.com/</a>
+2. Enable the Civic Information API for your project
+3. Create an API key in the Credentials section</p>
+<p><strong>Example Usage:</strong></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">elections.google_civic</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_elections</span><span class="p">,</span> <span class="n">get_voter_info</span><span class="p">,</span> <span class="n">get_representatives</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get list of available elections</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">elections</span> <span class="o">=</span> <span class="n">get_elections</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s1">&#39;YOUR_KEY&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get voter information for an address</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voter_info</span> <span class="o">=</span> <span class="n">get_voter_info</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">address</span><span class="o">=</span><span class="s1">&#39;1600 Pennsylvania Ave NW, Washington, DC&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">api_key</span><span class="o">=</span><span class="s1">&#39;YOUR_KEY&#39;</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get representatives for an address</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">reps</span> <span class="o">=</span> <span class="n">get_representatives</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">address</span><span class="o">=</span><span class="s1">&#39;340 Main St, Venice, CA 90291&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">api_key</span><span class="o">=</span><span class="s1">&#39;YOUR_KEY&#39;</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="elections.google_civic.get_elections">
+<span class="sig-prename descclassname"><span class="pre">elections.google_civic.</span></span><span class="sig-name descname"><span class="pre">get_elections</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/elections/google_civic.html#get_elections"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#elections.google_civic.get_elections" title="Link to this definition"></a></dt>
+<dd><p>Get list of available elections.</p>
+<p>Returns information about current and upcoming elections, including election IDs
+that can be used with get_voter_info().</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>api_key</strong> – Google Civic Information API key</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with ‘elections’ list containing election details</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">elections</span> <span class="o">=</span> <span class="n">get_elections</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s1">&#39;YOUR_KEY&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">elections</span><span class="p">[</span><span class="s1">&#39;elections&#39;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">elections</span><span class="p">[</span><span class="s1">&#39;elections&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+<span class="go">&#39;U.S. General Election&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="elections.google_civic.get_representatives">
+<span class="sig-prename descclassname"><span class="pre">elections.google_civic.</span></span><span class="sig-name descname"><span class="pre">get_representatives</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_offices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">levels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">roles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/elections/google_civic.html#get_representatives"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#elections.google_civic.get_representatives" title="Link to this definition"></a></dt>
+<dd><p>Get elected representatives for an address.</p>
+<p>Returns information about federal, state, and local elected officials.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> – Full address (if not provided, uses national divisions)</p></li>
+<li><p><strong>include_offices</strong> – Whether to include office information</p></li>
+<li><p><strong>levels</strong> – List of government levels (‘country’, ‘administrativeArea1’, ‘locality’)</p></li>
+<li><p><strong>roles</strong> – List of roles (‘legislatorUpperBody’, ‘legislatorLowerBody’, ‘headOfGovernment’)</p></li>
+<li><p><strong>api_key</strong> – Google Civic Information API key</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with divisions, offices, and officials</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">reps</span> <span class="o">=</span> <span class="n">get_representatives</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s1">&#39;340 Main St, Venice, CA 90291&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">api_key</span><span class="o">=</span><span class="s1">&#39;YOUR_KEY&#39;</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;officials&#39;</span> <span class="ow">in</span> <span class="n">reps</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="elections.google_civic.get_representatives_by_division">
+<span class="sig-prename descclassname"><span class="pre">elections.google_civic.</span></span><span class="sig-name descname"><span class="pre">get_representatives_by_division</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">division_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">levels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">roles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/elections/google_civic.html#get_representatives_by_division"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#elections.google_civic.get_representatives_by_division" title="Link to this definition"></a></dt>
+<dd><p>Get representatives for a specific Open Civic Data division.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>division_id</strong> – OCD division ID (e.g., ‘ocd-division/country:us/state:ca’)</p></li>
+<li><p><strong>levels</strong> – List of government levels to filter</p></li>
+<li><p><strong>roles</strong> – List of roles to filter</p></li>
+<li><p><strong>api_key</strong> – Google Civic Information API key</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with offices and officials for the division</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">reps</span> <span class="o">=</span> <span class="n">get_representatives_by_division</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s1">&#39;ocd-division/country:us/state:ca&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">api_key</span><span class="o">=</span><span class="s1">&#39;YOUR_KEY&#39;</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;officials&#39;</span> <span class="ow">in</span> <span class="n">reps</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="elections.google_civic.get_voter_info">
+<span class="sig-prename descclassname"><span class="pre">elections.google_civic.</span></span><span class="sig-name descname"><span class="pre">get_voter_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">election_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_all_available_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/elections/google_civic.html#get_voter_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#elections.google_civic.get_voter_info" title="Link to this definition"></a></dt>
+<dd><p>Get voter information for a specific address.</p>
+<p>Returns polling locations, early vote sites, ballot information, and candidates
+for the given address.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> – Full address (street, city, state, ZIP)</p></li>
+<li><p><strong>election_id</strong> – Optional election ID (get from get_elections())</p></li>
+<li><p><strong>api_key</strong> – Google Civic Information API key</p></li>
+<li><p><strong>return_all_available_data</strong> – If True, returns all available data</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with election info, polling locations, candidates, etc.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">info</span> <span class="o">=</span> <span class="n">get_voter_info</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s1">&#39;1600 Pennsylvania Ave NW, Washington, DC 20500&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">api_key</span><span class="o">=</span><span class="s1">&#39;YOUR_KEY&#39;</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;pollingLocations&#39;</span> <span class="ow">in</span> <span class="n">info</span> <span class="ow">or</span> <span class="s1">&#39;contests&#39;</span> <span class="ow">in</span> <span class="n">info</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="democracy_works.html" class="btn btn-neutral float-left" title="elections.democracy_works" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ipu_parline.html" class="btn btn-neutral float-right" title="elections.ipu_parline" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

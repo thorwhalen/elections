@@ -1,0 +1,4 @@
+elections.nytimes
+=================
+.. automodule:: elections.nytimes
+   :members:

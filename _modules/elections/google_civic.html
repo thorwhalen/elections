@@ -1,0 +1,401 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>elections.google_civic &mdash; elections 0.0.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=47de8214"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            elections
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections.html">elections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/democracy_works.html">elections.democracy_works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/google_civic.html">elections.google_civic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/ipu_parline.html">elections.ipu_parline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/nytimes.html">elections.nytimes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/openfec.html">elections.openfec</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">elections</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../elections.html">elections</a></li>
+      <li class="breadcrumb-item active">elections.google_civic</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for elections.google_civic</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Google Civic Information API Data Source</span>
+
+<span class="sd">This module provides access to U.S. civic data through Google&#39;s Civic Information API,</span>
+<span class="sd">including elections, representatives, polling places, early voting sites, and candidate</span>
+<span class="sd">information. The API covers both historical and upcoming elections.</span>
+
+<span class="sd">**Data Source:** Google Civic Information API</span>
+<span class="sd">**Base URL:** https://civicinfo.googleapis.com/civicinfo/v2/</span>
+<span class="sd">**Access:** Requires free Google API key</span>
+<span class="sd">**Rate Limits:** 1,000 requests/day (free tier)</span>
+<span class="sd">**Coverage:** U.S. federal, state, and local elections</span>
+<span class="sd">**Data Types:** Elections, representatives, polling locations, ballot info, candidates</span>
+
+<span class="sd">**Getting an API Key:**</span>
+<span class="sd">1. Go to: https://console.developers.google.com/</span>
+<span class="sd">2. Create a new project (or select existing)</span>
+<span class="sd">3. Enable the &quot;Google Civic Information API&quot;</span>
+<span class="sd">4. Go to &quot;Credentials&quot; and create an API key</span>
+<span class="sd">5. Set via environment variable: export GOOGLE_CIVIC_API_KEY=&#39;your_key&#39;</span>
+
+<span class="sd">**More Information:**</span>
+<span class="sd">- API Documentation: https://developers.google.com/civic-information/docs/v2</span>
+<span class="sd">- API Console: https://console.developers.google.com/apis/library/civicinfo.googleapis.com</span>
+<span class="sd">- Data Coverage: https://developers.google.com/civic-information/docs/v2/coverage</span>
+
+<span class="sd">**Error Messages:**</span>
+<span class="sd">If you receive an authentication error, you need a Google API key:</span>
+<span class="sd">1. Register at: https://console.developers.google.com/</span>
+<span class="sd">2. Enable the Civic Information API for your project</span>
+<span class="sd">3. Create an API key in the Credentials section</span>
+
+<span class="sd">**Example Usage:**</span>
+
+<span class="sd">    &gt;&gt;&gt; from elections.google_civic import get_elections, get_voter_info, get_representatives  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; # Get list of available elections</span>
+<span class="sd">    &gt;&gt;&gt; elections = get_elections(api_key=&#39;YOUR_KEY&#39;)  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; # Get voter information for an address</span>
+<span class="sd">    &gt;&gt;&gt; voter_info = get_voter_info(  # doctest: +SKIP</span>
+<span class="sd">    ...     address=&#39;1600 Pennsylvania Ave NW, Washington, DC&#39;,</span>
+<span class="sd">    ...     api_key=&#39;YOUR_KEY&#39;</span>
+<span class="sd">    ... )</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; # Get representatives for an address</span>
+<span class="sd">    &gt;&gt;&gt; reps = get_representatives(  # doctest: +SKIP</span>
+<span class="sd">    ...     address=&#39;340 Main St, Venice, CA 90291&#39;,</span>
+<span class="sd">    ...     api_key=&#39;YOUR_KEY&#39;</span>
+<span class="sd">    ... )</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+
+
+<span class="n">BASE_URL</span> <span class="o">=</span> <span class="s2">&quot;https://civicinfo.googleapis.com/civicinfo/v2/&quot;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_api_key</span><span class="p">(</span><span class="n">api_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get API key from parameter or environment.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        api_key: Optional API key to use</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        API key string</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If no API key is available</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">api_key</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">api_key</span>
+
+    <span class="n">env_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;GOOGLE_CIVIC_API_KEY&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">env_key</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">env_key</span>
+
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+        <span class="s2">&quot;Google Civic Information API requires an API key. &quot;</span>
+        <span class="s2">&quot;Get a free key at: https://console.developers.google.com/apis/library/civicinfo.googleapis.com &quot;</span>
+        <span class="s2">&quot;Then either:</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="s2">&quot;  1. Pass it as api_key parameter</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="s2">&quot;  2. Set environment variable: export GOOGLE_CIVIC_API_KEY=&#39;your_key&#39;&quot;</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_make_request</span><span class="p">(</span>
+    <span class="n">endpoint</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">api_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Make a request to the Google Civic Information API.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        endpoint: API endpoint path (e.g., &#39;elections&#39;)</span>
+<span class="sd">        params: Query parameters</span>
+<span class="sd">        api_key: Optional API key</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        JSON response as dictionary</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        requests.HTTPError: If request fails</span>
+<span class="sd">        ValueError: If API key is missing</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">params</span><span class="p">[</span><span class="s2">&quot;key&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_get_api_key</span><span class="p">(</span><span class="n">api_key</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">endpoint</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">400</span><span class="p">:</span>
+        <span class="n">error_msg</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Bad request (400): </span><span class="si">{</span><span class="n">error_msg</span><span class="si">}</span><span class="s2">. &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Check your parameters and ensure addresses are properly formatted.&quot;</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">401</span> <span class="ow">or</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">403</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Authentication failed (</span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">). &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Your API key may be invalid or the API is not enabled for your project. &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Get a free API key at: https://console.developers.google.com/apis/library/civicinfo.googleapis.com&quot;</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">429</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Rate limit exceeded (429). Free tier allows 1,000 requests/day. &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Check your quota at: https://console.developers.google.com/&quot;</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Request failed with status </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="get_elections">
+<a class="viewcode-back" href="../../module_docs/elections/google_civic.html#elections.google_civic.get_elections">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_elections</span><span class="p">(</span><span class="n">api_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get list of available elections.</span>
+
+<span class="sd">    Returns information about current and upcoming elections, including election IDs</span>
+<span class="sd">    that can be used with get_voter_info().</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        api_key: Google Civic Information API key</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary with &#39;elections&#39; list containing election details</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; elections = get_elections(api_key=&#39;YOUR_KEY&#39;)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; len(elections[&#39;elections&#39;]) &gt; 0  # doctest: +SKIP</span>
+<span class="sd">        True</span>
+<span class="sd">        &gt;&gt;&gt; elections[&#39;elections&#39;][0][&#39;name&#39;]  # doctest: +SKIP</span>
+<span class="sd">        &#39;U.S. General Election&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_make_request</span><span class="p">(</span><span class="s2">&quot;elections&quot;</span><span class="p">,</span> <span class="p">{},</span> <span class="n">api_key</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_voter_info">
+<a class="viewcode-back" href="../../module_docs/elections/google_civic.html#elections.google_civic.get_voter_info">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_voter_info</span><span class="p">(</span>
+    <span class="n">address</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">election_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">api_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">return_all_available_data</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get voter information for a specific address.</span>
+
+<span class="sd">    Returns polling locations, early vote sites, ballot information, and candidates</span>
+<span class="sd">    for the given address.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        address: Full address (street, city, state, ZIP)</span>
+<span class="sd">        election_id: Optional election ID (get from get_elections())</span>
+<span class="sd">        api_key: Google Civic Information API key</span>
+<span class="sd">        return_all_available_data: If True, returns all available data</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary with election info, polling locations, candidates, etc.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; info = get_voter_info(  # doctest: +SKIP</span>
+<span class="sd">        ...     &#39;1600 Pennsylvania Ave NW, Washington, DC 20500&#39;,</span>
+<span class="sd">        ...     api_key=&#39;YOUR_KEY&#39;</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; &#39;pollingLocations&#39; in info or &#39;contests&#39; in info  # doctest: +SKIP</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;address&quot;</span><span class="p">:</span> <span class="n">address</span><span class="p">,</span>
+        <span class="s2">&quot;returnAllAvailableData&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">return_all_available_data</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="n">election_id</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;electionId&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">election_id</span>
+
+    <span class="k">return</span> <span class="n">_make_request</span><span class="p">(</span><span class="s2">&quot;voterinfo&quot;</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">api_key</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_representatives">
+<a class="viewcode-back" href="../../module_docs/elections/google_civic.html#elections.google_civic.get_representatives">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_representatives</span><span class="p">(</span>
+    <span class="n">address</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">include_offices</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">levels</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">roles</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">api_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get elected representatives for an address.</span>
+
+<span class="sd">    Returns information about federal, state, and local elected officials.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        address: Full address (if not provided, uses national divisions)</span>
+<span class="sd">        include_offices: Whether to include office information</span>
+<span class="sd">        levels: List of government levels (&#39;country&#39;, &#39;administrativeArea1&#39;, &#39;locality&#39;)</span>
+<span class="sd">        roles: List of roles (&#39;legislatorUpperBody&#39;, &#39;legislatorLowerBody&#39;, &#39;headOfGovernment&#39;)</span>
+<span class="sd">        api_key: Google Civic Information API key</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary with divisions, offices, and officials</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; reps = get_representatives(  # doctest: +SKIP</span>
+<span class="sd">        ...     &#39;340 Main St, Venice, CA 90291&#39;,</span>
+<span class="sd">        ...     api_key=&#39;YOUR_KEY&#39;</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; &#39;officials&#39; in reps  # doctest: +SKIP</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;includeOffices&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">include_offices</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()}</span>
+
+    <span class="k">if</span> <span class="n">address</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;address&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">address</span>
+    <span class="k">if</span> <span class="n">levels</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;levels&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">levels</span>
+    <span class="k">if</span> <span class="n">roles</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;roles&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">roles</span>
+
+    <span class="k">return</span> <span class="n">_make_request</span><span class="p">(</span><span class="s2">&quot;representatives&quot;</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">api_key</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_representatives_by_division">
+<a class="viewcode-back" href="../../module_docs/elections/google_civic.html#elections.google_civic.get_representatives_by_division">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_representatives_by_division</span><span class="p">(</span>
+    <span class="n">division_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">levels</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">roles</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">api_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get representatives for a specific Open Civic Data division.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        division_id: OCD division ID (e.g., &#39;ocd-division/country:us/state:ca&#39;)</span>
+<span class="sd">        levels: List of government levels to filter</span>
+<span class="sd">        roles: List of roles to filter</span>
+<span class="sd">        api_key: Google Civic Information API key</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary with offices and officials for the division</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; reps = get_representatives_by_division(  # doctest: +SKIP</span>
+<span class="sd">        ...     &#39;ocd-division/country:us/state:ca&#39;,</span>
+<span class="sd">        ...     api_key=&#39;YOUR_KEY&#39;</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; &#39;officials&#39; in reps  # doctest: +SKIP</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">if</span> <span class="n">levels</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;levels&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">levels</span>
+    <span class="k">if</span> <span class="n">roles</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;roles&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">roles</span>
+
+    <span class="n">endpoint</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;representatives/</span><span class="si">{</span><span class="n">division_id</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">return</span> <span class="n">_make_request</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">api_key</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
