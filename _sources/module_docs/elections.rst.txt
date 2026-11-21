@@ -1,4 +1,0 @@
-elections
-=========
-.. automodule:: elections
-   :members:

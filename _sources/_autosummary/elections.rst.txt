@@ -1,0 +1,30 @@
+﻿elections
+=========
+
+.. automodule:: elections
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      get_source
+      list_sources
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      ElectionsDataModules
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   democracy_works
+   google_civic
+   ipu_parline
+   nytimes
+   openfec

@@ -1,0 +1,17 @@
+elections.ipu\_parline
+======================
+
+.. automodule:: elections.ipu_parline
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      get_country_list
+      get_election_results
+      get_electoral_system
+      get_parliament
+      get_women_in_parliament
+      search_parliaments
+   

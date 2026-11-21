@@ -1,176 +1,895 @@
-
-
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="./">
-<head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to elections’s documentation! &mdash; elections 0.0.3 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
 
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="alternate" type="text/markdown" href="index.html.md">
+<link rel="describedby" href="llms.txt" type="text/markdown">
+<link rel="alternate" type="text/markdown" href="index.html.md">
+<link rel="describedby" href="llms.txt">
+    <title>elections &#8212; elections</title>
   
-      <script src="_static/jquery.js?v=5d32c60e"></script>
-      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=47de8214"></script>
-      <script src="_static/doctools.js?v=fd6eb6e6"></script>
-      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
-      <script src="_static/toggleprompt.js?v=d7ede5d2"></script>
-      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="_static/copybutton.js?v=f281be69"></script>
-    <script src="_static/js/theme.js"></script>
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d75fae25" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx_autodoc_typehints.css?v=057ac668" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/epythet.css?v=58454260" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=75c7c72ae941e8b558d8"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
+
+    <script src="_static/documentation_options.js?v=8c5712d9"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=fd10adb8"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="elections" href="module_docs/elections.html" /> 
-</head>
+    <link rel="next" title="API reference" href="api.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.0.4" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
 
-          
-          
-          <a href="#" class="icon icon-home">
-            elections
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/elections.html">elections</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/elections/democracy_works.html">elections.democracy_works</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/elections/google_civic.html">elections.google_civic</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/elections/ipu_parline.html">elections.ipu_parline</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/elections/nytimes.html">elections.nytimes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/elections/openfec.html">elections.openfec</a></li>
-</ul>
 
-        </div>
-      </div>
-    </nav>
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation" aria-expanded="false" aria-controls="pst-primary-sidebar-modal">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">elections</a>
-      </nav>
+  
+    
+  
 
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Welcome to elections’s documentation!</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
-      </li>
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">elections</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api.html">
+    API reference
+  </a>
+</li>
+
   </ul>
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <section id="welcome-to-elections-s-documentation">
-<h1>Welcome to elections’s documentation!<a class="headerlink" href="#welcome-to-elections-s-documentation" title="Link to this heading"></a></h1>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/elections.html">elections</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/elections.html#elections.ElectionsDataModules"><code class="docutils literal notranslate"><span class="pre">ElectionsDataModules</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/elections.html#elections.get_source"><code class="docutils literal notranslate"><span class="pre">get_source()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/elections.html#elections.list_sources"><code class="docutils literal notranslate"><span class="pre">list_sources()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/elections/democracy_works.html">elections.democracy_works</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/elections/democracy_works.html#elections.democracy_works.get_election_by_id"><code class="docutils literal notranslate"><span class="pre">get_election_by_id()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/elections/democracy_works.html#elections.democracy_works.get_elections"><code class="docutils literal notranslate"><span class="pre">get_elections()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/elections/democracy_works.html#elections.democracy_works.get_state_elections"><code class="docutils literal notranslate"><span class="pre">get_state_elections()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/elections/democracy_works.html#elections.democracy_works.get_upcoming_elections"><code class="docutils literal notranslate"><span class="pre">get_upcoming_elections()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/elections/google_civic.html">elections.google_civic</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/elections/google_civic.html#elections.google_civic.get_elections"><code class="docutils literal notranslate"><span class="pre">get_elections()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/elections/google_civic.html#elections.google_civic.get_representatives"><code class="docutils literal notranslate"><span class="pre">get_representatives()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/elections/google_civic.html#elections.google_civic.get_representatives_by_division"><code class="docutils literal notranslate"><span class="pre">get_representatives_by_division()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/elections/google_civic.html#elections.google_civic.get_voter_info"><code class="docutils literal notranslate"><span class="pre">get_voter_info()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/elections/ipu_parline.html">elections.ipu_parline</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/elections/ipu_parline.html#elections.ipu_parline.get_country_list"><code class="docutils literal notranslate"><span class="pre">get_country_list()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/elections/ipu_parline.html#elections.ipu_parline.get_election_results"><code class="docutils literal notranslate"><span class="pre">get_election_results()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/elections/ipu_parline.html#elections.ipu_parline.get_electoral_system"><code class="docutils literal notranslate"><span class="pre">get_electoral_system()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/elections/ipu_parline.html#elections.ipu_parline.get_parliament"><code class="docutils literal notranslate"><span class="pre">get_parliament()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/elections/ipu_parline.html#elections.ipu_parline.get_women_in_parliament"><code class="docutils literal notranslate"><span class="pre">get_women_in_parliament()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/elections/ipu_parline.html#elections.ipu_parline.search_parliaments"><code class="docutils literal notranslate"><span class="pre">search_parliaments()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/elections/nytimes.html">elections.nytimes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/elections/nytimes.html#elections.nytimes.Races"><code class="docutils literal notranslate"><span class="pre">Races</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/elections/nytimes.html#elections.nytimes.get_election_data"><code class="docutils literal notranslate"><span class="pre">get_election_data()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/elections/nytimes.html#elections.nytimes.get_president_timeseries"><code class="docutils literal notranslate"><span class="pre">get_president_timeseries()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/elections/nytimes.html#elections.nytimes.get_races"><code class="docutils literal notranslate"><span class="pre">get_races()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/elections/openfec.html">elections.openfec</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/elections/openfec.html#elections.openfec.get_candidate_totals"><code class="docutils literal notranslate"><span class="pre">get_candidate_totals()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/elections/openfec.html#elections.openfec.get_candidates"><code class="docutils literal notranslate"><span class="pre">get_candidates()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/elections/openfec.html#elections.openfec.get_committees"><code class="docutils literal notranslate"><span class="pre">get_committees()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/elections/openfec.html#elections.openfec.get_election_results"><code class="docutils literal notranslate"><span class="pre">get_election_results()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/elections/openfec.html#elections.openfec.search_candidates"><code class="docutils literal notranslate"><span class="pre">search_candidates()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</div>
-</section>
-<section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
-</ul>
-<p>Release: 0.0.3</p>
-<p>Last change: Aug 04, 2026</p>
-</section>
-
-
-           </div>
-          </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="module_docs/elections.html" class="btn btn-neutral float-right" title="elections" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+</nav></div>
+      
     </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
 
-  <hr/>
-
-  <div role="contentinfo">
-    <p></p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
         </div>
-      </div>
-    </section>
-  </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
+      
+      
+        <div class="navbar-item">
 
-</body>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/thorwhalen/elections" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button type="button" class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page" aria-expanded="false" aria-controls="pst-secondary-sidebar-modal">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal" tabindex="-1"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api.html">
+    API reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/thorwhalen/elections" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none"></div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <!-- generated by epythet -->
+<section id="elections">
+<h1>elections<a class="headerlink" href="#elections" title="Link to this heading">#</a></h1>
+<p>A unified Python interface to multiple election data sources from around the world.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">elections</span></code> package provides easy access to various election data APIs through a consistent interface. Whether you need U.S. federal campaign finance data, international parliamentary statistics, or real-time election results, this package offers a simple way to access it all.</p>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>elections
+</pre></div>
+</div>
+<p>Note: Some data sources require additional dependencies (pandas, py2store) which will be installed automatically.</p>
+</section>
+<section id="general-interface">
+<h2>General Interface<a class="headerlink" href="#general-interface" title="Link to this heading">#</a></h2>
+<p>The package provides a dictionary-like interface to access different data source modules:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">elections</span><span class="w"> </span><span class="kn">import</span> <span class="n">ElectionsDataModules</span>
+
+<span class="c1"># Access all data source modules</span>
+<span class="n">modules</span> <span class="o">=</span> <span class="n">ElectionsDataModules</span><span class="p">()</span>
+
+<span class="c1"># List available sources</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">modules</span><span class="p">))</span>
+<span class="c1"># ['nytimes', 'openfec', 'google_civic', 'democracy_works', 'ipu_parline']</span>
+</pre></div>
+</div>
+<section id="available-data-sources">
+<h3>Available Data Sources<a class="headerlink" href="#available-data-sources" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>nytimes</strong>: New York Times election results (2016, 2020, 2024) - No API key required</p></li>
+<li><p><strong>openfec</strong>: Federal Election Commission campaign finance data - Optional API key</p></li>
+<li><p><strong>google_civic</strong>: Google Civic Information API (polling, representatives, voter info) - API key required</p></li>
+<li><p><strong>democracy_works</strong>: Democracy Works election guidance (dates, deadlines, locations) - No API key required</p></li>
+<li><p><strong>ipu_parline</strong>: Inter-Parliamentary Union global parliamentary data - No API key required</p></li>
+</ul>
+</section>
+</section>
+<section id="usage-examples">
+<h2>Usage Examples<a class="headerlink" href="#usage-examples" title="Link to this heading">#</a></h2>
+<section id="openfec-federal-campaign-finance">
+<span id="openfec---federal-campaign-finance"></span><h3>OpenFEC - Federal Campaign Finance<a class="headerlink" href="#openfec-federal-campaign-finance" title="Link to this heading">#</a></h3>
+<p>Access U.S. federal campaign finance data, including candidates, committees, and contributions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">elections</span><span class="w"> </span><span class="kn">import</span> <span class="n">ElectionsDataModules</span>
+
+<span class="n">modules</span> <span class="o">=</span> <span class="n">ElectionsDataModules</span><span class="p">()</span>
+
+<span class="c1"># Get OpenFEC module</span>
+<span class="n">openfec</span> <span class="o">=</span> <span class="n">modules</span><span class="p">[</span><span class="s2">"openfec"</span><span class="p">]</span>
+
+<span class="c1"># Get 2024 presidential candidates</span>
+<span class="n">candidates</span> <span class="o">=</span> <span class="n">openfec</span><span class="o">.</span><span class="n">get_candidates</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="mi">2024</span><span class="p">,</span> <span class="n">office</span><span class="o">=</span><span class="s2">"president"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">candidates</span><span class="p">[</span><span class="s1">'results'</span><span class="p">])</span><span class="si">}</span><span class="s2"> candidates"</span><span class="p">)</span>
+
+<span class="c1"># Search for specific candidate</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">openfec</span><span class="o">.</span><span class="n">search_candidates</span><span class="p">(</span><span class="s2">"Biden"</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">2024</span><span class="p">)</span>
+
+<span class="c1"># Get financial totals for a candidate</span>
+<span class="n">totals</span> <span class="o">=</span> <span class="n">openfec</span><span class="o">.</span><span class="n">get_candidate_totals</span><span class="p">(</span><span class="s2">"P80001571"</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">2020</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>API Key:</strong> Optional for higher rate limits. Get a free key at https://api.open.fec.gov/developers/</p>
+</section>
+<section id="google-civic-information">
+<h3>Google Civic Information<a class="headerlink" href="#google-civic-information" title="Link to this heading">#</a></h3>
+<p>Get voter information, polling locations, and representatives:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">elections</span><span class="w"> </span><span class="kn">import</span> <span class="n">ElectionsDataModules</span>
+
+<span class="n">modules</span> <span class="o">=</span> <span class="n">ElectionsDataModules</span><span class="p">()</span>
+
+<span class="c1"># Get Google Civic module</span>
+<span class="n">civic</span> <span class="o">=</span> <span class="n">modules</span><span class="p">[</span><span class="s2">"google_civic"</span><span class="p">]</span>
+
+<span class="c1"># Get voter information for an address</span>
+<span class="n">info</span> <span class="o">=</span> <span class="n">civic</span><span class="o">.</span><span class="n">get_voter_info</span><span class="p">(</span>
+    <span class="s2">"1600 Pennsylvania Ave NW, Washington, DC"</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">"YOUR_KEY"</span>
+<span class="p">)</span>
+
+<span class="c1"># Get representatives for an address</span>
+<span class="n">reps</span> <span class="o">=</span> <span class="n">civic</span><span class="o">.</span><span class="n">get_representatives</span><span class="p">(</span><span class="s2">"340 Main St, Venice, CA 90291"</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">"YOUR_KEY"</span><span class="p">)</span>
+
+<span class="c1"># Get list of available elections</span>
+<span class="n">elections</span> <span class="o">=</span> <span class="n">civic</span><span class="o">.</span><span class="n">get_elections</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s2">"YOUR_KEY"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>API Key:</strong> Required. Get a free key at https://console.developers.google.com/</p>
+</section>
+<section id="ipu-parline-international-parliamentary-data">
+<span id="ipu-parline---international-parliamentary-data"></span><h3>IPU Parline - International Parliamentary Data<a class="headerlink" href="#ipu-parline-international-parliamentary-data" title="Link to this heading">#</a></h3>
+<p>Access global parliamentary and election data for 190+ countries:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">elections</span><span class="w"> </span><span class="kn">import</span> <span class="n">ElectionsDataModules</span>
+
+<span class="n">modules</span> <span class="o">=</span> <span class="n">ElectionsDataModules</span><span class="p">()</span>
+
+<span class="c1"># Get IPU Parline module</span>
+<span class="n">ipu</span> <span class="o">=</span> <span class="n">modules</span><span class="p">[</span><span class="s2">"ipu_parline"</span><span class="p">]</span>
+
+<span class="c1"># Get parliament information for France</span>
+<span class="n">france</span> <span class="o">=</span> <span class="n">ipu</span><span class="o">.</span><span class="n">get_parliament</span><span class="p">(</span><span class="s2">"FRA"</span><span class="p">)</span>
+
+<span class="c1"># Get election results for Germany</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">ipu</span><span class="o">.</span><span class="n">get_election_results</span><span class="p">(</span><span class="s2">"DEU"</span><span class="p">)</span>
+
+<span class="c1"># Get women in parliament statistics</span>
+<span class="n">stats</span> <span class="o">=</span> <span class="n">ipu</span><span class="o">.</span><span class="n">get_women_in_parliament</span><span class="p">(</span><span class="s2">"SWE"</span><span class="p">)</span>
+
+<span class="c1"># Get list of all countries</span>
+<span class="n">countries</span> <span class="o">=</span> <span class="n">ipu</span><span class="o">.</span><span class="n">get_country_list</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>API Key:</strong> Not required</p>
+</section>
+<section id="democracy-works">
+<h3>Democracy Works<a class="headerlink" href="#democracy-works" title="Link to this heading">#</a></h3>
+<p>Get U.S. election dates, deadlines, and voting locations:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">elections</span><span class="w"> </span><span class="kn">import</span> <span class="n">ElectionsDataModules</span>
+
+<span class="n">modules</span> <span class="o">=</span> <span class="n">ElectionsDataModules</span><span class="p">()</span>
+
+<span class="c1"># Get Democracy Works module</span>
+<span class="n">dw</span> <span class="o">=</span> <span class="n">modules</span><span class="p">[</span><span class="s2">"democracy_works"</span><span class="p">]</span>
+
+<span class="c1"># Get upcoming elections</span>
+<span class="n">upcoming</span> <span class="o">=</span> <span class="n">dw</span><span class="o">.</span><span class="n">get_upcoming_elections</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="s2">"PA"</span><span class="p">,</span> <span class="n">days_ahead</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Get elections for a specific state</span>
+<span class="n">state_elections</span> <span class="o">=</span> <span class="n">dw</span><span class="o">.</span><span class="n">get_state_elections</span><span class="p">(</span><span class="s2">"CA"</span><span class="p">)</span>
+
+<span class="c1"># Get all elections</span>
+<span class="n">elections</span> <span class="o">=</span> <span class="n">dw</span><span class="o">.</span><span class="n">get_elections</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>API Key:</strong> Not required</p>
+</section>
+<section id="new-york-times-election-results">
+<h3>New York Times Election Results<a class="headerlink" href="#new-york-times-election-results" title="Link to this heading">#</a></h3>
+<p>Access historical U.S. election results (2016, 2020, 2024):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">elections</span><span class="w"> </span><span class="kn">import</span> <span class="n">ElectionsDataModules</span>
+
+<span class="n">modules</span> <span class="o">=</span> <span class="n">ElectionsDataModules</span><span class="p">()</span>
+
+<span class="c1"># Get NYT module</span>
+<span class="n">nyt</span> <span class="o">=</span> <span class="n">modules</span><span class="p">[</span><span class="s2">"nytimes"</span><span class="p">]</span>
+
+<span class="c1"># Get election data for a state</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">nyt</span><span class="o">.</span><span class="n">get_election_data</span><span class="p">(</span><span class="s2">"florida"</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">2020</span><span class="p">)</span>
+
+<span class="c1"># Get all races for a state</span>
+<span class="n">races</span> <span class="o">=</span> <span class="n">nyt</span><span class="o">.</span><span class="n">get_races</span><span class="p">(</span><span class="s2">"pennsylvania"</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">2020</span><span class="p">)</span>
+
+<span class="c1"># Get president race time series</span>
+<span class="n">timeseries</span> <span class="o">=</span> <span class="n">nyt</span><span class="o">.</span><span class="n">get_president_timeseries</span><span class="p">(</span><span class="s2">"georgia"</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">2020</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>API Key:</strong> Not required</p>
+</section>
+</section>
+<section id="direct-module-import">
+<h2>Direct Module Import<a class="headerlink" href="#direct-module-import" title="Link to this heading">#</a></h2>
+<p>You can also import data source modules directly:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import specific modules</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">elections</span><span class="w"> </span><span class="kn">import</span> <span class="n">openfec</span><span class="p">,</span> <span class="n">google_civic</span><span class="p">,</span> <span class="n">ipu_parline</span>
+
+<span class="c1"># Use them directly</span>
+<span class="n">candidates</span> <span class="o">=</span> <span class="n">openfec</span><span class="o">.</span><span class="n">get_candidates</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="mi">2024</span><span class="p">,</span> <span class="n">office</span><span class="o">=</span><span class="s2">"president"</span><span class="p">)</span>
+<span class="n">info</span> <span class="o">=</span> <span class="n">google_civic</span><span class="o">.</span><span class="n">get_voter_info</span><span class="p">(</span><span class="s2">"1600 Pennsylvania Ave"</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">"YOUR_KEY"</span><span class="p">)</span>
+<span class="n">france</span> <span class="o">=</span> <span class="n">ipu_parline</span><span class="o">.</span><span class="n">get_parliament</span><span class="p">(</span><span class="s2">"FRA"</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="consistent-parameter-names">
+<h2>Consistent Parameter Names<a class="headerlink" href="#consistent-parameter-names" title="Link to this heading">#</a></h2>
+<p>Across all modules, we use consistent parameter names:</p>
+<ul class="simple">
+<li><p><strong>year</strong>: Election year (e.g., 2020, 2024)</p></li>
+<li><p><strong>region</strong>: Geographic region (state abbreviation like ‘PA’, or state name)</p></li>
+<li><p><strong>api_key</strong>: API authentication key (when required)</p></li>
+<li><p><strong>race_type</strong>: Type of race (e.g., ‘president’, ‘senate’, ‘house’)</p></li>
+<li><p><strong>office</strong>: Office being sought (used by some APIs)</p></li>
+</ul>
+</section>
+<section id="api-keys-setup">
+<h2>API Keys Setup<a class="headerlink" href="#api-keys-setup" title="Link to this heading">#</a></h2>
+<p>Set API keys via environment variables for convenience:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">OPENFEC_API_KEY</span><span class="o">=</span><span class="s1">'your_openfec_key'</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">GOOGLE_CIVIC_API_KEY</span><span class="o">=</span><span class="s1">'your_google_key'</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="specific-example-2020-us-elections">
+<h1>Specific Example: 2020 US elections<a class="headerlink" href="#specific-example-2020-us-elections" title="Link to this heading">#</a></h1>
+<p>Easy access to (US 2020) election statistics.</p>
+<p>Yes, you can do it via our general interface, doing:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">elections</span><span class="w"> </span><span class="kn">import</span> <span class="n">ElectionsDataModules</span>
+
+<span class="n">modules</span> <span class="o">=</span> <span class="n">ElectionsDataModules</span><span class="p">()</span>
+
+<span class="n">nyt</span> <span class="o">=</span> <span class="n">modules</span><span class="p">[</span><span class="s2">"nytimes"</span><span class="p">]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">nyt</span><span class="o">.</span><span class="n">get_election_data</span><span class="p">(</span><span class="s2">"florida"</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">2020</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>But here’s another convenient dict-like interface that was made based on it.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">elections</span><span class="w"> </span><span class="kn">import</span> <span class="n">President2020TimeSeries</span><span class="p">,</span> <span class="n">Races2020</span><span class="p">,</span> <span class="n">Election2020RawJson</span>
+</pre></div>
+</div>
+<section id="president-s-race-stats">
+<span id="presidents-race-stats"></span><h2>President’s race stats<a class="headerlink" href="#president-s-race-stats" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">elections</span><span class="w"> </span><span class="kn">import</span> <span class="n">President2020TimeSeries</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">President2020TimeSeries</span><span class="p">()</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="c1"># Returns: 51</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">s</span></code> is a dictionary-like interface to the presidential race. Its keys are the states:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="o">*</span><span class="n">s</span><span class="p">)</span>
+<span class="c1"># alabama alaska arizona arkansas california colorado connecticut delaware</span>
+<span class="c1"># district-of-columbia florida georgia hawaii idaho illinois indiana iowa kansas</span>
+<span class="c1"># kentucky louisiana maine maryland massachusetts michigan minnesota mississippi</span>
+<span class="c1"># missouri montana nebraska nevada new-hampshire new-jersey new-mexico new-york</span>
+<span class="c1"># north-carolina north-dakota ohio oklahoma oregon pennsylvania rhode-island</span>
+<span class="c1"># south-carolina south-dakota tennessee texas utah vermont virginia washington</span>
+<span class="c1"># west-virginia wisconsin wyoming</span>
+</pre></div>
+</div>
+<p>Its values are dataframes containing the stats:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">state</span> <span class="o">=</span> <span class="s2">"georgia"</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">state</span><span class="p">]</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>timestamp</p></th>
+<th class="head"><p>votes</p></th>
+<th class="head"><p>eevp</p></th>
+<th class="head"><p>eevp_source</p></th>
+<th class="head"><p>trumpd</p></th>
+<th class="head"><p>bidenj</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>2020-11-04T09:23:03Z</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>edison</p></td>
+<td><p>0.000</p></td>
+<td><p>0.000</p></td>
+</tr>
+<tr class="row-odd"><td><p>2020-11-04T00:14:11Z</p></td>
+<td><p>408</p></td>
+<td><p>0</p></td>
+<td><p>edison</p></td>
+<td><p>0.674</p></td>
+<td><p>0.326</p></td>
+</tr>
+<tr class="row-even"><td><p>2020-11-04T00:15:51Z</p></td>
+<td><p>127106</p></td>
+<td><p>2</p></td>
+<td><p>edison</p></td>
+<td><p>0.370</p></td>
+<td><p>0.618</p></td>
+</tr>
+<tr class="row-odd"><td><p>2020-11-04T00:19:55Z</p></td>
+<td><p>173638</p></td>
+<td><p>3</p></td>
+<td><p>edison</p></td>
+<td><p>0.431</p></td>
+<td><p>0.557</p></td>
+</tr>
+<tr class="row-even"><td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+</tr>
+<tr class="row-odd"><td><p>2020-11-06T23:45:40Z</p></td>
+<td><p>4970093</p></td>
+<td><p>99</p></td>
+<td><p>edison</p></td>
+<td><p>0.493</p></td>
+<td><p>0.494</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><em>456 rows × 5 columns</em></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">"bidenj"</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">state</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="Biden vote share over time in Georgia" src="https://github.com/thorwhalen/elections/blob/master/output_9_0.png" /></p>
+</section>
+<section id="other-races">
+<h2>Other races<a class="headerlink" href="#other-races" title="Link to this heading">#</a></h2>
+<p>But that’s not the only race going on here.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">elections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Races2020</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">Races2020</span><span class="p">()</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="c1"># Returns: 51</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="s2">"new-york"</span><span class="p">]</span>  <span class="c1"># by the way, you can tab-complete this in a jupyter notebook</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+<span class="c1"># &lt;class 'py2store.base.Store'&gt;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="si">}</span><span class="s2"> items... Here are the first 5:"</span><span class="p">)</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">)[:</span><span class="mi">5</span><span class="p">]</span>
+<span class="c1"># ['president-general-2020-11-03',</span>
+<span class="c1">#  'house-general-district-001-2020-11-03',</span>
+<span class="c1">#  'house-general-district-002-2020-11-03',</span>
+<span class="c1">#  'house-general-district-003-2020-11-03',</span>
+<span class="c1">#  'house-general-district-004-2020-11-03']</span>
+</pre></div>
+</div>
+<p>So we see that now, instead of just getting the president’s race, we get… 242 races (one of which is the president’s race).</p>
+<p>What you need to know is that <code class="docutils literal notranslate"><span class="pre">President2020TimeSeries</span></code> just gave you one of the many data fields available for the race (the ‘timeseries’ one), extracted and formatted for your convenience, since it’s probably the main information you’re here for.</p>
+<p>But there are other associated (raw) data fields you may or may not be interested in. Here’s what you got:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span>
+    <span class="s2">"president-general-2020-11-03"</span>
+<span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>  <span class="c1"># you can tab complete here as well (you're welcome!)</span>
+<span class="c1"># dict_keys(['race_id', 'race_slug', 'url', 'state_page_url', 'ap_polls_page',</span>
+<span class="c1">#            'edison_exit_polls_page', 'race_type', 'election_type', 'election_date',</span>
+<span class="c1">#            'runoff', 'race_name', 'office', 'officeid', 'race_rating', 'seat',</span>
+<span class="c1">#            'seat_name', 'state_id', 'state_slug', 'state_name', 'state_nyt_abbrev',</span>
+<span class="c1">#            'state_shape', 'party_id', 'uncontested', 'report', 'result',</span>
+<span class="c1">#            'result_source', 'gain', 'lost_seat', 'votes', 'electoral_votes',</span>
+<span class="c1">#            'absentee_votes', 'absentee_counties', 'absentee_count_progress',</span>
+<span class="c1">#            'absentee_outstanding', 'absentee_max_ballots', 'provisional_outstanding',</span>
+<span class="c1">#            'provisional_count_progress', 'poll_display', 'poll_countdown_display',</span>
+<span class="c1">#            'poll_waiting_display', 'poll_time', 'poll_time_short', 'precincts_reporting',</span>
+<span class="c1">#            'precincts_total', 'reporting_display', 'reporting_value', 'eevp',</span>
+<span class="c1">#            'tot_exp_vote', 'eevp_source', 'eevp_value', 'eevp_display',</span>
+<span class="c1">#            'county_data_source', 'incumbent_party', 'no_forecast', 'last_updated',</span>
+<span class="c1">#            'candidates', 'has_incumbent', 'leader_margin_value', 'leader_margin_votes',</span>
+<span class="c1">#            'leader_margin_display', 'leader_margin_name_display', 'leader_party_id',</span>
+<span class="c1">#            'counties', 'votes2016', 'margin2016', 'clinton2016', 'trump2016',</span>
+<span class="c1">#            'votes2012', 'margin2012', 'expectations_text', 'expectations_text_short',</span>
+<span class="c1">#            'absentee_ballot_deadline', 'absentee_postmark_deadline', 'update_sentences',</span>
+<span class="c1">#            'race_diff', 'winnerCalledTimestamp', 'timeseries'])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"president-general-2020-11-03"</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="s2">"trump2016"</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="s2">"clinton2016"</span><span class="p">])</span>
+<span class="c1"># 2819534 4556124</span>
+</pre></div>
+</div>
+</section>
+<section id="election2020rawjson">
+<h2>Election2020RawJson<a class="headerlink" href="#election2020rawjson" title="Link to this heading">#</a></h2>
+<p>But if you want even more raw data than the above, we can give that to you.</p>
+<p>With <code class="docutils literal notranslate"><span class="pre">Election2020RawJson</span></code> you get access to the original full JSON.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">elections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Election2020RawJson</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">raw_jsons</span> <span class="o">=</span> <span class="n">Election2020RawJson</span><span class="p">()</span>
+<span class="n">json_data</span> <span class="o">=</span> <span class="n">raw_jsons</span><span class="p">[</span><span class="s2">"california"</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">json_data</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="c1"># dict_keys(['data', 'meta'])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">json_data</span><span class="p">[</span><span class="s2">"meta"</span><span class="p">])</span>
+<span class="c1"># {'version': 10403,</span>
+<span class="c1">#  'track': '2020-11-03',</span>
+<span class="c1">#  'timestamp': '2020-11-06T23:52:57.623Z'}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">json_data</span><span class="p">[</span><span class="s2">"data"</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="c1"># dict_keys(['races', 'party_control', 'liveUpdates'])</span>
+</pre></div>
+</div>
+<section id="party-control">
+<h3>Party Control<a class="headerlink" href="#party-control" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">party_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">json_data</span><span class="p">[</span><span class="s2">"data"</span><span class="p">][</span><span class="s2">"party_control"</span><span class="p">])</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">"race_type"</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>race_type</p></th>
+<th class="head"><p>house</p></th>
+<th class="head"><p>president</p></th>
+<th class="head"><p>senate</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>needed_for_control</p></td>
+<td><p>218</p></td>
+<td><p>270</p></td>
+<td><p>50</p></td>
+</tr>
+<tr class="row-odd"><td><p>total</p></td>
+<td><p>435</p></td>
+<td><p>538</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>no_election</p></td>
+<td><p>{}</p></td>
+<td><p>{}</p></td>
+<td><p>{‘democrat’: 35, ‘republican’: 30, ‘other’: 0}</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="live-updates">
+<h3>Live Updates<a class="headerlink" href="#live-updates" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">updates_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">json_data</span><span class="p">[</span><span class="s2">"data"</span><span class="p">][</span><span class="s2">"liveUpdates"</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Total live updates: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">updates_df</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="c1"># Total live updates: 449</span>
+</pre></div>
+</div>
+<p>Example entries from the 449 live updates:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>id</p></th>
+<th class="head"><p>author</p></th>
+<th class="head"><p>location</p></th>
+<th class="head"><p>text</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>333</p></td>
+<td><p>Nate Cohn</p></td>
+<td><p>in New York</p></td>
+<td><p>New ballots from Clark County (that’s Las Vegas)…</p></td>
+</tr>
+<tr class="row-odd"><td><p>332</p></td>
+<td><p>Nate Cohn</p></td>
+<td><p>in New York</p></td>
+<td><p>The latest Arizona ballot releases aren’t looking…</p></td>
+</tr>
+<tr class="row-even"><td><p>331</p></td>
+<td><p>Nick Corasaniti</p></td>
+<td><p>in Philadelphia</p></td>
+<td><p>There are still 102,000 mail ballots to be counted…</p></td>
+</tr>
+<tr class="row-odd"><td><p>330</p></td>
+<td><p>Dave Philipps</p></td>
+<td><p>in Las Vegas</p></td>
+<td><p>Biden nets 2,520 votes in the Las Vegas area…</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="epythet-aggregates">This documentation as a single file: <a href="elections.md">elections.md</a> (Markdown, for agents).</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+<p class="epythet-provenance" style="font-size:.8em;opacity:.65;margin-top:2.5em;text-align:right">built 2026-11-21 17:37 UTC from <a href="https://github.com/thorwhalen/elections/commit/f847be1e2c84d9a2ee69e84021d9dcdbf562192f">f847be1</a> (master) · elections 0.0.4 · <a href="about-this-build.html">about this build</a></p>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="right-next"
+       href="api.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">API reference</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal" tabindex="-1"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">elections</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#general-interface">General Interface</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#available-data-sources">Available Data Sources</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usage-examples">Usage Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#openfec-federal-campaign-finance">OpenFEC - Federal Campaign Finance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#google-civic-information">Google Civic Information</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ipu-parline-international-parliamentary-data">IPU Parline - International Parliamentary Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#democracy-works">Democracy Works</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#new-york-times-election-results">New York Times Election Results</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#direct-module-import">Direct Module Import</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#consistent-parameter-names">Consistent Parameter Names</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#api-keys-setup">API Keys Setup</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#specific-example-2020-us-elections">Specific Example: 2020 US elections</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#president-s-race-stats">President’s race stats</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-races">Other races</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#election2020rawjson">Election2020RawJson</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#party-control">Party Control</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#live-updates">Live Updates</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/index.md.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.24.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
 </html>

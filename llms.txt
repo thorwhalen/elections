@@ -1,0 +1,24 @@
+# elections
+
+> A unified Python interface to multiple election data sources from around the world.
+
+
+## Pages
+
+- [elections](index.html.md): A unified Python interface to multiple election data sources from around the world.
+- [API reference](api.html.md): | &#96;elections&#96;   | Election Data Package   |
+- [elections](_autosummary/elections.html.md): Election Data Package
+- [elections.democracy_works](_autosummary/elections.democracy_works.html.md): Democracy Works Elections API Data Source
+- [elections.google_civic](_autosummary/elections.google_civic.html.md): Google Civic Information API Data Source
+- [elections.ipu_parline](_autosummary/elections.ipu_parline.html.md): IPU Parline - Inter-Parliamentary Union Data Source
+- [elections.nytimes](_autosummary/elections.nytimes.html.md): New York Times Election Data Source
+- [elections.openfec](_autosummary/elections.openfec.html.md): OpenFEC - Federal Election Commission Data Source
+- [About this build](about-this-build.html.md): This documentation was built on &#42;&#42;2026-11-21 17:37 UTC&#42;&#42; from commit &lt;a href="https://github.com/tho...
+
+## Optional
+
+- [elections.md](elections.md): Complete documentation in a single file.
+
+## Build
+
+- [build_info.json](build_info.json): build provenance (commit, version, tool versions, whether the docs match the package)

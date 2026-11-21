@@ -1,4 +1,0 @@
-elections.democracy_works
-=========================
-.. automodule:: elections.democracy_works
-   :members:

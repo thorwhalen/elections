@@ -1,88 +1,709 @@
-
-
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="../../">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>elections.nytimes &mdash; elections 0.0.3 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="alternate" type="text/markdown" href="nytimes.html.md">
+<link rel="describedby" href="../../llms.txt" type="text/markdown">
+    <title>elections.nytimes &#8212; elections</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d75fae25" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx_autodoc_typehints.css?v=057ac668" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/epythet.css?v=58454260" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=75c7c72ae941e8b558d8"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
+
+    <script src="../../_static/documentation_options.js?v=8c5712d9"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
+
+
+
+
+
+const initStyles = () => {
+    const defaultStyle = document.createElement('style');
+    defaultStyle.textContent = "pre.mermaid {\n    /* Same as .mermaid-container > pre */\n    display: block;\n    width: 100%;\n}\n\npre.mermaid > svg {\n    /* Same as .mermaid-container > pre > svg */\n    height: 500px;\n    width: 100%;\n    max-width: 100% !important;\n}";
+    document.head.appendChild(defaultStyle);
+
+    const fullscreenStyle = document.createElement('style');
+    fullscreenStyle.textContent = ".mermaid-container {\n    position: relative;\n    display: flex;\n    flex-direction: row;\n    width: 100%;\n}\n\n.mermaid-container > pre {\n    display: block;\n    width: 100%;\n}\n\n.mermaid-container > pre > svg {\n    height: 500px;\n    width: 100%;\n    max-width: 100% !important;\n}\n\n.mermaid-fullscreen-btn {\n    position: absolute;\n    width: 28px;\n    height: 28px;\n    background: rgba(255, 255, 255, 0.95);\n    border: 1px solid rgba(0, 0, 0, 0.3);\n    border-radius: 4px;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    transition: all 0.2s;\n    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);\n    font-size: 14px;\n    line-height: 1;\n    padding: 0;\n    color: #333;\n}\n\n.mermaid-fullscreen-btn:hover {\n    opacity: 100% !important;\n    background: rgba(255, 255, 255, 1);\n    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);\n    transform: scale(1.1);\n}\n\n.mermaid-fullscreen-btn.dark-theme {\n    background: rgba(50, 50, 50, 0.95);\n    border: 1px solid rgba(255, 255, 255, 0.3);\n    color: #e0e0e0;\n}\n\n.mermaid-fullscreen-btn.dark-theme:hover {\n    background: rgba(60, 60, 60, 1);\n    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);\n}\n\n.mermaid-fullscreen-modal {\n    display: none;\n    position: fixed !important;\n    top: 0 !important;\n    left: 0 !important;\n    width: 95vw;\n    height: 100vh;\n    background: rgba(255, 255, 255, 0.98);\n    z-index: 9999;\n    padding: 20px;\n    overflow: auto;\n}\n\n.mermaid-fullscreen-modal.dark-theme {\n    background: rgba(0, 0, 0, 0.98);\n}\n\n.mermaid-fullscreen-modal.active {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.mermaid-container-fullscreen {\n    position: relative;\n    width: 95vw;\n    height: 90vh;\n    max-width: 95vw;\n    max-height: 90vh;\n    background: white;\n    border-radius: 8px;\n    padding: 20px;\n    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);\n    overflow: auto;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.mermaid-container-fullscreen.dark-theme {\n    background: #1a1a1a;\n    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);\n}\n\n.mermaid-container-fullscreen pre.mermaid {\n    width: 100%;\n    height: 100%;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.mermaid-container-fullscreen .mermaid svg {\n    height: 100% !important;\n    width: 100% !important;\n    cursor: grab;\n}\n\n.mermaid-fullscreen-close {\n    position: fixed !important;\n    top: 20px !important;\n    right: 20px !important;\n    width: 40px;\n    height: 40px;\n    background: rgba(255, 255, 255, 0.95);\n    border: 1px solid rgba(0, 0, 0, 0.2);\n    border-radius: 50%;\n    cursor: pointer;\n    z-index: 10000;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);\n    transition: all 0.2s;\n    font-size: 24px;\n    line-height: 1;\n    color: #333;\n}\n\n.mermaid-fullscreen-close:hover {\n    background: white;\n    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);\n    transform: scale(1.1);\n}\n\n.mermaid-fullscreen-close.dark-theme {\n    background: rgba(50, 50, 50, 0.95);\n    border: 1px solid rgba(255, 255, 255, 0.2);\n    color: #e0e0e0;\n}\n\n.mermaid-fullscreen-close.dark-theme:hover {\n    background: rgba(60, 60, 60, 1);\n    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);\n}\n\n.mermaid-fullscreen-modal .mermaid-fullscreen-btn {\n    display: none !important;\n}";
+    document.head.appendChild(fullscreenStyle);
+}
+
+// Detect if page has dark background
+const isDarkTheme = () => {
+    // We use a set of heuristics:
+    // 1. Check for common dark mode classes or attributes
+    // 2. Check computed background color brightness
+    if (document.documentElement.classList.contains('dark') ||
+        document.documentElement.getAttribute('data-theme') === 'dark' ||
+        document.body.classList.contains('dark') ||
+        document.body.getAttribute('data-theme') === 'dark') {
+        // console.log("Dark theme detected via class/attribute");
+        return true;
+    }
+    if (document.documentElement.classList.contains('light') ||
+        document.documentElement.getAttribute('data-theme') === 'light' ||
+        document.body.classList.contains('light') ||
+        document.body.getAttribute('data-theme') === 'light') {
+        // console.log("Light theme detected via class/attribute");
+        return false;
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // console.log("Dark theme detected via prefers-color-scheme");
+        return true;
+    }
+    const bgColor = window.getComputedStyle(document.body).backgroundColor;
+    const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+        const r = parseInt(match[1]);
+        const g = parseInt(match[2]);
+        const b = parseInt(match[3]);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        // console.log("Background color brightness:", brightness);
+        return brightness < 128;
+    }
+    // console.log("No dark or light theme detected, defaulting to light theme");
+    return false;
+};
+
+let darkTheme = isDarkTheme();
+let modal = null;
+let modalContent = null;
+let previousScrollOffset = [window.scrollX, window.scrollY];
+let _lazyObserver = null;
+let _renderQueue = Promise.resolve();
+let closeModal = () => {};
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal?.classList.contains('active')) {
+        closeModal();
+    }
+});
+
+// Apply d3 zoom to each SVG. Idempotent: an SVG already wrapped is skipped,
+// so this is safe to call both for the initial batch and for diagrams that
+// render lazily once they become visible.
+const addZoomToSvgs = (svgs) => {
+    svgs.each(function() {
+        if (this.getAttribute('data-zoom-applied') === 'true') return;
+        var svg = d3.select(this);
+        svg.html("<g class='wrapper'>" + svg.html() + "</g>");
+        var inner = svg.select("g");
+        var zoom = d3.zoom().on("zoom", function(event) {
+            inner.attr("transform", event.transform);
+        });
+        svg.call(zoom);
+        this.setAttribute('data-zoom-applied', 'true');
+    });
+};
+
+const runMermaid = async (rerun) => {
+    console.log("Running mermaid diagrams, rerun =", rerun);
+    // clear all existing mermaid charts
+    let all_mermaids = document.querySelectorAll(".mermaid");
+
+    if (rerun) {
+        // Disconnect any previous lazy rendering observer
+        if (_lazyObserver) {
+            _lazyObserver.disconnect();
+            _lazyObserver = null;
+        }
+
+        all_mermaids.forEach((el) => {
+            el.removeAttribute('data-mermaid-deferred');
+            el.removeAttribute('data-mermaid-render-failed');
+            if(!el.hasAttribute("data-original-code")) {
+                // store original code
+                // console.log(`Storing original code for first run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+            if(el.getAttribute("data-processed") === "true") {
+                // remove and restore original
+                el.removeAttribute("data-processed");
+                // console.log(`Restoring original code for re-run: `, el.getAttribute('data-original-code'));
+                el.innerHTML = el.getAttribute('data-original-code');
+            } else {
+                // store original code
+                // console.log(`Storing original code for re-run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+        });
+
+        // Separate visible and hidden elements. Mermaid's layout engine measures
+        // text dimensions via the DOM, which fails for elements hidden by a parent
+        // (e.g., Reveal.js non-active slides, sphinx-design unopened tabs),
+        // producing broken SVGs. Render visible elements now, defer hidden ones.
+        const visible = [];
+        const hidden = [];
+        all_mermaids.forEach((el) => {
+            // offsetParent is null for display:none ancestors.
+            // getClientRects().length > 0 catches position:fixed elements
+            // (which also have null offsetParent but are still visible).
+            if (el.offsetParent !== null || el.getClientRects().length > 0) {
+                visible.push(el);
+            } else {
+                hidden.push(el);
+                el.setAttribute('data-mermaid-deferred', 'true');
+            }
+        });
+
+        if (visible.length > 0) {
+            try {
+                await mermaid.run({ nodes: visible });
+            } catch (e) {
+                console.error("Mermaid rendering failed:", e);
+            }
+        }
+
+        // Lazily render hidden elements when they become visible.
+        // Uses a promise chain (_renderQueue) to serialize rendering,
+        // since IntersectionObserver may report multiple entries at once
+        // and mermaid.run() is not safe to call concurrently.
+        if (hidden.length > 0) {
+            if (typeof IntersectionObserver === 'undefined') {
+                console.warn("IntersectionObserver not available; hidden mermaid diagrams will not render.");
+            } else {
+                _renderQueue = Promise.resolve();
+                _lazyObserver = new IntersectionObserver((entries) => {
+                    for (const entry of entries) {
+                        if (entry.isIntersecting && entry.target.getAttribute("data-processed") !== "true") {
+                            _lazyObserver.unobserve(entry.target);
+                            const el = entry.target;
+                            _renderQueue = _renderQueue.then(async () => {
+                                try {
+                                    await mermaid.run({ nodes: [el] });
+                                    el.removeAttribute('data-mermaid-deferred');
+                                    // Apply zoom to the now-rendered diagram, matching
+                                    // the decoration visible diagrams receive.
+                                    if (false) {
+                                        addZoomToSvgs(d3.selectAll("").select(function() {
+                                            return this.querySelector("svg");
+                                        }));
+                                    }
+                                } catch (e) {
+                                    console.error("Mermaid deferred rendering failed:", e);
+                                    el.removeAttribute('data-mermaid-deferred');
+                                    el.setAttribute('data-mermaid-render-failed', 'true');
+                                }
+                            });
+                        }
+                    }
+                });
+                hidden.forEach((el) => _lazyObserver.observe(el));
+            }
+        }
+    }
+
+    all_mermaids = document.querySelectorAll(".mermaid");
+    // Exclude deferred (hidden) and render-failed elements from completion checks
+    const mermaids_active = document.querySelectorAll(".mermaid:not([data-mermaid-deferred]):not([data-mermaid-render-failed])");
+    const mermaids_processed = document.querySelectorAll(".mermaid:not([data-mermaid-deferred]):not([data-mermaid-render-failed])[data-processed='true']");
+
+    if (false) {
+        const mermaids_to_add_zoom = 0 === -1 ? mermaids_active.length : 0;
+        if(mermaids_to_add_zoom > 0) {
+            var svgs = d3.selectAll("").select(function() {
+                return this.querySelector("svg");
+            });
+            // Wait until every active (visible) diagram has rendered. Deferred
+            // diagrams are excluded, so a fixed d3_node_count that counts a
+            // hidden diagram no longer loops forever waiting for its SVG.
+            if(mermaids_active.length !== mermaids_processed.length) {
+                setTimeout(() => runMermaid(false), 200);
+                return;
+            }
+            addZoomToSvgs(svgs);
+        }
+    } else if(mermaids_active.length !== mermaids_processed.length) {
+        // Wait for mermaid to process all diagrams
+        setTimeout(() => runMermaid(false), 200);
+        return;
+    }
+
+    // Stop here if not adding fullscreen capability
+    if (!true) return;
+
+    if (modal !== null ) {
+        // Destroy existing modal
+        modal.remove();
+        modal = null;
+        modalContent = null;
+    }
+
+    modal = document.createElement('div');
+    modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Fullscreen diagram viewer');
+    modal.innerHTML = `
+        <button class="mermaid-fullscreen-close${darkTheme ? ' dark-theme' : ''}" aria-label="Close fullscreen">✕</button>
+        <div class="mermaid-container-fullscreen${darkTheme ? ' dark-theme' : ''}"></div>
+    `;
+    document.body.appendChild(modal);
+
+    modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
+
+    closeModal = () => {
+        modal.classList.remove('active');
+        modalContent.innerHTML = '';
+        document.body.style.overflow = ''
+        window.scrollTo({left: previousScrollOffset[0], top: previousScrollOffset[1], behavior: 'instant'});
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
+        if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
+            mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            // Already processed, adjust button class if needed
+            const existingBtn = mermaidDiv.parentNode.querySelector('.mermaid-fullscreen-btn');
+            if (existingBtn) {
+                existingBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+            }
+            return;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'mermaid-container';
+        mermaidDiv.parentNode.insertBefore(container, mermaidDiv);
+        container.appendChild(mermaidDiv);
+
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+        fullscreenBtn.setAttribute('aria-label', 'View diagram in fullscreen');
+        fullscreenBtn.textContent = "\u26f6";
+        fullscreenBtn.style.opacity = "50%";
+
+        // Calculate dynamic position based on diagram's margin and padding
+        const diagramStyle = window.getComputedStyle(mermaidDiv);
+        const marginTop = parseFloat(diagramStyle.marginTop) || 0;
+        const marginRight = parseFloat(diagramStyle.marginRight) || 0;
+        const paddingTop = parseFloat(diagramStyle.paddingTop) || 0;
+        const paddingRight = parseFloat(diagramStyle.paddingRight) || 0;
+        fullscreenBtn.style.top = `${marginTop + paddingTop + 4}px`;
+        fullscreenBtn.style.right = `${marginRight + paddingRight + 4}px`;
+
+        fullscreenBtn.addEventListener('click', () => {
+            previousScrollOffset = [window.scrollX, window.scrollY];
+            const clone = mermaidDiv.cloneNode(true);
+            modalContent.innerHTML = '';
+            modalContent.appendChild(clone);
+
+            const svg = clone.querySelector('svg');
+            if (svg) {
+                svg.removeAttribute('width');
+                svg.removeAttribute('height');
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '100%';
+                svg.style.display = 'block';
+
+                if (false) {
+                    setTimeout(() => {
+                        const g = svg.querySelector('g');
+                        if (g) {
+                            var svgD3 = d3.select(svg);
+                            svgD3.html("<g class='wrapper'>" + svgD3.html() + "</g>");
+                            var inner = svgD3.select("g");
+                            var zoom = d3.zoom().on("zoom", function(event) {
+                                inner.attr("transform", event.transform);
+                            });
+                            svgD3.call(zoom);
+                        }
+                    }, 100);
+                }
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        container.appendChild(fullscreenBtn);
+    });
+};
+
+
+
+const load = async () => {
+    initStyles();
+
+
+    await runMermaid(true);
+
+    const reRunIfThemeChanges = async () => {
+        const newDarkTheme = isDarkTheme();
+        if (newDarkTheme !== darkTheme) {
+            darkTheme = newDarkTheme;
+            console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
+            await mermaid.initialize(
+                {...{"startOnLoad": false},
+                ...{ darkMode: darkTheme, theme: darkTheme ? "dark" : "default" },
+                }
+            );
+            await runMermaid(true);
+        }
+    };
+
+    // Update theme classes when theme changes
+    const themeObserver = new MutationObserver(reRunIfThemeChanges);
+    themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    themeObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+};
+
+
+
+
+
+console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
+mermaid.initialize(
+    {...{"startOnLoad": false},
+    ...{ darkMode: darkTheme, theme: darkTheme ? "dark" : "default" },
+    }
+);
+
+window.addEventListener("load", load);
+window.runMermaid = runMermaid;</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/elections/nytimes';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.0.4" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
 
   
-      <script src="../../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=47de8214"></script>
-      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
-      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
-      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
-      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="../../_static/copybutton.js?v=f281be69"></script>
-    <script src="../../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" /> 
-</head>
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../../index.html" class="icon icon-home">
-            elections
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections.html">elections</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/democracy_works.html">elections.democracy_works</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/google_civic.html">elections.google_civic</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/ipu_parline.html">elections.ipu_parline</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/nytimes.html">elections.nytimes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../module_docs/elections/openfec.html">elections.openfec</a></li>
-</ul>
 
-        </div>
-      </div>
-    </nav>
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation" aria-expanded="false" aria-controls="pst-primary-sidebar-modal">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">elections</a>
-      </nav>
+  
+    
+  
 
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
-          <li class="breadcrumb-item"><a href="../elections.html">elections</a></li>
-      <li class="breadcrumb-item active">elections.nytimes</li>
-      <li class="wy-breadcrumbs-aside">
-      </li>
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">elections</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api.html">
+    API reference
+  </a>
+</li>
+
   </ul>
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <h1>Source code for elections.nytimes</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;New York Times Election Data Source</span>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
 
-<span class="sd">This module provides access to election data from the New York Times&#39; unofficial</span>
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/thorwhalen/elections" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal" tabindex="-1"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api.html">
+    API reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/thorwhalen/elections" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-house"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../elections.html" class="nav-link">elections</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">elections.nytimes</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for elections.nytimes</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""New York Times Election Data Source</span>
+
+<span class="sd">This module provides access to election data from the New York Times' unofficial</span>
 <span class="sd">election results API. The API provides detailed election results including vote</span>
 <span class="sd">counts, candidate information, and time-series data for U.S. elections.</span>
 
@@ -103,20 +724,20 @@
 <span class="sd">**Example Usage:**</span>
 
 <span class="sd">NOTE: I only managed to get data for year=2020. I implemented the patterns for other years,</span>
-<span class="sd">but it doesn&#39;t seem to work.</span>
+<span class="sd">but it doesn't seem to work.</span>
 
 <span class="sd">    &gt;&gt;&gt; from elections.nytimes import get_election_data, get_races, get_president_timeseries  # doctest: +SKIP</span>
 <span class="sd">    &gt;&gt;&gt;</span>
 <span class="sd">    &gt;&gt;&gt; # Get raw election data for Pennsylvania in 2020</span>
-<span class="sd">    &gt;&gt;&gt; data = get_election_data(region=&#39;pennsylvania&#39;)  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt; data = get_election_data(region='pennsylvania')  # doctest: +SKIP</span>
 <span class="sd">    &gt;&gt;&gt;</span>
 <span class="sd">    &gt;&gt;&gt; # Get races for a specific state</span>
-<span class="sd">    &gt;&gt;&gt; races = get_races(region=&#39;florida&#39;)  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt; races = get_races(region='florida')  # doctest: +SKIP</span>
 <span class="sd">    &gt;&gt;&gt;</span>
 <span class="sd">    &gt;&gt;&gt; # Get president race time series</span>
-<span class="sd">    &gt;&gt;&gt; timeseries = get_president_timeseries(region=&#39;georgia&#39;)  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt; timeseries = get_president_timeseries(region='georgia')  # doctest: +SKIP</span>
 
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span>
@@ -131,75 +752,75 @@
 
 <span class="c1"># Election dates for supported years</span>
 <span class="n">ELECTION_DATES</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="c1"># 2016: &#39;2016-11-08&#39;,</span>
-    <span class="mi">2020</span><span class="p">:</span> <span class="s2">&quot;2020-11-03&quot;</span><span class="p">,</span>
-    <span class="c1"># 2024: &#39;2024-11-05&#39;,</span>
+    <span class="c1"># 2016: '2016-11-08',</span>
+    <span class="mi">2020</span><span class="p">:</span> <span class="s2">"2020-11-03"</span><span class="p">,</span>
+    <span class="c1"># 2024: '2024-11-05',</span>
 <span class="p">}</span>
 
 <span class="c1"># Standard region names (states in lowercase with hyphens)</span>
 <span class="n">REGIONS</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;alabama&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;alaska&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;arizona&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;arkansas&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;california&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;colorado&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;connecticut&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;delaware&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;district-of-columbia&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;florida&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;georgia&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;hawaii&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;idaho&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;illinois&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;indiana&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;iowa&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;kansas&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;kentucky&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;louisiana&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;maine&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;maryland&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;massachusetts&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;michigan&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;minnesota&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;mississippi&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;missouri&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;montana&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;nebraska&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;nevada&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;new-hampshire&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;new-jersey&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;new-mexico&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;new-york&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;north-carolina&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;north-dakota&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;ohio&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;oklahoma&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;oregon&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;pennsylvania&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;rhode-island&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;south-carolina&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;south-dakota&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;tennessee&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;texas&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;utah&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;vermont&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;virginia&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;washington&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;west-virginia&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;wisconsin&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;wyoming&quot;</span><span class="p">,</span>
+    <span class="s2">"alabama"</span><span class="p">,</span>
+    <span class="s2">"alaska"</span><span class="p">,</span>
+    <span class="s2">"arizona"</span><span class="p">,</span>
+    <span class="s2">"arkansas"</span><span class="p">,</span>
+    <span class="s2">"california"</span><span class="p">,</span>
+    <span class="s2">"colorado"</span><span class="p">,</span>
+    <span class="s2">"connecticut"</span><span class="p">,</span>
+    <span class="s2">"delaware"</span><span class="p">,</span>
+    <span class="s2">"district-of-columbia"</span><span class="p">,</span>
+    <span class="s2">"florida"</span><span class="p">,</span>
+    <span class="s2">"georgia"</span><span class="p">,</span>
+    <span class="s2">"hawaii"</span><span class="p">,</span>
+    <span class="s2">"idaho"</span><span class="p">,</span>
+    <span class="s2">"illinois"</span><span class="p">,</span>
+    <span class="s2">"indiana"</span><span class="p">,</span>
+    <span class="s2">"iowa"</span><span class="p">,</span>
+    <span class="s2">"kansas"</span><span class="p">,</span>
+    <span class="s2">"kentucky"</span><span class="p">,</span>
+    <span class="s2">"louisiana"</span><span class="p">,</span>
+    <span class="s2">"maine"</span><span class="p">,</span>
+    <span class="s2">"maryland"</span><span class="p">,</span>
+    <span class="s2">"massachusetts"</span><span class="p">,</span>
+    <span class="s2">"michigan"</span><span class="p">,</span>
+    <span class="s2">"minnesota"</span><span class="p">,</span>
+    <span class="s2">"mississippi"</span><span class="p">,</span>
+    <span class="s2">"missouri"</span><span class="p">,</span>
+    <span class="s2">"montana"</span><span class="p">,</span>
+    <span class="s2">"nebraska"</span><span class="p">,</span>
+    <span class="s2">"nevada"</span><span class="p">,</span>
+    <span class="s2">"new-hampshire"</span><span class="p">,</span>
+    <span class="s2">"new-jersey"</span><span class="p">,</span>
+    <span class="s2">"new-mexico"</span><span class="p">,</span>
+    <span class="s2">"new-york"</span><span class="p">,</span>
+    <span class="s2">"north-carolina"</span><span class="p">,</span>
+    <span class="s2">"north-dakota"</span><span class="p">,</span>
+    <span class="s2">"ohio"</span><span class="p">,</span>
+    <span class="s2">"oklahoma"</span><span class="p">,</span>
+    <span class="s2">"oregon"</span><span class="p">,</span>
+    <span class="s2">"pennsylvania"</span><span class="p">,</span>
+    <span class="s2">"rhode-island"</span><span class="p">,</span>
+    <span class="s2">"south-carolina"</span><span class="p">,</span>
+    <span class="s2">"south-dakota"</span><span class="p">,</span>
+    <span class="s2">"tennessee"</span><span class="p">,</span>
+    <span class="s2">"texas"</span><span class="p">,</span>
+    <span class="s2">"utah"</span><span class="p">,</span>
+    <span class="s2">"vermont"</span><span class="p">,</span>
+    <span class="s2">"virginia"</span><span class="p">,</span>
+    <span class="s2">"washington"</span><span class="p">,</span>
+    <span class="s2">"west-virginia"</span><span class="p">,</span>
+    <span class="s2">"wisconsin"</span><span class="p">,</span>
+    <span class="s2">"wyoming"</span><span class="p">,</span>
 <span class="p">]</span>
 
 
 <div class="viewcode-block" id="get_election_data">
-<a class="viewcode-back" href="../../module_docs/elections/nytimes.html#elections.nytimes.get_election_data">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/elections.nytimes.html#elections.nytimes.get_election_data">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_election_data</span><span class="p">(</span><span class="n">region</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">year</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2020</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Fetch raw election JSON data for a specific region and year from NYT API.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        region: Region name (state) in lowercase with hyphens (e.g., &#39;pennsylvania&#39;)</span>
+<span class="sd">        region: Region name (state) in lowercase with hyphens (e.g., 'pennsylvania')</span>
 <span class="sd">        year: Election year (2016, 2020, or 2024)</span>
 
 <span class="sd">    Returns:</span>
@@ -209,26 +830,26 @@
 <span class="sd">        ValueError: If year is not supported</span>
 
 <span class="sd">    Example:</span>
-<span class="sd">        &gt;&gt;&gt; data = get_election_data(&#39;florida&#39;, 2020)  # doctest: +SKIP</span>
-<span class="sd">        &gt;&gt;&gt; print(data[&#39;data&#39;][&#39;races&#39;][0][&#39;state_id&#39;])  # doctest: +SKIP</span>
-<span class="sd">        &#39;FL&#39;</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        &gt;&gt;&gt; data = get_election_data('florida', 2020)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; print(data['data']['races'][0]['state_id'])  # doctest: +SKIP</span>
+<span class="sd">        'FL'</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">year</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ELECTION_DATES</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Year </span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2"> not supported. Available years: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">ELECTION_DATES</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">"Year </span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2"> not supported. Available years: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">ELECTION_DATES</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">"</span>
         <span class="p">)</span>
 
     <span class="n">election_date</span> <span class="o">=</span> <span class="n">ELECTION_DATES</span><span class="p">[</span><span class="n">year</span><span class="p">]</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://static01.nyt.com/elections-assets/</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2">/data/api/</span><span class="si">{</span><span class="n">election_date</span><span class="si">}</span><span class="s2">/state-page/</span><span class="si">{</span><span class="n">region</span><span class="si">}</span><span class="s2">.json&quot;</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"https://static01.nyt.com/elections-assets/</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2">/data/api/</span><span class="si">{</span><span class="n">election_date</span><span class="si">}</span><span class="s2">/state-page/</span><span class="si">{</span><span class="n">region</span><span class="si">}</span><span class="s2">.json"</span>
 
     <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Failed to fetch data for region &#39;</span><span class="si">{</span><span class="n">region</span><span class="si">}</span><span class="s2">&#39; and year </span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2">. &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;Status code: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">. &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;Note: Regions should be in lowercase with hyphens, like: </span><span class="si">{</span><span class="n">REGIONS</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span>
+            <span class="sa">f</span><span class="s2">"Failed to fetch data for region '</span><span class="si">{</span><span class="n">region</span><span class="si">}</span><span class="s2">' and year </span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2">. "</span>
+            <span class="sa">f</span><span class="s2">"Status code: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">. "</span>
+            <span class="sa">f</span><span class="s2">"Note: Regions should be in lowercase with hyphens, like: </span><span class="si">{</span><span class="n">REGIONS</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span><span class="si">}</span><span class="s2">..."</span>
         <span class="p">)</span></div>
 
 
@@ -236,7 +857,7 @@
 <span class="nd">@add_ipython_key_completions</span>
 <span class="nd">@Store</span><span class="o">.</span><span class="n">wrap</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">ElectionRawJson</span><span class="p">(</span><span class="n">ExplicitKeysSource</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Store interface for accessing raw election JSON data by region.</span>
 
 <span class="sd">    Args:</span>
@@ -244,14 +865,14 @@
 
 <span class="sd">    Example:</span>
 <span class="sd">        &gt;&gt;&gt; store = ElectionRawJson(year=2020)  # doctest: +SKIP</span>
-<span class="sd">        &gt;&gt;&gt; florida_data = store[&#39;florida&#39;]  # doctest: +SKIP</span>
-<span class="sd">        &gt;&gt;&gt; print(florida_data[&#39;data&#39;][&#39;races&#39;][0][&#39;race_id&#39;])  # doctest: +SKIP</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        &gt;&gt;&gt; florida_data = store['florida']  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; print(florida_data['data']['races'][0]['race_id'])  # doctest: +SKIP</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">year</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2020</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">year</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ELECTION_DATES</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Year </span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2"> not supported. Available years: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">ELECTION_DATES</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">"Year </span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2"> not supported. Available years: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">ELECTION_DATES</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">"</span>
             <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">year</span> <span class="o">=</span> <span class="n">year</span>
         <span class="n">_obj_of_key</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">get_election_data</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="n">year</span><span class="p">)</span>
@@ -259,9 +880,9 @@
 
 
 <div class="viewcode-block" id="Races">
-<a class="viewcode-back" href="../../module_docs/elections/nytimes.html#elections.nytimes.Races">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/elections.nytimes.html#elections.nytimes.Races">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Races</span><span class="p">(</span><span class="n">ElectionRawJson</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Store interface for accessing race data by region.</span>
 
 <span class="sd">    Transforms raw election data into a store of races indexed by race slug.</span>
@@ -271,58 +892,58 @@
 
 <span class="sd">    Example:</span>
 <span class="sd">        &gt;&gt;&gt; races = Races(year=2020)  # doctest: +SKIP</span>
-<span class="sd">        &gt;&gt;&gt; pa_races = races[&#39;pennsylvania&#39;]  # doctest: +SKIP</span>
-<span class="sd">        &gt;&gt;&gt; president = pa_races[&#39;president-general-2020-11-03&#39;]  # doctest: +SKIP</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        &gt;&gt;&gt; pa_races = races['pennsylvania']  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; president = pa_races['president-general-2020-11-03']  # doctest: +SKIP</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_obj_of_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Transform raw data into a store of races.&quot;&quot;&quot;</span>
-        <span class="n">state_slug</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="s2">&quot;races&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;state_id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-        <span class="n">races</span> <span class="o">=</span> <span class="n">Store</span><span class="p">({</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;race_slug&quot;</span><span class="p">][</span><span class="mi">3</span><span class="p">:]:</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="s2">&quot;races&quot;</span><span class="p">]})</span>
+<span class="w">        </span><span class="sd">"""Transform raw data into a store of races."""</span>
+        <span class="n">state_slug</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"data"</span><span class="p">][</span><span class="s2">"races"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"state_id"</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="n">races</span> <span class="o">=</span> <span class="n">Store</span><span class="p">({</span><span class="n">x</span><span class="p">[</span><span class="s2">"race_slug"</span><span class="p">][</span><span class="mi">3</span><span class="p">:]:</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">"data"</span><span class="p">][</span><span class="s2">"races"</span><span class="p">]})</span>
         <span class="k">return</span> <span class="n">add_ipython_key_completions</span><span class="p">(</span><span class="n">races</span><span class="p">)</span></div>
 
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_post_process_timeseries</span><span class="p">(</span>
-    <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">race_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;president&quot;</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">race_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"president"</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Post-process race data to extract time series information.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        data: Raw election data dictionary</span>
-<span class="sd">        race_type: Type of race to extract (e.g., &#39;president&#39;, &#39;senate&#39;)</span>
+<span class="sd">        race_type: Type of race to extract (e.g., 'president', 'senate')</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        DataFrame with time series data including vote shares</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="c1"># Find the race key matching the race type</span>
     <span class="n">race_key</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">race_type</span> <span class="ow">in</span> <span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">and</span> <span class="s2">&quot;timeseries&quot;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">race_type</span> <span class="ow">in</span> <span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">and</span> <span class="s2">"timeseries"</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]:</span>
             <span class="n">race_key</span> <span class="o">=</span> <span class="n">key</span>
             <span class="k">break</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">race_key</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;No race matching type &#39;</span><span class="si">{</span><span class="n">race_type</span><span class="si">}</span><span class="s2">&#39; found with timeseries data&quot;</span>
+            <span class="sa">f</span><span class="s2">"No race matching type '</span><span class="si">{</span><span class="n">race_type</span><span class="si">}</span><span class="s2">' found with timeseries data"</span>
         <span class="p">)</span>
 
-    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">race_key</span><span class="p">][</span><span class="s2">&quot;timeseries&quot;</span><span class="p">])</span>
-    <span class="k">if</span> <span class="s2">&quot;vote_shares&quot;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">df</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;vote_shares&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">())),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">del</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;vote_shares&quot;</span><span class="p">]</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">race_key</span><span class="p">][</span><span class="s2">"timeseries"</span><span class="p">])</span>
+    <span class="k">if</span> <span class="s2">"vote_shares"</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">df</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"vote_shares"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">())),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">del</span> <span class="n">df</span><span class="p">[</span><span class="s2">"vote_shares"</span><span class="p">]</span>
 
-    <span class="k">if</span> <span class="s2">&quot;timestamp&quot;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;timestamp&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s2">"timestamp"</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">"timestamp"</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">df</span>
 
 
 <div class="viewcode-block" id="get_races">
-<a class="viewcode-back" href="../../module_docs/elections/nytimes.html#elections.nytimes.get_races">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/elections.nytimes.html#elections.nytimes.get_races">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_races</span><span class="p">(</span><span class="n">region</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">year</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2020</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Get races for a specific region and year.</span>
 
 <span class="sd">    Args:</span>
@@ -333,19 +954,19 @@
 <span class="sd">        Dictionary mapping race slugs to race data</span>
 
 <span class="sd">    Example:</span>
-<span class="sd">        &gt;&gt;&gt; races = get_races(&#39;pennsylvania&#39;, 2020)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; races = get_races('pennsylvania', 2020)  # doctest: +SKIP</span>
 <span class="sd">        &gt;&gt;&gt; list(races.keys())[:2]  # doctest: +SKIP</span>
-<span class="sd">        [&#39;president-general-2020-11-03&#39;, &#39;senate-general-2020-11-03&#39;]</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        ['president-general-2020-11-03', 'senate-general-2020-11-03']</span>
+<span class="sd">    """</span>
     <span class="n">races_store</span> <span class="o">=</span> <span class="n">Races</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="n">year</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">races_store</span><span class="p">[</span><span class="n">region</span><span class="p">]</span></div>
 
 
 
 <div class="viewcode-block" id="get_president_timeseries">
-<a class="viewcode-back" href="../../module_docs/elections/nytimes.html#elections.nytimes.get_president_timeseries">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/elections.nytimes.html#elections.nytimes.get_president_timeseries">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_president_timeseries</span><span class="p">(</span><span class="n">region</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">year</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2020</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Get president race time series data for a specific region and year.</span>
 
 <span class="sd">    Args:</span>
@@ -356,12 +977,12 @@
 <span class="sd">        DataFrame with time series vote data</span>
 
 <span class="sd">    Example:</span>
-<span class="sd">        &gt;&gt;&gt; df = get_president_timeseries(&#39;georgia&#39;, 2020)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; df = get_president_timeseries('georgia', 2020)  # doctest: +SKIP</span>
 <span class="sd">        &gt;&gt;&gt; df.columns  # doctest: +SKIP</span>
-<span class="sd">        Index([&#39;timestamp&#39;, &#39;votes&#39;, &#39;bidenj&#39;, &#39;trumpd&#39;, ...], dtype=&#39;object&#39;)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        Index(['timestamp', 'votes', 'bidenj', 'trumpd', ...], dtype='object')</span>
+<span class="sd">    """</span>
     <span class="n">races</span> <span class="o">=</span> <span class="n">get_races</span><span class="p">(</span><span class="n">region</span><span class="p">,</span> <span class="n">year</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">_post_process_timeseries</span><span class="p">(</span><span class="n">races</span><span class="p">,</span> <span class="n">race_type</span><span class="o">=</span><span class="s2">&quot;president&quot;</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">_post_process_timeseries</span><span class="p">(</span><span class="n">races</span><span class="p">,</span> <span class="n">race_type</span><span class="o">=</span><span class="s2">"president"</span><span class="p">)</span></div>
 
 
 
@@ -372,38 +993,60 @@
 <span class="c1"># NOTE: `wrap_kvs` must wrap the *class*, not `Races2020`. Handed a</span>
 <span class="c1"># `functools.partial`, `wrap_kvs` treats it as a store *instance* and returns a</span>
 <span class="c1"># (non-callable) `Store` wrapping the partial itself, so `President2020TimeSeries()`</span>
-<span class="c1"># raised `TypeError: &#39;Store&#39; object is not callable`. Wrapping the class first and</span>
+<span class="c1"># raised `TypeError: 'Store' object is not callable`. Wrapping the class first and</span>
 <span class="c1"># binding the year afterwards mirrors `Races2020` and yields a working factory.</span>
 <span class="n">President2020TimeSeries</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
-    <span class="n">wrap_kvs</span><span class="p">(</span><span class="n">Races</span><span class="p">,</span> <span class="n">obj_of_data</span><span class="o">=</span><span class="n">_post_process_timeseries</span><span class="p">),</span> <span class="n">year</span><span class="o">=</span><span class="mi">2020</span>
+    <span class="n">wrap_kvs</span><span class="p">(</span><span class="n">Races</span><span class="p">,</span> <span class="n">value_decoder</span><span class="o">=</span><span class="n">_post_process_timeseries</span><span class="p">),</span> <span class="n">year</span><span class="o">=</span><span class="mi">2020</span>
 <span class="p">)</span>
 </pre></div>
 
-           </div>
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
           </div>
-          <footer>
-
-  <hr/>
-
-  <div role="contentinfo">
-    <p></p>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
   </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8"></script>
 
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.24.0.
+</p></div>
+      
+    </div>
+  
+</div>
 
-</footer>
-        </div>
-      </div>
-    </section>
-  </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+  </footer>
+  </body>
 </html>

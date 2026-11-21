@@ -1,4 +1,0 @@
-elections.google_civic
-======================
-.. automodule:: elections.google_civic
-   :members:

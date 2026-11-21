@@ -1,0 +1,16 @@
+elections.openfec
+=================
+
+.. automodule:: elections.openfec
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      get_candidate_totals
+      get_candidates
+      get_committees
+      get_election_results
+      search_candidates
+   

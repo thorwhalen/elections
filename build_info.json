@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "built_at": "2026-11-21T17:37:38Z",
+  "package": {
+    "name": "elections",
+    "version": "0.0.4",
+    "display_name": "elections",
+    "source": "pyproject.toml"
+  },
+  "git": {
+    "available": true,
+    "commit": "f847be1e2c84d9a2ee69e84021d9dcdbf562192f",
+    "short_commit": "f847be1",
+    "branch": "master",
+    "tags": [],
+    "dirty": false,
+    "remote_url": "https://github.com/thorwhalen/elections",
+    "commit_url": "https://github.com/thorwhalen/elections/commit/f847be1e2c84d9a2ee69e84021d9dcdbf562192f",
+    "error": null
+  },
+  "ci": {
+    "provider": "github",
+    "repository": "thorwhalen/elections",
+    "sha": "f847be1e2c84d9a2ee69e84021d9dcdbf562192f",
+    "sha_in_history": true,
+    "ref": "refs/heads/master",
+    "ref_name": "master",
+    "run_id": "44930946762",
+    "run_url": "https://github.com/thorwhalen/elections/actions/runs/44930946762",
+    "server_url": "https://github.com"
+  },
+  "tools": {
+    "epythet": "0.2.22",
+    "sphinx": "9.1.1",
+    "docutils": "0.22.4",
+    "python": "3.12.16"
+  },
+  "config": {
+    "theme": "auto",
+    "html_theme": "pydata_sphinx_theme",
+    "accent": "#5a479a",
+    "mode": "auto",
+    "api_generator": "autosummary",
+    "ignore": [
+      "tests/",
+      "scrap/",
+      "examples/"
+    ],
+    "agent_outputs": true,
+    "aggregates": [
+      "md"
+    ],
+    "ai_artifacts": true,
+    "provenance": true,
+    "docs_dir": "docsrc"
+  },
+  "site": {
+    "modules_documented": 6,
+    "objects_documented": 27
+  },
+  "pypi": {
+    "checked": true,
+    "latest": "0.0.5",
+    "relation": "behind",
+    "error": null
+  },
+  "reproduce": "git clone https://github.com/thorwhalen/elections && cd elections\ngit checkout f847be1e2c84d9a2ee69e84021d9dcdbf562192f\npip install \"epythet==0.2.22\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
+  "warnings": [],
+  "alignment": {
+    "aligned": false,
+    "notes": [
+      "The documented version (0.0.4) is behind the latest release on PyPI (0.0.5): `pip install elections` gives newer code than these docs describe."
+    ]
+  }
+}

@@ -1,85 +1,704 @@
-
-
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="../">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>elections &mdash; elections 0.0.3 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="alternate" type="text/markdown" href="elections.html.md">
+<link rel="describedby" href="../llms.txt" type="text/markdown">
+    <title>elections &#8212; elections</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d75fae25" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_autodoc_typehints.css?v=057ac668" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/epythet.css?v=58454260" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=75c7c72ae941e8b558d8"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
+
+    <script src="../_static/documentation_options.js?v=8c5712d9"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=fd10adb8"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
+
+
+
+
+
+const initStyles = () => {
+    const defaultStyle = document.createElement('style');
+    defaultStyle.textContent = "pre.mermaid {\n    /* Same as .mermaid-container > pre */\n    display: block;\n    width: 100%;\n}\n\npre.mermaid > svg {\n    /* Same as .mermaid-container > pre > svg */\n    height: 500px;\n    width: 100%;\n    max-width: 100% !important;\n}";
+    document.head.appendChild(defaultStyle);
+
+    const fullscreenStyle = document.createElement('style');
+    fullscreenStyle.textContent = ".mermaid-container {\n    position: relative;\n    display: flex;\n    flex-direction: row;\n    width: 100%;\n}\n\n.mermaid-container > pre {\n    display: block;\n    width: 100%;\n}\n\n.mermaid-container > pre > svg {\n    height: 500px;\n    width: 100%;\n    max-width: 100% !important;\n}\n\n.mermaid-fullscreen-btn {\n    position: absolute;\n    width: 28px;\n    height: 28px;\n    background: rgba(255, 255, 255, 0.95);\n    border: 1px solid rgba(0, 0, 0, 0.3);\n    border-radius: 4px;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    transition: all 0.2s;\n    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);\n    font-size: 14px;\n    line-height: 1;\n    padding: 0;\n    color: #333;\n}\n\n.mermaid-fullscreen-btn:hover {\n    opacity: 100% !important;\n    background: rgba(255, 255, 255, 1);\n    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);\n    transform: scale(1.1);\n}\n\n.mermaid-fullscreen-btn.dark-theme {\n    background: rgba(50, 50, 50, 0.95);\n    border: 1px solid rgba(255, 255, 255, 0.3);\n    color: #e0e0e0;\n}\n\n.mermaid-fullscreen-btn.dark-theme:hover {\n    background: rgba(60, 60, 60, 1);\n    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);\n}\n\n.mermaid-fullscreen-modal {\n    display: none;\n    position: fixed !important;\n    top: 0 !important;\n    left: 0 !important;\n    width: 95vw;\n    height: 100vh;\n    background: rgba(255, 255, 255, 0.98);\n    z-index: 9999;\n    padding: 20px;\n    overflow: auto;\n}\n\n.mermaid-fullscreen-modal.dark-theme {\n    background: rgba(0, 0, 0, 0.98);\n}\n\n.mermaid-fullscreen-modal.active {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.mermaid-container-fullscreen {\n    position: relative;\n    width: 95vw;\n    height: 90vh;\n    max-width: 95vw;\n    max-height: 90vh;\n    background: white;\n    border-radius: 8px;\n    padding: 20px;\n    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);\n    overflow: auto;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.mermaid-container-fullscreen.dark-theme {\n    background: #1a1a1a;\n    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);\n}\n\n.mermaid-container-fullscreen pre.mermaid {\n    width: 100%;\n    height: 100%;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.mermaid-container-fullscreen .mermaid svg {\n    height: 100% !important;\n    width: 100% !important;\n    cursor: grab;\n}\n\n.mermaid-fullscreen-close {\n    position: fixed !important;\n    top: 20px !important;\n    right: 20px !important;\n    width: 40px;\n    height: 40px;\n    background: rgba(255, 255, 255, 0.95);\n    border: 1px solid rgba(0, 0, 0, 0.2);\n    border-radius: 50%;\n    cursor: pointer;\n    z-index: 10000;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);\n    transition: all 0.2s;\n    font-size: 24px;\n    line-height: 1;\n    color: #333;\n}\n\n.mermaid-fullscreen-close:hover {\n    background: white;\n    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);\n    transform: scale(1.1);\n}\n\n.mermaid-fullscreen-close.dark-theme {\n    background: rgba(50, 50, 50, 0.95);\n    border: 1px solid rgba(255, 255, 255, 0.2);\n    color: #e0e0e0;\n}\n\n.mermaid-fullscreen-close.dark-theme:hover {\n    background: rgba(60, 60, 60, 1);\n    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);\n}\n\n.mermaid-fullscreen-modal .mermaid-fullscreen-btn {\n    display: none !important;\n}";
+    document.head.appendChild(fullscreenStyle);
+}
+
+// Detect if page has dark background
+const isDarkTheme = () => {
+    // We use a set of heuristics:
+    // 1. Check for common dark mode classes or attributes
+    // 2. Check computed background color brightness
+    if (document.documentElement.classList.contains('dark') ||
+        document.documentElement.getAttribute('data-theme') === 'dark' ||
+        document.body.classList.contains('dark') ||
+        document.body.getAttribute('data-theme') === 'dark') {
+        // console.log("Dark theme detected via class/attribute");
+        return true;
+    }
+    if (document.documentElement.classList.contains('light') ||
+        document.documentElement.getAttribute('data-theme') === 'light' ||
+        document.body.classList.contains('light') ||
+        document.body.getAttribute('data-theme') === 'light') {
+        // console.log("Light theme detected via class/attribute");
+        return false;
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // console.log("Dark theme detected via prefers-color-scheme");
+        return true;
+    }
+    const bgColor = window.getComputedStyle(document.body).backgroundColor;
+    const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+        const r = parseInt(match[1]);
+        const g = parseInt(match[2]);
+        const b = parseInt(match[3]);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        // console.log("Background color brightness:", brightness);
+        return brightness < 128;
+    }
+    // console.log("No dark or light theme detected, defaulting to light theme");
+    return false;
+};
+
+let darkTheme = isDarkTheme();
+let modal = null;
+let modalContent = null;
+let previousScrollOffset = [window.scrollX, window.scrollY];
+let _lazyObserver = null;
+let _renderQueue = Promise.resolve();
+let closeModal = () => {};
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal?.classList.contains('active')) {
+        closeModal();
+    }
+});
+
+// Apply d3 zoom to each SVG. Idempotent: an SVG already wrapped is skipped,
+// so this is safe to call both for the initial batch and for diagrams that
+// render lazily once they become visible.
+const addZoomToSvgs = (svgs) => {
+    svgs.each(function() {
+        if (this.getAttribute('data-zoom-applied') === 'true') return;
+        var svg = d3.select(this);
+        svg.html("<g class='wrapper'>" + svg.html() + "</g>");
+        var inner = svg.select("g");
+        var zoom = d3.zoom().on("zoom", function(event) {
+            inner.attr("transform", event.transform);
+        });
+        svg.call(zoom);
+        this.setAttribute('data-zoom-applied', 'true');
+    });
+};
+
+const runMermaid = async (rerun) => {
+    console.log("Running mermaid diagrams, rerun =", rerun);
+    // clear all existing mermaid charts
+    let all_mermaids = document.querySelectorAll(".mermaid");
+
+    if (rerun) {
+        // Disconnect any previous lazy rendering observer
+        if (_lazyObserver) {
+            _lazyObserver.disconnect();
+            _lazyObserver = null;
+        }
+
+        all_mermaids.forEach((el) => {
+            el.removeAttribute('data-mermaid-deferred');
+            el.removeAttribute('data-mermaid-render-failed');
+            if(!el.hasAttribute("data-original-code")) {
+                // store original code
+                // console.log(`Storing original code for first run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+            if(el.getAttribute("data-processed") === "true") {
+                // remove and restore original
+                el.removeAttribute("data-processed");
+                // console.log(`Restoring original code for re-run: `, el.getAttribute('data-original-code'));
+                el.innerHTML = el.getAttribute('data-original-code');
+            } else {
+                // store original code
+                // console.log(`Storing original code for re-run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+        });
+
+        // Separate visible and hidden elements. Mermaid's layout engine measures
+        // text dimensions via the DOM, which fails for elements hidden by a parent
+        // (e.g., Reveal.js non-active slides, sphinx-design unopened tabs),
+        // producing broken SVGs. Render visible elements now, defer hidden ones.
+        const visible = [];
+        const hidden = [];
+        all_mermaids.forEach((el) => {
+            // offsetParent is null for display:none ancestors.
+            // getClientRects().length > 0 catches position:fixed elements
+            // (which also have null offsetParent but are still visible).
+            if (el.offsetParent !== null || el.getClientRects().length > 0) {
+                visible.push(el);
+            } else {
+                hidden.push(el);
+                el.setAttribute('data-mermaid-deferred', 'true');
+            }
+        });
+
+        if (visible.length > 0) {
+            try {
+                await mermaid.run({ nodes: visible });
+            } catch (e) {
+                console.error("Mermaid rendering failed:", e);
+            }
+        }
+
+        // Lazily render hidden elements when they become visible.
+        // Uses a promise chain (_renderQueue) to serialize rendering,
+        // since IntersectionObserver may report multiple entries at once
+        // and mermaid.run() is not safe to call concurrently.
+        if (hidden.length > 0) {
+            if (typeof IntersectionObserver === 'undefined') {
+                console.warn("IntersectionObserver not available; hidden mermaid diagrams will not render.");
+            } else {
+                _renderQueue = Promise.resolve();
+                _lazyObserver = new IntersectionObserver((entries) => {
+                    for (const entry of entries) {
+                        if (entry.isIntersecting && entry.target.getAttribute("data-processed") !== "true") {
+                            _lazyObserver.unobserve(entry.target);
+                            const el = entry.target;
+                            _renderQueue = _renderQueue.then(async () => {
+                                try {
+                                    await mermaid.run({ nodes: [el] });
+                                    el.removeAttribute('data-mermaid-deferred');
+                                    // Apply zoom to the now-rendered diagram, matching
+                                    // the decoration visible diagrams receive.
+                                    if (false) {
+                                        addZoomToSvgs(d3.selectAll("").select(function() {
+                                            return this.querySelector("svg");
+                                        }));
+                                    }
+                                } catch (e) {
+                                    console.error("Mermaid deferred rendering failed:", e);
+                                    el.removeAttribute('data-mermaid-deferred');
+                                    el.setAttribute('data-mermaid-render-failed', 'true');
+                                }
+                            });
+                        }
+                    }
+                });
+                hidden.forEach((el) => _lazyObserver.observe(el));
+            }
+        }
+    }
+
+    all_mermaids = document.querySelectorAll(".mermaid");
+    // Exclude deferred (hidden) and render-failed elements from completion checks
+    const mermaids_active = document.querySelectorAll(".mermaid:not([data-mermaid-deferred]):not([data-mermaid-render-failed])");
+    const mermaids_processed = document.querySelectorAll(".mermaid:not([data-mermaid-deferred]):not([data-mermaid-render-failed])[data-processed='true']");
+
+    if (false) {
+        const mermaids_to_add_zoom = 0 === -1 ? mermaids_active.length : 0;
+        if(mermaids_to_add_zoom > 0) {
+            var svgs = d3.selectAll("").select(function() {
+                return this.querySelector("svg");
+            });
+            // Wait until every active (visible) diagram has rendered. Deferred
+            // diagrams are excluded, so a fixed d3_node_count that counts a
+            // hidden diagram no longer loops forever waiting for its SVG.
+            if(mermaids_active.length !== mermaids_processed.length) {
+                setTimeout(() => runMermaid(false), 200);
+                return;
+            }
+            addZoomToSvgs(svgs);
+        }
+    } else if(mermaids_active.length !== mermaids_processed.length) {
+        // Wait for mermaid to process all diagrams
+        setTimeout(() => runMermaid(false), 200);
+        return;
+    }
+
+    // Stop here if not adding fullscreen capability
+    if (!true) return;
+
+    if (modal !== null ) {
+        // Destroy existing modal
+        modal.remove();
+        modal = null;
+        modalContent = null;
+    }
+
+    modal = document.createElement('div');
+    modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Fullscreen diagram viewer');
+    modal.innerHTML = `
+        <button class="mermaid-fullscreen-close${darkTheme ? ' dark-theme' : ''}" aria-label="Close fullscreen">✕</button>
+        <div class="mermaid-container-fullscreen${darkTheme ? ' dark-theme' : ''}"></div>
+    `;
+    document.body.appendChild(modal);
+
+    modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
+
+    closeModal = () => {
+        modal.classList.remove('active');
+        modalContent.innerHTML = '';
+        document.body.style.overflow = ''
+        window.scrollTo({left: previousScrollOffset[0], top: previousScrollOffset[1], behavior: 'instant'});
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
+        if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
+            mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            // Already processed, adjust button class if needed
+            const existingBtn = mermaidDiv.parentNode.querySelector('.mermaid-fullscreen-btn');
+            if (existingBtn) {
+                existingBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+            }
+            return;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'mermaid-container';
+        mermaidDiv.parentNode.insertBefore(container, mermaidDiv);
+        container.appendChild(mermaidDiv);
+
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+        fullscreenBtn.setAttribute('aria-label', 'View diagram in fullscreen');
+        fullscreenBtn.textContent = "\u26f6";
+        fullscreenBtn.style.opacity = "50%";
+
+        // Calculate dynamic position based on diagram's margin and padding
+        const diagramStyle = window.getComputedStyle(mermaidDiv);
+        const marginTop = parseFloat(diagramStyle.marginTop) || 0;
+        const marginRight = parseFloat(diagramStyle.marginRight) || 0;
+        const paddingTop = parseFloat(diagramStyle.paddingTop) || 0;
+        const paddingRight = parseFloat(diagramStyle.paddingRight) || 0;
+        fullscreenBtn.style.top = `${marginTop + paddingTop + 4}px`;
+        fullscreenBtn.style.right = `${marginRight + paddingRight + 4}px`;
+
+        fullscreenBtn.addEventListener('click', () => {
+            previousScrollOffset = [window.scrollX, window.scrollY];
+            const clone = mermaidDiv.cloneNode(true);
+            modalContent.innerHTML = '';
+            modalContent.appendChild(clone);
+
+            const svg = clone.querySelector('svg');
+            if (svg) {
+                svg.removeAttribute('width');
+                svg.removeAttribute('height');
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '100%';
+                svg.style.display = 'block';
+
+                if (false) {
+                    setTimeout(() => {
+                        const g = svg.querySelector('g');
+                        if (g) {
+                            var svgD3 = d3.select(svg);
+                            svgD3.html("<g class='wrapper'>" + svgD3.html() + "</g>");
+                            var inner = svgD3.select("g");
+                            var zoom = d3.zoom().on("zoom", function(event) {
+                                inner.attr("transform", event.transform);
+                            });
+                            svgD3.call(zoom);
+                        }
+                    }, 100);
+                }
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        container.appendChild(fullscreenBtn);
+    });
+};
+
+
+
+const load = async () => {
+    initStyles();
+
+
+    await runMermaid(true);
+
+    const reRunIfThemeChanges = async () => {
+        const newDarkTheme = isDarkTheme();
+        if (newDarkTheme !== darkTheme) {
+            darkTheme = newDarkTheme;
+            console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
+            await mermaid.initialize(
+                {...{"startOnLoad": false},
+                ...{ darkMode: darkTheme, theme: darkTheme ? "dark" : "default" },
+                }
+            );
+            await runMermaid(true);
+        }
+    };
+
+    // Update theme classes when theme changes
+    const themeObserver = new MutationObserver(reRunIfThemeChanges);
+    themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    themeObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+};
+
+
+
+
+
+console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
+mermaid.initialize(
+    {...{"startOnLoad": false},
+    ...{ darkMode: darkTheme, theme: darkTheme ? "dark" : "default" },
+    }
+);
+
+window.addEventListener("load", load);
+window.runMermaid = runMermaid;</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/elections';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.0.4" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
 
   
-      <script src="../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=47de8214"></script>
-      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
-      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
-      <script src="../_static/toggleprompt.js?v=d7ede5d2"></script>
-      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script src="../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
-</head>
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            elections
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../module_docs/elections.html">elections</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../module_docs/elections/democracy_works.html">elections.democracy_works</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../module_docs/elections/google_civic.html">elections.google_civic</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../module_docs/elections/ipu_parline.html">elections.ipu_parline</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../module_docs/elections/nytimes.html">elections.nytimes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../module_docs/elections/openfec.html">elections.openfec</a></li>
-</ul>
 
-        </div>
-      </div>
-    </nav>
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation" aria-expanded="false" aria-controls="pst-primary-sidebar-modal">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">elections</a>
-      </nav>
+  
+    
+  
 
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
-      <li class="breadcrumb-item active">elections</li>
-      <li class="wy-breadcrumbs-aside">
-      </li>
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">elections</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api.html">
+    API reference
+  </a>
+</li>
+
   </ul>
-  <hr/>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/thorwhalen/elections" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal" tabindex="-1"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api.html">
+    API reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/thorwhalen/elections" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-house"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">elections</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
   <h1>Source code for elections</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Election Data Package</span>
+<span></span><span class="sd">"""Election Data Package</span>
 
 <span class="sd">This package provides a unified interface to multiple election data sources from</span>
 <span class="sd">around the world. It includes U.S. election data from various providers as well as</span>
@@ -100,31 +719,31 @@
 <span class="sd">    &gt;&gt;&gt; # Access all data sources as a mapping</span>
 <span class="sd">    &gt;&gt;&gt; modules = ElectionsDataModules()</span>
 <span class="sd">    &gt;&gt;&gt; list(modules.keys())  # doctest: +SKIP</span>
-<span class="sd">    [&#39;nytimes&#39;, &#39;openfec&#39;, &#39;google_civic&#39;, &#39;democracy_works&#39;, &#39;ipu_parline&#39;]</span>
+<span class="sd">    ['nytimes', 'openfec', 'google_civic', 'democracy_works', 'ipu_parline']</span>
 <span class="sd">    &gt;&gt;&gt;</span>
 <span class="sd">    &gt;&gt;&gt; # Access a specific data source module</span>
-<span class="sd">    &gt;&gt;&gt; nyt = modules[&#39;nytimes&#39;]  # doctest: +SKIP</span>
-<span class="sd">    &gt;&gt;&gt; data = nyt.get_election_data(&#39;florida&#39;, year=2020)  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt; nyt = modules['nytimes']  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt; data = nyt.get_election_data('florida', year=2020)  # doctest: +SKIP</span>
 <span class="sd">    &gt;&gt;&gt;</span>
 <span class="sd">    &gt;&gt;&gt; # Or import modules directly</span>
 <span class="sd">    &gt;&gt;&gt; from elections import nytimes</span>
-<span class="sd">    &gt;&gt;&gt; data = nytimes.get_election_data(&#39;pennsylvania&#39;, year=2020)  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt; data = nytimes.get_election_data('pennsylvania', year=2020)  # doctest: +SKIP</span>
 
 <span class="sd">**Consistent Parameter Names:**</span>
 
 <span class="sd">Across all modules, we use consistent parameter names for common concepts:</span>
 
 <span class="sd">- **year**: Election year (e.g., 2020, 2024)</span>
-<span class="sd">- **region**: Geographic region (state abbreviation like &#39;PA&#39;, or state name like &#39;pennsylvania&#39;)</span>
+<span class="sd">- **region**: Geographic region (state abbreviation like 'PA', or state name like 'pennsylvania')</span>
 <span class="sd">- **api_key**: API authentication key (when required)</span>
-<span class="sd">- **race_type**: Type of race (e.g., &#39;president&#39;, &#39;senate&#39;, &#39;house&#39;)</span>
+<span class="sd">- **race_type**: Type of race (e.g., 'president', 'senate', 'house')</span>
 <span class="sd">- **office**: Office being sought (used by some APIs)</span>
 
 <span class="sd">**API Keys:**</span>
 
 <span class="sd">Some data sources require API keys:</span>
 
-<span class="sd">- **openfec**: Optional (use &#39;DEMO_KEY&#39; or get free key at https://api.open.fec.gov/developers/)</span>
+<span class="sd">- **openfec**: Optional (use 'DEMO_KEY' or get free key at https://api.open.fec.gov/developers/)</span>
 <span class="sd">- **google_civic**: Required (get free key at https://console.developers.google.com/)</span>
 <span class="sd">- **democracy_works**: Not required</span>
 <span class="sd">- **nytimes**: Not required</span>
@@ -139,31 +758,31 @@
 <span class="sd">Get NYT election results for multiple states:</span>
 
 <span class="sd">    &gt;&gt;&gt; from elections.nytimes import get_election_data</span>
-<span class="sd">    &gt;&gt;&gt; states = [&#39;florida&#39;, &#39;pennsylvania&#39;, &#39;georgia&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; states = ['florida', 'pennsylvania', 'georgia']</span>
 <span class="sd">    &gt;&gt;&gt; results = {s: get_election_data(s, year=2020) for s in states}  # doctest: +SKIP</span>
 
 <span class="sd">Search for campaign finance data:</span>
 
 <span class="sd">    &gt;&gt;&gt; from elections.openfec import search_candidates, get_candidate_totals</span>
-<span class="sd">    &gt;&gt;&gt; candidates = search_candidates(&#39;Biden&#39;, year=2024)  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt; candidates = search_candidates('Biden', year=2024)  # doctest: +SKIP</span>
 <span class="sd">    &gt;&gt;&gt; # Get financial totals for specific candidate</span>
-<span class="sd">    &gt;&gt;&gt; totals = get_candidate_totals(&#39;P80001571&#39;, year=2020)  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt; totals = get_candidate_totals('P80001571', year=2020)  # doctest: +SKIP</span>
 
 <span class="sd">Get voter information for an address:</span>
 
 <span class="sd">    &gt;&gt;&gt; from elections.google_civic import get_voter_info</span>
 <span class="sd">    &gt;&gt;&gt; info = get_voter_info(  # doctest: +SKIP</span>
-<span class="sd">    ...     &#39;1600 Pennsylvania Ave NW, Washington, DC 20500&#39;,</span>
-<span class="sd">    ...     api_key=&#39;YOUR_KEY&#39;</span>
+<span class="sd">    ...     '1600 Pennsylvania Ave NW, Washington, DC 20500',</span>
+<span class="sd">    ...     api_key='YOUR_KEY'</span>
 <span class="sd">    ... )</span>
 
 <span class="sd">Get international election data:</span>
 
 <span class="sd">    &gt;&gt;&gt; from elections.ipu_parline import get_parliament, get_election_results</span>
-<span class="sd">    &gt;&gt;&gt; france = get_parliament(&#39;FRA&#39;)  # doctest: +SKIP</span>
-<span class="sd">    &gt;&gt;&gt; results = get_election_results(&#39;DEU&#39;)  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt; france = get_parliament('FRA')  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt; results = get_election_results('DEU')  # doctest: +SKIP</span>
 
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Mapping</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Iterator</span>
@@ -185,9 +804,9 @@
 
 
 <div class="viewcode-block" id="ElectionsDataModules">
-<a class="viewcode-back" href="../module_docs/elections.html#elections.ElectionsDataModules">[docs]</a>
+<a class="viewcode-back" href="../_autosummary/elections.html#elections.ElectionsDataModules">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ElectionsDataModules</span><span class="p">(</span><span class="n">Mapping</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Mapping interface to election data sources.</span>
 
 <span class="sd">    This class provides dict-like access to different election data source modules.</span>
@@ -195,11 +814,11 @@
 
 <span class="sd">    **Available Sources:**</span>
 
-<span class="sd">    - &#39;nytimes&#39;: New York Times election results API</span>
-<span class="sd">    - &#39;openfec&#39;: Federal Election Commission API</span>
-<span class="sd">    - &#39;google_civic&#39;: Google Civic Information API</span>
-<span class="sd">    - &#39;democracy_works&#39;: Democracy Works Elections API</span>
-<span class="sd">    - &#39;ipu_parline&#39;: Inter-Parliamentary Union Parline database</span>
+<span class="sd">    - 'nytimes': New York Times election results API</span>
+<span class="sd">    - 'openfec': Federal Election Commission API</span>
+<span class="sd">    - 'google_civic': Google Civic Information API</span>
+<span class="sd">    - 'democracy_works': Democracy Works Elections API</span>
+<span class="sd">    - 'ipu_parline': Inter-Parliamentary Union Parline database</span>
 
 <span class="sd">    **Usage:**</span>
 
@@ -208,18 +827,18 @@
 <span class="sd">        &gt;&gt;&gt; # List all available sources</span>
 <span class="sd">        &gt;&gt;&gt; sources = sorted(modules)</span>
 <span class="sd">        &gt;&gt;&gt; sources  # doctest: +ELLIPSIS</span>
-<span class="sd">        [&#39;democracy_works&#39;, &#39;google_civic&#39;, &#39;ipu_parline&#39;, &#39;nytimes&#39;, &#39;openfec&#39;]</span>
+<span class="sd">        ['democracy_works', 'google_civic', 'ipu_parline', 'nytimes', 'openfec']</span>
 
 <span class="sd">        &gt;&gt;&gt; # Access a specific source</span>
-<span class="sd">        &gt;&gt;&gt; nyt_module = modules[&#39;nytimes&#39;]  # doctest: +SKIP</span>
-<span class="sd">        &gt;&gt;&gt; data = nyt_module.get_election_data(&#39;florida&#39;, year=2020)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; nyt_module = modules['nytimes']  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; data = nyt_module.get_election_data('florida', year=2020)  # doctest: +SKIP</span>
 <span class="sd">        &gt;&gt;&gt;</span>
 <span class="sd">        &gt;&gt;&gt; # Iterate over all sources</span>
 <span class="sd">        &gt;&gt;&gt; for source_id, module in modules.items():  # doctest: +SKIP</span>
-<span class="sd">        ...     print(f&quot;{source_id}: {module.__doc__.split(chr(10))[0]}&quot;)</span>
+<span class="sd">        ...     print(f"{source_id}: {module.__doc__.split(chr(10))[0]}")</span>
 <span class="sd">        &gt;&gt;&gt;</span>
 <span class="sd">        &gt;&gt;&gt; # Check if a source exists</span>
-<span class="sd">        &gt;&gt;&gt; &#39;nytimes&#39; in modules  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; 'nytimes' in modules  # doctest: +SKIP</span>
 <span class="sd">        True</span>
 
 <span class="sd">    **Attributes:**</span>
@@ -228,28 +847,28 @@
 <span class="sd">    See the module documentation for details:</span>
 
 <span class="sd">        &gt;&gt;&gt; modules = ElectionsDataModules()</span>
-<span class="sd">        &gt;&gt;&gt; nyt = modules[&#39;nytimes&#39;]  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; nyt = modules['nytimes']  # doctest: +SKIP</span>
 <span class="sd">        &gt;&gt;&gt; help(nyt)  # doctest: +SKIP</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="n">_sources</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;nytimes&quot;</span><span class="p">:</span> <span class="s2">&quot;elections.nytimes&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;openfec&quot;</span><span class="p">:</span> <span class="s2">&quot;elections.openfec&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;google_civic&quot;</span><span class="p">:</span> <span class="s2">&quot;elections.google_civic&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;democracy_works&quot;</span><span class="p">:</span> <span class="s2">&quot;elections.democracy_works&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;ipu_parline&quot;</span><span class="p">:</span> <span class="s2">&quot;elections.ipu_parline&quot;</span><span class="p">,</span>
+        <span class="s2">"nytimes"</span><span class="p">:</span> <span class="s2">"elections.nytimes"</span><span class="p">,</span>
+        <span class="s2">"openfec"</span><span class="p">:</span> <span class="s2">"elections.openfec"</span><span class="p">,</span>
+        <span class="s2">"google_civic"</span><span class="p">:</span> <span class="s2">"elections.google_civic"</span><span class="p">,</span>
+        <span class="s2">"democracy_works"</span><span class="p">:</span> <span class="s2">"elections.democracy_works"</span><span class="p">,</span>
+        <span class="s2">"ipu_parline"</span><span class="p">:</span> <span class="s2">"elections.ipu_parline"</span><span class="p">,</span>
     <span class="p">}</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the ElectionsDataModules mapping.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Initialize the ElectionsDataModules mapping."""</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_modules</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Get a data source module by its identifier.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            key: Source identifier (e.g., &#39;nytimes&#39;, &#39;openfec&#39;)</span>
+<span class="sd">            key: Source identifier (e.g., 'nytimes', 'openfec')</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            The imported module for that data source</span>
@@ -257,11 +876,11 @@
 <span class="sd">        Raises:</span>
 <span class="sd">            KeyError: If the source identifier is not recognized</span>
 <span class="sd">            ImportError: If the module cannot be imported (e.g., missing dependencies)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sources</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Unknown data source: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">. &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;Available sources: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sources</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">"Unknown data source: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">. "</span>
+                <span class="sa">f</span><span class="s2">"Available sources: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sources</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">"</span>
             <span class="p">)</span>
 
         <span class="c1"># Lazy load modules</span>
@@ -271,53 +890,53 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_modules</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">module_path</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;Cannot import </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> module: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">. &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;This may be due to missing dependencies. &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;For &#39;nytimes&#39;, ensure &#39;py2store&#39; and &#39;pandas&#39; are installed.&quot;</span>
+                    <span class="sa">f</span><span class="s2">"Cannot import </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> module: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">. "</span>
+                    <span class="sa">f</span><span class="s2">"This may be due to missing dependencies. "</span>
+                    <span class="sa">f</span><span class="s2">"For 'nytimes', ensure 'py2store' and 'pandas' are installed."</span>
                 <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modules</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Iterate over source identifiers.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Iterate over source identifiers."""</span>
         <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sources</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the number of available data sources.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Return the number of available data sources."""</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sources</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a string representation of available sources.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;ElectionsDataModules(</span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sources</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">)&quot;</span>
+<span class="w">        </span><span class="sd">"""Return a string representation of available sources."""</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"ElectionsDataModules(</span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sources</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">)"</span>
 
 <div class="viewcode-block" id="ElectionsDataModules.describe">
-<a class="viewcode-back" href="../module_docs/elections.html#elections.ElectionsDataModules.describe">[docs]</a>
+<a class="viewcode-back" href="../_autosummary/elections.html#elections.ElectionsDataModules.describe">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">describe</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Print descriptions of all available data sources.</span>
 
 <span class="sd">        This method loads each module and prints its first docstring line</span>
 <span class="sd">        along with key information about the data source.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Available Election Data Sources:&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+<span class="sd">        """</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"Available Election Data Sources:"</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">source_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sources</span><span class="p">:</span>
             <span class="n">module</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">source_id</span><span class="p">]</span>
             <span class="c1"># Get first line of module docstring</span>
-            <span class="n">doc_lines</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="vm">__doc__</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">module</span><span class="o">.</span><span class="vm">__doc__</span> <span class="k">else</span> <span class="p">[]</span>
+            <span class="n">doc_lines</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="vm">__doc__</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span> <span class="k">if</span> <span class="n">module</span><span class="o">.</span><span class="vm">__doc__</span> <span class="k">else</span> <span class="p">[]</span>
             <span class="n">first_line</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span>
-                <span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">doc_lines</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()),</span> <span class="s2">&quot;No description&quot;</span>
+                <span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">doc_lines</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()),</span> <span class="s2">"No description"</span>
             <span class="p">)</span>
 
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">source_id</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">first_line</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="si">{</span><span class="n">source_id</span><span class="si">}</span><span class="s2">:"</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  </span><span class="si">{</span><span class="n">first_line</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
             <span class="c1"># Try to extract key info from docstring</span>
             <span class="k">if</span> <span class="n">module</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">doc_lines</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="s2">&quot;Access:&quot;</span> <span class="ow">in</span> <span class="n">line</span> <span class="ow">or</span> <span class="s2">&quot;API Key&quot;</span> <span class="ow">in</span> <span class="n">line</span> <span class="ow">or</span> <span class="s2">&quot;Coverage:&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
-                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+                    <span class="k">if</span> <span class="s2">"Access:"</span> <span class="ow">in</span> <span class="n">line</span> <span class="ow">or</span> <span class="s2">"API Key"</span> <span class="ow">in</span> <span class="n">line</span> <span class="ow">or</span> <span class="s2">"Coverage:"</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  </span><span class="si">{</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span></div>
 </div>
 
 
@@ -327,30 +946,30 @@
 
 
 <div class="viewcode-block" id="get_source">
-<a class="viewcode-back" href="../module_docs/elections.html#elections.get_source">[docs]</a>
+<a class="viewcode-back" href="../_autosummary/elections.html#elections.get_source">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_source</span><span class="p">(</span><span class="n">source_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Convenience function to get a data source module.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        source_id: Source identifier (e.g., &#39;nytimes&#39;, &#39;openfec&#39;)</span>
+<span class="sd">        source_id: Source identifier (e.g., 'nytimes', 'openfec')</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        The data source module</span>
 
 <span class="sd">    Example:</span>
 <span class="sd">        &gt;&gt;&gt; from elections import get_source</span>
-<span class="sd">        &gt;&gt;&gt; nyt = get_source(&#39;nytimes&#39;)  # doctest: +SKIP</span>
-<span class="sd">        &gt;&gt;&gt; data = nyt.get_election_data(&#39;florida&#39;, year=2020)  # doctest: +SKIP</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        &gt;&gt;&gt; nyt = get_source('nytimes')  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; data = nyt.get_election_data('florida', year=2020)  # doctest: +SKIP</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">_default_modules</span><span class="p">[</span><span class="n">source_id</span><span class="p">]</span></div>
 
 
 
 <div class="viewcode-block" id="list_sources">
-<a class="viewcode-back" href="../module_docs/elections.html#elections.list_sources">[docs]</a>
+<a class="viewcode-back" href="../_autosummary/elections.html#elections.list_sources">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">list_sources</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    List all available data source identifiers.</span>
 
 <span class="sd">    Returns:</span>
@@ -359,52 +978,74 @@
 <span class="sd">    Example:</span>
 <span class="sd">        &gt;&gt;&gt; from elections import list_sources</span>
 <span class="sd">        &gt;&gt;&gt; sources = list_sources()</span>
-<span class="sd">        &gt;&gt;&gt; &#39;nytimes&#39; in sources</span>
+<span class="sd">        &gt;&gt;&gt; 'nytimes' in sources</span>
 <span class="sd">        True</span>
-<span class="sd">        &gt;&gt;&gt; &#39;openfec&#39; in sources</span>
+<span class="sd">        &gt;&gt;&gt; 'openfec' in sources</span>
 <span class="sd">        True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">_default_modules</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
 
 
 
 <span class="c1"># Export main classes and functions</span>
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;ElectionsDataModules&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;get_source&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;list_sources&quot;</span><span class="p">,</span>
+    <span class="s2">"ElectionsDataModules"</span><span class="p">,</span>
+    <span class="s2">"get_source"</span><span class="p">,</span>
+    <span class="s2">"list_sources"</span><span class="p">,</span>
     <span class="c1"># Backward compatibility exports</span>
-    <span class="s2">&quot;Election2020RawJson&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Races2020&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;President2020TimeSeries&quot;</span><span class="p">,</span>
+    <span class="s2">"Election2020RawJson"</span><span class="p">,</span>
+    <span class="s2">"Races2020"</span><span class="p">,</span>
+    <span class="s2">"President2020TimeSeries"</span><span class="p">,</span>
 <span class="p">]</span>
 </pre></div>
 
-           </div>
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
           </div>
-          <footer>
-
-  <hr/>
-
-  <div role="contentinfo">
-    <p></p>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
   </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8"></script>
 
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.24.0.
+</p></div>
+      
+    </div>
+  
+</div>
 
-</footer>
-        </div>
-      </div>
-    </section>
-  </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+  </footer>
+  </body>
 </html>

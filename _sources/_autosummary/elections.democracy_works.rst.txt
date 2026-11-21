@@ -1,0 +1,15 @@
+elections.democracy\_works
+==========================
+
+.. automodule:: elections.democracy_works
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      get_election_by_id
+      get_elections
+      get_state_elections
+      get_upcoming_elections
+   

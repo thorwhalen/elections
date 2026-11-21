@@ -1,0 +1,20 @@
+elections.nytimes
+=================
+
+.. automodule:: elections.nytimes
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      get_election_data
+      get_president_timeseries
+      get_races
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Races
+   

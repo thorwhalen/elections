@@ -1,0 +1,17 @@
+# elections
+
+> A unified Python interface to multiple election data sources from around the world.
+
+
+## Pages in this subsection
+
+- [elections](elections.html.md): Election Data Package
+- [elections.democracy_works](elections.democracy_works.html.md): Democracy Works Elections API Data Source
+- [elections.google_civic](elections.google_civic.html.md): Google Civic Information API Data Source
+- [elections.ipu_parline](elections.ipu_parline.html.md): IPU Parline - Inter-Parliamentary Union Data Source
+- [elections.nytimes](elections.nytimes.html.md): New York Times Election Data Source
+- [elections.openfec](elections.openfec.html.md): OpenFEC - Federal Election Commission Data Source
+
+## Optional
+
+- [Top-level llms.txt](../llms.txt): Complete documentation index.

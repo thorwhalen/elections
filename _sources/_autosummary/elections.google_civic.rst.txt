@@ -1,0 +1,15 @@
+elections.google\_civic
+=======================
+
+.. automodule:: elections.google_civic
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      get_elections
+      get_representatives
+      get_representatives_by_division
+      get_voter_info
+   
