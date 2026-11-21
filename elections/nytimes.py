@@ -281,5 +281,5 @@ Races2020 = partial(Races, year=2020)
 # raised `TypeError: 'Store' object is not callable`. Wrapping the class first and
 # binding the year afterwards mirrors `Races2020` and yields a working factory.
 President2020TimeSeries = partial(
-    wrap_kvs(Races, obj_of_data=_post_process_timeseries), year=2020
+    wrap_kvs(Races, value_decoder=_post_process_timeseries), year=2020
 )
